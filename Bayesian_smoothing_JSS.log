@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.7)  28 APR 2023 11:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.7)  29 APR 2023 16:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -915,38 +915,38 @@ File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
 ) (./Bayesian_smoothing_JSS.aux)
 \openout1 = `Bayesian_smoothing_JSS.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for MDA/cmr/m/n on input line 64.
-LaTeX Font Info:    Trying to load font information for MDA+cmr on input line 6
-4.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for MDA/cmr/m/n on input line 71.
+LaTeX Font Info:    Trying to load font information for MDA+cmr on input line 7
+1.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/mathdesign/mdacmr.fd
 File: mdacmr.fd 
 )
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for MDB/cmr/m/n on input line 64.
-LaTeX Font Info:    Trying to load font information for MDB+cmr on input line 6
-4.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for MDB/cmr/m/n on input line 71.
+LaTeX Font Info:    Trying to load font information for MDB+cmr on input line 7
+1.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/mathdesign/mdbcmr.fd
 File: mdbcmr.fd 
 )
-LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    ... okay on input line 71.
 (/usr/local/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count329
@@ -975,7 +975,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring ON on input line 64.
+Package hyperref Info: Link coloring ON on input line 71.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 (/usr/local/texlive/2022/texmf-dist/tex/latex/refcount/refcount.sty
@@ -987,130 +987,130 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count335
 )
-LaTeX Info: Redefining \ref on input line 64.
-LaTeX Info: Redefining \pageref on input line 64.
-LaTeX Info: Redefining \nameref on input line 64.
+LaTeX Info: Redefining \ref on input line 71.
+LaTeX Info: Redefining \pageref on input line 71.
+LaTeX Info: Redefining \nameref on input line 71.
 (./Bayesian_smoothing_JSS.out) (./Bayesian_smoothing_JSS.out)
 \@outlinefile=\write5
 \openout5 = `Bayesian_smoothing_JSS.out'.
 
-<jsslogo.jpg, id=51, 540.0175pt x 393.47pt>
+<jsslogo.jpg, id=55, 540.0175pt x 393.47pt>
 File: jsslogo.jpg Graphic file (type jpg)
 <use jsslogo.jpg>
-Package pdftex.def Info: jsslogo.jpg  used on input line 64.
+Package pdftex.def Info: jsslogo.jpg  used on input line 71.
 (pdftex.def)             Requested size: 89.80768pt x 65.43607pt.
-LaTeX Font Info:    Trying to load font information for T1+pzc on input line 64
+LaTeX Font Info:    Trying to load font information for T1+pzc on input line 71
 .
 (/usr/local/texlive/2022/texmf-dist/tex/latex/psnfss/t1pzc.fd
 File: t1pzc.fd 2020/03/25 font definitions for T1/pzc.
 )
 LaTeX Font Info:    Font shape `T1/pzc/m/n' in size <28> not available
-(Font)              Font shape `T1/pzc/m/it' tried instead on input line 64.
+(Font)              Font shape `T1/pzc/m/it' tried instead on input line 71.
 LaTeX Font Info:    Font shape `T1/mdput/m/it' will be
-(Font)              scaled to size 10.29301pt on input line 64.
+(Font)              scaled to size 10.29301pt on input line 71.
 LaTeX Font Info:    Font shape `T1/mdput/m/it' will be
-(Font)              scaled to size 9.40002pt on input line 64.
+(Font)              scaled to size 9.40002pt on input line 71.
 LaTeX Font Info:    Font shape `T1/mdput/m/n' will be
-(Font)              scaled to size 16.24324pt on input line 64.
+(Font)              scaled to size 16.24324pt on input line 71.
 LaTeX Font Info:    Font shape `T1/mdput/b/n' will be
-(Font)              scaled to size 16.24324pt on input line 64.
+(Font)              scaled to size 16.24324pt on input line 71.
 LaTeX Font Info:    Trying to load font information for OT1+mdput on input line
- 64.
+ 71.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/mathdesign/mdput/ot1mdput.fd
 File: ot1mdput.fd 2013/08/29 Fontinst v1.933 font definitions for OT1/mdput.
 )
 LaTeX Font Info:    Font shape `OT1/mdput/m/n' will be
-(Font)              scaled to size 10.29301pt on input line 64.
+(Font)              scaled to size 10.29301pt on input line 71.
 LaTeX Font Info:    Font shape `OT1/mdput/m/n' will be
-(Font)              scaled to size 7.52002pt on input line 64.
+(Font)              scaled to size 7.52002pt on input line 71.
 LaTeX Font Info:    Font shape `OT1/mdput/m/n' will be
-(Font)              scaled to size 5.64001pt on input line 64.
+(Font)              scaled to size 5.64001pt on input line 71.
 LaTeX Font Info:    Trying to load font information for OML+mdput on input line
- 64.
+ 71.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/mathdesign/mdput/omlmdput.fd
 File: omlmdput.fd 2013/08/29 Fontinst v1.933 font definitions for OML/mdput.
 )
 LaTeX Font Info:    Font shape `OML/mdput/m/it' will be
-(Font)              scaled to size 10.29301pt on input line 64.
+(Font)              scaled to size 10.29301pt on input line 71.
 LaTeX Font Info:    Font shape `OML/mdput/m/it' will be
-(Font)              scaled to size 7.52002pt on input line 64.
+(Font)              scaled to size 7.52002pt on input line 71.
 LaTeX Font Info:    Font shape `OML/mdput/m/it' will be
-(Font)              scaled to size 5.64001pt on input line 64.
+(Font)              scaled to size 5.64001pt on input line 71.
 LaTeX Font Info:    Trying to load font information for OMS+mdput on input line
- 64.
+ 71.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/mathdesign/mdput/omsmdput.fd
 File: omsmdput.fd 2013/08/29 Fontinst v1.933 font definitions for OMS/mdput.
 )
 LaTeX Font Info:    Font shape `OMS/mdput/m/n' will be
-(Font)              scaled to size 10.29301pt on input line 64.
+(Font)              scaled to size 10.29301pt on input line 71.
 LaTeX Font Info:    Font shape `OMS/mdput/m/n' will be
-(Font)              scaled to size 7.52002pt on input line 64.
+(Font)              scaled to size 7.52002pt on input line 71.
 LaTeX Font Info:    Font shape `OMS/mdput/m/n' will be
-(Font)              scaled to size 5.64001pt on input line 64.
+(Font)              scaled to size 5.64001pt on input line 71.
 LaTeX Font Info:    Trying to load font information for OMX+mdput on input line
- 64.
+ 71.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/mathdesign/mdput/omxmdput.fd
 File: omxmdput.fd 2013/08/29 Fontinst v1.933 font definitions for OMX/mdput.
 )
 LaTeX Font Info:    Font shape `OMX/mdput/m/n' will be
-(Font)              scaled to size 10.29301pt on input line 64.
+(Font)              scaled to size 10.29301pt on input line 71.
 LaTeX Font Info:    Font shape `OMX/mdput/m/n' will be
-(Font)              scaled to size 7.52002pt on input line 64.
+(Font)              scaled to size 7.52002pt on input line 71.
 LaTeX Font Info:    Font shape `OMX/mdput/m/n' will be
-(Font)              scaled to size 5.64001pt on input line 64.
+(Font)              scaled to size 5.64001pt on input line 71.
 LaTeX Font Info:    Font shape `OML/mdput/m/n' will be
-(Font)              scaled to size 10.29301pt on input line 64.
+(Font)              scaled to size 10.29301pt on input line 71.
 LaTeX Font Info:    Font shape `OML/mdput/m/n' will be
-(Font)              scaled to size 7.52002pt on input line 64.
+(Font)              scaled to size 7.52002pt on input line 71.
 LaTeX Font Info:    Font shape `OML/mdput/m/n' will be
-(Font)              scaled to size 5.64001pt on input line 64.
+(Font)              scaled to size 5.64001pt on input line 71.
 LaTeX Font Info:    Trying to load font information for MDA+mdput on input line
- 64.
+ 71.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/mathdesign/mdput/mdamdput.fd
 File: mdamdput.fd 2013/08/29 Fontinst v1.933 font definitions for MDA/mdput.
 )
 LaTeX Font Info:    Font shape `MDA/mdput/m/n' will be
-(Font)              scaled to size 10.29301pt on input line 64.
+(Font)              scaled to size 10.29301pt on input line 71.
 LaTeX Font Info:    Font shape `MDA/mdput/m/n' will be
-(Font)              scaled to size 7.52002pt on input line 64.
+(Font)              scaled to size 7.52002pt on input line 71.
 LaTeX Font Info:    Font shape `MDA/mdput/m/n' will be
-(Font)              scaled to size 5.64001pt on input line 64.
+(Font)              scaled to size 5.64001pt on input line 71.
 LaTeX Font Info:    Trying to load font information for MDB+mdput on input line
- 64.
+ 71.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/mathdesign/mdput/mdbmdput.fd
 File: mdbmdput.fd 2013/08/29 Fontinst v1.933 font definitions for MDB/mdput.
 )
 LaTeX Font Info:    Font shape `MDB/mdput/m/n' will be
-(Font)              scaled to size 10.29301pt on input line 64.
+(Font)              scaled to size 10.29301pt on input line 71.
 LaTeX Font Info:    Font shape `MDB/mdput/m/n' will be
-(Font)              scaled to size 7.52002pt on input line 64.
+(Font)              scaled to size 7.52002pt on input line 71.
 LaTeX Font Info:    Font shape `MDB/mdput/m/n' will be
-(Font)              scaled to size 5.64001pt on input line 64.
+(Font)              scaled to size 5.64001pt on input line 71.
 LaTeX Font Info:    Font shape `T1/mdput/m/n' will be
-(Font)              scaled to size 11.28003pt on input line 64.
+(Font)              scaled to size 11.28003pt on input line 71.
 LaTeX Font Info:    Font shape `T1/mdput/b/n' will be
-(Font)              scaled to size 11.28003pt on input line 64.
+(Font)              scaled to size 11.28003pt on input line 71.
 LaTeX Font Info:    Font shape `T1/mdput/m/n' will be
-(Font)              scaled to size 9.40002pt on input line 64.
+(Font)              scaled to size 9.40002pt on input line 71.
 LaTeX Font Info:    Font shape `T1/mdput/b/n' will be
-(Font)              scaled to size 9.40002pt on input line 64.
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 6
-4.
+(Font)              scaled to size 9.40002pt on input line 71.
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 7
+1.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Info: Redefining \microtypecontext on input line 64.
-Package microtype Info: Applying patch `item' on input line 64.
-Package microtype Info: Applying patch `toc' on input line 64.
-Package microtype Info: Applying patch `eqnum' on input line 64.
-Package microtype Info: Applying patch `footnote' on input line 64.
+LaTeX Info: Redefining \microtypecontext on input line 71.
+Package microtype Info: Applying patch `item' on input line 71.
+Package microtype Info: Applying patch `toc' on input line 71.
+Package microtype Info: Applying patch `eqnum' on input line 71.
+Package microtype Info: Applying patch `footnote' on input line 71.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 64.
+LaTeX Info: Redefining \showhyphens on input line 71.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -1123,9 +1123,9 @@ Package microtype Info: Loading generic protrusion settings for font family
 {/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./jsslo
 go.jpg>]
 LaTeX Font Info:    Font shape `T1/mdput/b/n' will be
-(Font)              scaled to size 10.29301pt on input line 71.
+(Font)              scaled to size 10.29301pt on input line 78.
 LaTeX Font Info:    Font shape `T1/mdput/b/n' will be
-(Font)              scaled to size 13.53603pt on input line 71.
+(Font)              scaled to size 13.53603pt on input line 78.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmss' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
@@ -1136,7 +1136,7 @@ pdfTeX warning (font expansion): font should be expanded before its first use
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 LaTeX Font Info:    Font shape `T1/mdput/m/sl' will be
-(Font)              scaled to size 10.29301pt on input line 133.
+(Font)              scaled to size 10.29301pt on input line 140.
 
 Overfull \hbox (5.45529pt too wide) has occurred while \output is active
 \T1/mdput/m/n/10.95 2 []
@@ -1151,12 +1151,12 @@ Overfull \hbox (5.45529pt too wide) has occurred while \output is active
 
 [3]
 LaTeX Font Info:    Trying to load font information for TS1+mdput on input line
- 232.
+ 237.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/mathdesign/mdput/ts1mdput.fd
 File: ts1mdput.fd 2013/08/29 Fontinst v1.933 font definitions for TS1/mdput.
 )
 LaTeX Font Info:    Font shape `TS1/mdput/m/n' will be
-(Font)              scaled to size 10.29301pt on input line 232.
+(Font)              scaled to size 10.29301pt on input line 237.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `mdput' (encoding: TS1).
 (microtype)             For optimal results, create family-specific settings.
@@ -1175,8 +1175,8 @@ Overfull \hbox (5.45529pt too wide) has occurred while \output is active
  []
 
 [5]
-LaTeX Font Info:    Trying to load font information for T1+txtt on input line 3
-15.
+LaTeX Font Info:    Trying to load font information for T1+txtt on input line 2
+90.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/txfonts/t1txtt.fd
 File: t1txtt.fd 2000/12/15 v3.1
 )
@@ -1184,20 +1184,34 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `txtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
+<Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf, id=155, 355.3275pt x 25
+7.96375pt>
+File: Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf Graphic file (type 
+pdf)
+<use Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf>
+Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf 
+ used on input line 331.
+(pdftex.def)             Requested size: 354.12434pt x 257.09714pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 
 Overfull \hbox (5.45529pt too wide) has occurred while \output is active
 \T1/mdput/m/n/10.95 6 []
  []
 
 [6]
-<Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf, id=162, 355.3275pt x 25
-7.96375pt>
-File: Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf Graphic file (type 
-pdf)
-<use Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf>
-Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf 
- used on input line 364.
-(pdftex.def)             Requested size: 354.12434pt x 257.09714pt.
+<Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf, id=168, 273.02pt x 244.9
+15pt>
+File: Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf Graphic file (type p
+df)
+<use Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf>
+Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf  
+used on input line 358.
+(pdftex.def)             Requested size: 354.12434pt x 317.6906pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 
 Overfull \hbox (5.45529pt too wide) has occurred while \output is active
 [] \T1/mdput/m/n/10.95 7
@@ -1208,18 +1222,8 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.380 \end{CodeInput}
-                      <./Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf>
-]
-<Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf, id=186, 273.02pt x 244.9
-15pt>
-File: Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf Graphic file (type p
-df)
-<use Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf>
-Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf  
-used on input line 391.
-(pdftex.def)             Requested size: 354.12434pt x 317.6906pt.
-
+l.366 \newpage
+               <./Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf>]
 Overfull \hbox (5.45529pt too wide) has occurred while \output is active
 \T1/mdput/m/n/10.95 8 []
  []
@@ -1229,156 +1233,131 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.409 +     neigh_fraction = 0.5,
-                                  <./Bayesian_smoothing_JSS_files/figure-latex/
-map1-1.pdf>]
-<Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf, id=205, 355.3275pt x 18
-8.705pt>
+l.389 ...2.5800   Max.   :20.8100   Max.   :24.690
+                                                   <./Bayesian_smoothing_JSS_fi
+les/figure-latex/map1-1.pdf>]
+<Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf, id=208, 505.89pt x 265.
+99374pt>
 File: Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf Graphic file (type 
 pdf)
 <use Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf>
 Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf 
- used on input line 445.
-(pdftex.def)             Requested size: 354.12434pt x 188.07106pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \vbox (badness 1406) has occurred while \output is active []
-
+ used on input line 414.
+(pdftex.def)             Requested size: 354.12434pt x 186.1984pt.
 
 Overfull \hbox (5.45529pt too wide) has occurred while \output is active
 [] \T1/mdput/m/n/10.95 9
  []
 
-[9]
-<Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf, id=214, 344.28625pt x 2
-53.94875pt>
+[9
+pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.424 F
+       urther insights are provided by Figure \ref{fig:vhist} which shows th...
+ <./Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf>]
+<Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf, id=232, 568.1225pt x 25
+3.94875pt>
 File: Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf Graphic file (type 
 pdf)
 <use Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf>
 Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf 
- used on input line 463.
-(pdftex.def)             Requested size: 354.12434pt x 261.20587pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
+ used on input line 432.
+(pdftex.def)             Requested size: 354.12434pt x 158.29907pt.
 
 Overfull \hbox (10.91058pt too wide) has occurred while \output is active
 \T1/mdput/m/n/10.95 10 []
  []
 
 [10
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) ha
+pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.493 \begin{CodeInput}
-                        <./Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pd
+l.462 \begin{CodeInput}
+                        <./Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pd
 f>]
-<Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf, id=238, 273.02pt x 244.
+<Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf, id=251, 273.02pt x 244.
 915pt>
 File: Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf Graphic file (type 
 pdf)
 <use Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf>
 Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf 
- used on input line 503.
+ used on input line 471.
 (pdftex.def)             Requested size: 354.12434pt x 317.6906pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
 
 Overfull \hbox (10.91058pt too wide) has occurred while \output is active
 [] \T1/mdput/m/n/10.95 11
  []
 
 [11
-pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) ha
+pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.528 \begin{CodeInput}
-                        <./Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pd
-f>]
-<Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf, id=254, 273.02pt x 244.
+l.490 \end{CodeInput}
+                      <./Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf>
+]
+<Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf, id=267, 273.02pt x 244.
 915pt>
 File: Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf Graphic file (type 
 pdf)
 <use Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf>
 Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf 
- used on input line 538.
+ used on input line 505.
 (pdftex.def)             Requested size: 354.12434pt x 317.6906pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: Reference `fig:fig1' on page 12 undefined on input line 546.
-
 
 Overfull \hbox (10.91058pt too wide) has occurred while \output is active
 \T1/mdput/m/n/10.95 12 []
  []
 
 [12
-pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.562 ...43               2.043              2.771
-                                                   <./Bayesian_smoothing_JSS_fi
-les/figure-latex/smth1-1.pdf>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (10.91058pt too wide) has occurred while \output is active
-[] \T1/mdput/m/n/10.95 13
- []
-
-[13
 pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.579   T
-         o reduce the neighbourhood influence compared with the probabilitie...
- <./Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf>] (./Bayesian_smoothi
-ng_JSS.bbl
+l.524 +   dplyr::inner_join(sum3, by = "class")
+                                                <./Bayesian_smoothing_JSS_files
+/figure-latex/smth2-1.pdf>] (./Bayesian_smoothing_JSS.bbl
 Overfull \hbox (10.91058pt too wide) has occurred while \output is active
-\T1/mdput/m/n/10.95 14 []
+[] \T1/mdput/m/n/10.95 13
  []
 
-[14])
-Underfull \hbox (badness 10000) in paragraph at lines 594--594
+[13])
+Underfull \hbox (badness 10000) in paragraph at lines 564--564
 
  []
 
 LaTeX Font Info:    Font shape `T1/pzc/m/n' in size <13> not available
-(Font)              Font shape `T1/pzc/m/it' tried instead on input line 594.
+(Font)              Font shape `T1/pzc/m/it' tried instead on input line 564.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `pzc' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
 Overfull \hbox (10.91058pt too wide) has occurred while \output is active
+\T1/mdput/m/n/10.95 14 []
+ []
+
+[14]
+Overfull \hbox (10.91058pt too wide) has occurred while \output is active
 [] \T1/mdput/m/n/10.95 15
  []
 
 [15] (./Bayesian_smoothing_JSS.aux)
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `Bayesian_smoothing_JSS.out' has not changed.
 
-(rerunfilecheck)             Checksum: DCCF8005751D792936751EA662176922;2560.
+(rerunfilecheck)             Checksum: 5E62F8C65E394169299C9C9A149BAF0C;2969.
  ) 
 Here is how much of TeX's memory you used:
- 26905 strings out of 478268
- 497732 string characters out of 5846348
- 791410 words of memory out of 5000000
- 44212 multiletter control sequences out of 15000+600000
- 615621 words of font info for 291 fonts, out of 8000000 for 9000
+ 26929 strings out of 478268
+ 498253 string characters out of 5846348
+ 792598 words of memory out of 5000000
+ 44210 multiletter control sequences out of 15000+600000
+ 617665 words of font info for 306 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,14n,94p,1277b,875s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,14n,94p,1019b,875s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/ly1/texnansi.enc}{/usr/lo
 cal/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/20
 22/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2022/texmf-dist/f
@@ -1397,10 +1376,10 @@ ve/2022/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></usr/local/texlive/2022
 -dist/fonts/type1/public/txfonts/t1xtt.pfb></usr/local/texlive/2022/texmf-dist/
 fonts/type1/public/txfonts/t1xtt.pfb></usr/local/texlive/2022/texmf-dist/fonts/
 type1/urw/zapfchan/uzcmi8a.pfb>
-Output written on Bayesian_smoothing_JSS.pdf (15 pages, 5155043 bytes).
+Output written on Bayesian_smoothing_JSS.pdf (15 pages, 5154787 bytes).
 PDF statistics:
- 394 PDF objects out of 1000 (max. 8388607)
- 311 compressed objects within 4 object streams
- 77 named destinations out of 1000 (max. 500000)
- 44680 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 412 PDF objects out of 1000 (max. 8388607)
+ 329 compressed objects within 4 object streams
+ 82 named destinations out of 1000 (max. 500000)
+ 44688 words of extra memory for PDF output out of 51595 (max. 10000000)
 

@@ -1,9 +1,12 @@
 ---
 documentclass: jss
+classoption: shortnames
 author:
   - name: Gilberto Camara
     orcid: 0000-0002-3681-487X
-    affiliation: National Inst for Space Research, \\ Brazil
+    affiliation: |
+        | Nat Inst for Space Research
+        | Brazil
     # use this syntax to add text on several lines
     address: |
       | Avenida dos Astronautas, 1758
@@ -11,20 +14,30 @@ author:
     email: \email{gilberto.camara```inpe.br}
   - name: Rolf Simoes
     orcid: 0000-0003-0953-4132
-    affiliation: National Inst for Space Research, Brazil
+    affiliation: |
+        | Nat Inst for Space Research
+        | Brazil
     # To add another line, use \AND at the end of the previous one as above
   - name: Renato Assunção
     orcid: 0000-0001-7442-9166
-    affiliation: Federal Univ of Minas Gerais, Brazil \AND
+    affiliation: | 
+        | Federal Univ of Minas Gerais
+        | Brazil \AND
   - name: Alexandre Carvalho
     orcid: 0000-0001-8762-5465
-    affiliation: Inst for Applied Economic Research, Brazil
+    affiliation: |
+        | Inst Applied Economic Research
+        | Brazil
   - name: Felipe Souza
     orcid: 0000-XXXXX
-    affiliation: National Inst for Space Research, Brazil
+    affiliation: |
+        | Nat Inst for Space Research
+        | Brazil
   - name: Pedro Ribeiro de Andrade
-    orcid: 0000-XXXXX
-    affiliation: National Institute for Space Research, Brazil        
+    orcid: 0000-0001-8675-4046
+    affiliation: |
+        | Nat Inst for Space Research
+        | Brazil      
 title:
   formatted: "Bayesian inference for smoothing of remote sensing image classification using machine learning"
   # If you use tex in the formatted title, also supply version without
@@ -72,6 +85,8 @@ sits:::.conf_set_options("tmap_legend_text_size" = 0.7)
 sits:::.conf_set_options("tmap_legend_title_size" = 0.7)
 sits:::.conf_set_options("tmap_max_cells" = 1e+09)
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "h")
+tempdir = "./temp_dir"
+Sys.setenv("SITS_DOCUMENTATION_MODE" = "true")
 ```
 \newpage
 # Introduction
@@ -146,8 +161,7 @@ $i$ belonging to class $k$, $k=1,\dots{},K$, then
 To more the inference tractable, the class probability values $p_{i,k}$ are converted to 
 log-odds values. The logit function converts probability values from 
 0 to 1 to values from $-\infty$ to $\infty$. The conversion from probabilities to logit 
-values is useful to support the assumption of normal distribution for the data. 
-The conversion is expressed by
+values is expressed by
 
 \begin{equation}
 x_{i,k} = \ln \left(\frac{p_{i,k}}{1 - p_{i,k}}\right)
@@ -156,8 +170,7 @@ x_{i,k} = \ln \left(\frac{p_{i,k}}{1 - p_{i,k}}\right)
 Confidence in pixel classification increases with logit. There are situations, such as 
 border pixels or mixed ones, where the logit of different classes are similar in magnitude. 
 These are cases of low confidence in the classification result. To assess and correct these 
-cases, the post-classification smoothing method borrows strength from the neighbors and 
-reduces the variance of the estimated class.
+cases, the post-classification smoothing method borrows strength from the neighbours.
 
 ## Bayesian inference
 
@@ -237,29 +250,24 @@ where
 in the neighborhood of pixel $i$.
 \item $s^2_{i,k}$ is the variance of logit values for pixels of class $k$ 
 in the neighborhood of pixel $i$.
-\item $\sigma^2_{k}$ is the prior variance of the logit values for class $k$, 
+\item $\sigma^2_{k}$ is the likelihood variance for class $k$, 
 and is an user-derived hyperparameter.
 \end{itemize}
 
 The above equation is a weighted average between the value $x_{i,k}$ for the pixel 
-and the mean $m_{i,k}$ for the neighboring pixels. When the variance $s^2_{i,k}$ for the 
-neighbors is too high, the algorithm gives more weight to the pixel value $x_{i,k}$. 
-On the other hand, when the noise $\sigma^2_k$ increases, the method gives more weight 
-to the neighborhood mean $m_{i,k}$.
+and the mean $m_{i,k}$ for the neighbouring pixels. When the variance $s^2_{i,k}$ for the 
+neighbours is too high, the algorithm gives more weight to the pixel value $x_{i,k}$. 
+When the variance of the likelihood $\sigma^2_k$ increases, the method gives more weight to the neighbourhood mean $m_{i,k}$.
 
 \newpage
 
 ## Effect of the hyperparameter
 
 The parameter $\sigma^2_k$ controls the level of smoothness. If $\sigma^2_k$ is zero, 
-the smoothed value ${E}[\mu_{i,k} | x_{i,k}]$ will be equal to the pixel value $x_{i,k}$. 
-Making $\sigma^2_k$ high leads to much smoothness. Values of the prior variance 
-$\sigma^2_{k}$, which are small relative to the local variance $s^2_{i,k}$ increase our 
-confidence in the original probabilities. Conversely, prior variances $\sigma^2_{k}$ 
-which are large relative to the local variance $s^2_{i,k}$ increase our confidence in 
-the average probability of the neighborhood.
+the estimated value ${E}[\mu_{i,k} | x_{i,k}]$ will be the pixel value $x_{i,k}$. 
+Values of the likelihood variance $\sigma^2_{k}$, which are small relative to the prior variance $s^2_{i,k}$ increase our confidence in the original probabilities. Conversely, likelihood variances $\sigma^2_{k}$ which are large relative to the prior variance $s^2_{i,k}$ increase our confidence in the average probability of the neighbourhood.
 
-Thus, the parameter $\sigma^2_{k}$ expresses our confidence in the inherent variability 
+Thus, the parameter $\sigma^2_{k}$ expresses confidence in the inherent variability 
 of the distribution of values of a class $k$. The smaller the parameter $\sigma^2_{k}$, 
 the more we trust the estimated probability values produced by the classifier for class $k$. 
 Conversely, higher values of $\sigma^2_{k}$ indicate lower confidence in the classifier 
@@ -267,69 +275,41 @@ outputs and improved confidence in the local average values.
 
 Consider the following two-class example. Take a pixel with probability 0.4 
 (logit $x_{i,1}$ = -0.4054) for class A, and probability 0.6 (logit $x_{i,2}$ = 0.4054) 
-for class B. Without post-processing, the pixel will be labeled as class B. Consider that 
-the local average is 0.6 (logit $m_{i,1}$ = 0.4054) for class A and 0.4 
-(logit $m_{i,2}$ = -0.4054) for class B. This is a case of an outlier classified 
-originally as class B in the midst of a set of pixels of class A. Take the local variance 
-of logits to be $s^2_{i,1}$ = 5 for class A and $s^2_{i,2}$ = 10 and for class B. 
-This difference is to be expected if the local variability of class A is smaller 
-than that of class B.
-
-To complete the estimate, we need to set the parameter $\sigma^2_{k}$, representing prior 
-belief in the variability of the probability values for each class. If we take both 
-$\sigma^2_{A}$ for class A and $\sigma^2_{B}$ for class B to be both 10, the Bayesian 
-estimated probability for class A is 0.52  and for class B is 0.48. In this case, the pixel 
-will be relabeled as being class A. However, if our belief in the original values is higher, 
-we will get a different result. If we set $\sigma^2$ to be 5 for both classes A and B, 
-the Bayesian probability estimate will be 0.48 for class A and 0.52 for class B. 
-In this case, the original label will be kept.
+for class B. Without post-processing, the pixel will be labelled as class B. Consider a 
+local average of 0.6 (logit $m_{i,1}$ = 0.4054) for class A and 0.4 
+(logit $m_{i,2}$ = -0.4054) for class B. This is an outlier classified as class B in the midst of a set of pixels of class A. Suppose a local variance of logits to be $s^2_{i,1}$ = 5 for class A and $s^2_{i,2}$ = 10 and for class B. This difference is to be expected if the local variability of class A is smaller than that of class B. To complete the estimate, we need to set the parameter $\sigma^2_{k}$, representing prior belief in the variability of the probability values for each class. If we take both  $\sigma^2_{A}$ for class A and $\sigma^2_{B}$ for class B to be both 10, the Bayesian  estimated probability for class A is 0.52  and for class B is 0.48. In this case, the pixel will be relabelled as being class A. If we set $\sigma^2$ to be 5 for both classes A and B, the Bayesian probability estimate will be 0.48 for class A and 0.52 for class B.In this case, the original label will be kept.
 
 ## Defining the neighbourhood
 
-The intuition for Bayesian smoothing is that homogeneous neighbourhoods should have a 
-dominant class that has both higher average probabilities and lower variance than the others. 
-In these neighbourhoods, a pixel of a different class is likely to be associated 
-to lower average probabilities and higher local variance. Thus, the post-processing
-will not change the most likely class for pixels in spatially homogenous regions.
+The underlying principle of Bayesian smoothing is that regions with similar characteristics typically have a dominant class, characterized by higher average probabilities and lower variance compared to other classes. In such areas, a pixel belonging to a different class is expected to exhibit lower average probabilities and higher local variance. Consequently, post-processing should alter the class of this pixel to match the dominant class.
 
-The rationale behind Bayesian smoothing is that areas with similar characteristics have a dominant class that has higher average probabilities and lower variance than other classes. 
-In such regions, a pixel with a different class is expected to have lower average 
-probabilities and higher local variance. Post-processing should not change the most likely 
-class for pixels in these regions.
+Classification challenges arise when pixels are situated along the boundaries between areas containing different classes, as they possess signatures of two classes. To ensure the reliability of local class statistics, only pixels with a high likelihood of belonging to the class should be included. In the context of spatial neighbourhoods centred on border pixels, only a portion of the pixels in the window share the same class as the central pixel, while the others belong to a different class. To account for border pixels, we use a specialized definition of a neighbourhood to estimate the prior class distribution.
 
-When pixels are located at the borders between areas with different classes, they contain 
-signatures of two classes, which poses a classification problem. For local class statistics to be reliable, only pixels likely to belong to this class should be included. When windows are 
-centered on border pixels, only some of the pixels in the window belong to the same class as the central pixel; the others belong to a different class. To account for border pixels, 
-sits uses a special definition of a neighbourhood to estimate the prior class distribution. 
+To approximate the prior distribution using spatial neighbourhoods, the algorithm uses pixels with high probability of belonging to the class. The rationale is that pixels with low probabilities are unlikely to be part of the same class distribution as those with high probability values. This procedure ensures a more reliable estimation of the prior.
 
-To estimate prior distribution using spatial neighbourhood, the algorithm only uses
-pixels with high probability of belonging to the class. The logic is that pixels with 
-low probabilities are unlikely to belong to the same class distribution as those with 
-high probability values. This procedure ensures a more reliable estimate of the prior.
+
 
 # Software and examples
 
 ## Reading a probability data cube
  
-The input for the \pkg{sits} post-classification is an image file with the probabilities produced by a machine learning algorithm. This file should be multi-band, where each band contains the pixel probabilities of a single class. The image should be GDAL-readable with INT2S data type with values ranging  from [0..10000]. The file name should have  information on reference dates and includes a version number. The following code creates a probability cube from a file produced by a random forests classification applied to a data cube of Sentinel-2 images, covering tile "20LLQ" in the Brazilian Amazonia covering the period from 2020-06-04 to 2021-08-26. The original analysis-ready files were obtained from Microsoft Planetary Computer. The training data has six classes: (a) \code{Forest} for natural tropical forest; (b) \code{Water} for lakes and rivers; (c) \code{Wetlands} for areas where water covers the soil in the wet season; (d) \code{ClearCut_Burn} for areas where fires cleared the land after tree removal. (e) \code{ClearCut_Soil} where the forest has been removed; (f) \code{ClearCut_Veg} where some vegetation remains after most trees have been removed.
-
-The first step is informing the location of the file. In this case, the image containing
-the probabilities is provided by the \pkg{sitsdata} package.
+The input for post-classification is an image with probabilities produced by a machine learning algorithm. This file should be multi-band, where each band contains the pixel probabilities of a single class; it should be GDAL-readable with INT2S data type with values ranging  from [0..10000]. The file name should have information on reference dates and include a version number. In the examples, we use a file produced by a random forests algorithm applied to a data cube of Sentinel-2 images for tile "20LLQ" in the period 2020-06-04 to 2021-08-26.
 
 ```{r, echo = TRUE, eval = TRUE}
 data_dir <- system.file("/extdata/Rondonia-20LLQ/", package = "sitsdata")
 list.files(data_dir)
 ```
 
-The class labels should also be informed by the user, since they are not stored in image files. 
+The training data has six classes: (a) \code{Forest} for natural tropical forest; (b) \code{Water} for lakes and rivers; (c) \code{Wetlands} for areas where water covers the soil in the wet season; (d) \code{ClearCut_Burn} for areas where fires cleared the land after tree removal. (e) \code{ClearCut_Soil} where the forest has been removed; (f) \code{ClearCut_Veg} where some vegetation remains after most trees have been removed. The class labels should also be informed by the user, since they are not stored in image files. 
+
 ```{r, echo = TRUE, eval = TRUE}
 labels <- c("Water", "ClearCut_Burn", "ClearCut_Soil",
             "ClearCut_Veg", "Forest", "Wetland")
 ```
 
-In \pkg{sits}, \code{sits_cube()} builds an object describing the image; its main parameters are: (a) \code{source}: data provider. Examples are "AWS" and "MPC"; (b)\code{collection}: image collection on the data provider, e.g., "SENTINEL-2-L2A" (Sentinel-2 collection from MPC); (c)\code{data_dir}: directory where the image is available; (d)\code{bands}: Band names associated with the data, in this case \code{probs};  (e) \code{labels}: Labels with the training classes; (f) \code{version}: version of the result; (g) \code{parse_info}: how to extract `tile`, `band`, `date` and `version` information from the file name. It includes designators such as `X1` and `X2` which are place holders for parts of the file name that is not relevant.
+The following code creates a data cube object describing the probability file. This is done by \code{sits_cube()} whose main parameters are: (a) \code{source}: data provider, e.g.,  "AWS" or "MPC"; (b)\code{collection}, image collection, e.g., "SENTINEL-2-L2A" (collection from MPC); (c)\code{data_dir}, directory where the image is stored; (d)\code{bands}; band names, in this case \code{probs};  (e) \code{labels}, labels of the training classes; (f) \code{parse_info}, a vector that shows how to extract `tile`, `band`, `date` and `version` from the file name. It includes designators such as `X1` and `X2` which are place holders for parts of the file name that are not relevant.
 
-```{r, tidy="styler", echo=TRUE, eval=TRUE}
+```{r, echo=TRUE, eval=TRUE}
 probs_cube <- sits_cube( 
   source = "MPC",
   collection = "SENTINEL-2-L2A",
@@ -340,36 +320,37 @@ probs_cube <- sits_cube(
   data_dir = data_dir)
 ```
 
-The output of \code{sits_cube()} is a tibble that contains metadata about the probability maps and associated file. Figure \@ref(fig:pcube) shows the layers of the data cube. The map for class \code{Forest} shows high probability values associated with compact patches and linear stretches in riparian areas. Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. By contrast, the probability maps for classes \code{Water}, \code{ClearCut_Burn} and \code{ClearCut_Veg} have mostly low values. 
+The output is a tibble with metadata about the probability layers. Figure \@ref(fig:pcube) shows the layers of the data cube. The map for class \code{Forest} shows high probability values associated with compact patches and linear stretches in riparian areas. Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. By contrast, the probability maps for classes \code{Water}, \code{ClearCut_Burn} and \code{ClearCut_Veg} have mostly low values. 
 
-```{r pcube, width = 9, tidy="styler", fig.align = 'center', fig.cap = "Class probabilities produced by random forest algorithm."}
+```{r pcube, width = 8, tidy="styler", fig.align = 'center', fig.cap = "Class probabilities produced by random forest algorithm."}
 plot(probs_cube)
 ```
 
-
-To show the need for post-processing, it is useful to produce a non-smoothed labelled map. The map is obtained by taking the class of higher probability for each pixel as its label without considering the spatial context. This is done by \code{sits_label_classification()} whose main parameters are: (a) \code{cube}, a probability cube; (b) \code{output_dir}, directory for storing results; (c) \code{version}. 
+The non-smoothed labelled map shows the need for post-processing. This map is obtained by taking the class of higher probability for each pixel as its label without considering the spatial context. This is done by \code{sits_label_classification()} whose main parameters are: (a) \code{cube}, a probability cube; (b) \code{output_dir}, directory for storing results; (c) \code{version}. 
 ```{r, echo=TRUE, eval=TRUE}
 label_cube_no_smooth <- sits_label_classification(
     cube = probs_cube,
-    output_dir = tempdir(),
+    output_dir = tempdir,
     version = "no_smooth")
 ```
-Figure \@ref(fig:map1) shows the resulting map, which contains a significant number of outliers and pixels likely to be misclassified.
+Figure \@ref(fig:map1) shows the resulting map, which contains a significant number of outliers and misclassified pixels.
 
-```{r map1, width = 7, tidy="styler", fig.align = 'center', fig.cap = "Labelled map without smoothing."}
+```{r map1, fig.width = 6, fig.align = 'center', fig.cap = "Labelled map without smoothing."}
 plot(label_cube_no_smooth)
 ```
 
+\newpage
+
 ## Estimating the local logit variances
 
-Before applying the Bayesian smoothing procedure to remove outliers, it is useful to consider the spatial distribution and the histogram of the logit variances, which correspond to the $s^2_{i,k}$ parameter in the Bayesian estimator. For this purpose, \code{sits_variance()} estimates the local logit variances. Its main parameters are: (a) \code{cube}, a probability cube; (b) \code{window_size}, the dimension of the local neighbourhood; (c) \code{neigh_fraction}, the percentage of pixels in the neighbourhood used to calculate the variance; (d) \code{output_dir}, directory where results will be stored. The example uses half of the pixels of a 7x7 window to estimate the variance. The chosen pixels will be those with the highest probability pixels to be more representative of the actual class distribution. The output values are the logit variances in the vicinity of each pixel. 
+The local logit variances correspond to the $s^2_{i,k}$ parameter in the Bayesian inference and are estimated by \code{sits_variance()}. Its main parameters are: (a) \code{cube}, a probability cube; (b) \code{window_size}, dimension of the local neighbourhood; (c) \code{neigh_fraction}, the percentage of pixels in the neighbourhood used to calculate the variance; (d) \code{output_dir}, directory where results will be stored. The example below uses half of the pixels of a 7x7 window to estimate the variance. The chosen pixels will be those with the highest probability pixels to be more representative of the actual class distribution. The output values are the logit variances in the vicinity of each pixel. 
 
 ```{r, echo=TRUE, eval=TRUE}
 var_cube <- sits_variance(
     cube = probs_cube,
     window_size = 7,
     neigh_fraction = 0.5,
-    output_dir = tempdir())
+    output_dir = tempdir)
 summary(var_cube, only_stats = TRUE)
 ```
 
@@ -381,21 +362,21 @@ their respective normal distributions.
 
 The summary statistics show that most local variance values are low, which is an expected result. Areas of low variance correspond to pixel neighbourhoods of high logit values for one the classes and low logit values for the others. High values of the local variances are relevant in areas of confusion between classes. Figure \@ref(fig:vcube) shows the values of local logit variances for classes \code{ClearCut_Veg} and class \code{Forest}, considering only the 4th quartile of the distribution. Only the top 25% of the values for each class are shown, emphasizing areas of high local variability. 
 
-```{r vcube, width = 9, tidy="styler", fig.align = 'center', fig.cap = "Logit variance map showing values above the 3rd quartile."}
+```{r vcube, fig.width = 8, tidy="styler", fig.align = 'center', fig.cap = "Logit variance map showing values above the 3rd quartile."}
 plot(var_cube, percentile = 0.75, labels = c("ClearCut_Veg", "Forest"))
 ```
 
 Comparing the logit variance maps of Figure \@ref(fig:vcube) with the probability maps of Figure \@ref(fig:pcube) shows the relevance of expert knowledge. The areas of high probability of class \code{Forest} are mostly made of compact patches; areas of high local variance occur near the borders of these patches. By contrast, class \code{ClearCut_Veg} represents a transition between natural forest areas and places where all trees have been cut, which are associated to class \code{ClearCut_Soil}. Class \code{ClearCut_Veg} has a high spectral variability, since the extent of remaining vegetation after most trees have been removed is not uniform. For this reason, the local variance of class \code{ClearCut_Veg} is mostly patch-based, while that of class \code{Forest} is mostly border-based. 
 
-Further insights into the local variance are provided by Figure \@ref(fig:vhist) which shows the histograms of local variances per class. The values shown correspond to the 4th quartile (greater that 75% of all values) . The distribution of logit variances is uneven between the classes. Class \code{ClearCut_Veg} has a more balanced distribution, while most values in the 4th quartile of the \code{ClearCut_Soil} class have low values. 
+Further insights are provided by Figure \@ref(fig:vhist) which shows the histograms of local variances per class. The values shown correspond to the 4th quartile (top 25% of all values). The distribution of logit variances is uneven between the classes. Class \code{ClearCut_Veg} has a more balanced distribution, while most values in the 4th quartile of the \code{ClearCut_Soil} class have low values. 
 
-```{r vhist, width = 9, tidy="styler", fig.align = 'center', fig.cap = "Histogram of logits of class variances above the 3rd quartile."}
+```{r vhist, fig.width = 8, tidy="styler", fig.align = 'center', fig.cap = "Histogram of top quartile of variances of class logits."}
 plot(var_cube, type = "hist")
 ```
 
 ## Applying Bayesian smoothing to remove outliers
 
-To remove the outliers in the classification map, \pkg{sits} uses \code{sits_smooth()}. Its main parameters are: (a) \code{cube}, a probability cube; (b) \code{window_size}, the dimension of the local neighbourhood; (c) \code{neigh_fraction}, the percentage of pixels in the neighbourhood used to calculate the variance; (d) \code{smoothness}, a vector with  prior logit variances for each class; (e) \code{output_dir}, directory where results will be stored; (f) \code{version}, a string to distinguish different runs.
+To remove the outliers in the classification map, \pkg{sits} uses \code{sits_smooth()}. Its main parameters are: (a) \code{cube}, a probability cube; (b) \code{window_size},  dimension of the local neighbourhood; (c) \code{neigh_fraction}, percentage of pixels in the neighbourhood used to calculate the variance; (d) \code{smoothness}, prior logit variances for each class; (e) \code{output_dir}, directory where results will be stored; (f) \code{version}, a string to distinguish different runs.
 
 As discussed above, the effect of the Bayesian estimator depends on the values of the a priori variance $\sigma^2_{k}$ set by the user and of the neighbourhood definition used to compute to local variance $s^2_{i,1}$ for each pixel. To show the effects of different $\sigma^2$ values we consider two cases: (a) setting $\sigma^2$ to a high value close to the maximum value of local logit variance; (b) setting $\sigma^2$ to a lower value close to the minimum value of the 4rd quartile. 
 
@@ -405,16 +386,16 @@ smooth_cube_high <- sits_smooth(
     window_size = 7,
     neigh_fraction = 0.5,
     smoothness = c(25, 10, 20, 20, 25, 10),
-    output_dir = tempdir(),
+    output_dir = tempdir,
     version = "smooth_high")
 ```
 
-The impact of Bayesian smoothing can be best captured by producing  a labelled map using \code{sits_label_classification()} taking the smoothed image as its input. Figure \@ref(fig:smth1) shows that the outliers and isolated pixels have been removed.
+The impact of Bayesian smoothing can be best captured by producing a labelled map using \code{sits_label_classification()} taking the smoothed image as its input. Figure \@ref(fig:smth1) shows that the outliers and isolated pixels have been removed.
 
-```{r smth1, width = 7, tidy="styler", fig.align = 'center', fig.cap = "Labelled map with smoothing with high smoothness values."}
+```{r smth1, fig.width = 6, fig.align = 'center', fig.cap = "Labelled map with smoothing with high smoothness values."}
 label_cube_smooth_high <- sits_label_classification(
     cube = smooth_cube_high,
-    output_dir = tempdir(),
+    output_dir = tempdir,
     version = "smooth_high")
 plot(label_cube_smooth_high)
 ```
@@ -427,21 +408,21 @@ smooth_cube_low <- sits_smooth(
     window_size = 7,
     neigh_fraction = 0.5,
     smoothness = c(5, 1, 1, 2, 4, 1),
-    output_dir = tempdir(),
+    output_dir = tempdir,
     version = "smooth_low")
 ```
 
 To see the impact of small $\sigma^2$, we compute the labelled map.
 
-```{r smth2, width = 9, tidy="styler", fig.align = 'center', fig.cap = "Labelled map with small smoothing parameters."}
+```{r smth2, fig.width = 6, fig.align = 'center', fig.cap = "Labelled map with low smoothing parameters."}
 label_cube_smooth_low <- sits_label_classification(
     cube = smooth_cube_low,
-    output_dir = tempdir(),
+    output_dir = tempdir,
     version = "smooth_low")
 plot(label_cube_smooth_low)
 ```
 
-Comparing the class areas of the non-smoothed and smoothed maps shown below, the most frequent classes (\code{ClearCut_Soil} and \code{Forest}) increased their areas at the expense of the others. As shown in Figure \@ref(fig:fig1), these classes occur in more compact patches than the others. 
+A visual comparison between the two smoothed maps shows that there is an increase in the area of the \code{ClearCut_Veg} class. Such observation is confirmed by comparing the class areas of the non-smoothed map with the two types of smoothed maps, as shown below. 
 
 ```{r, echo=TRUE, eval=TRUE}
 sum1 <- summary(label_cube_no_smooth, only_stats = TRUE)
@@ -454,17 +435,20 @@ dplyr::inner_join(sum1, sum2, by = "class") %>%
   dplyr::inner_join(sum3, by = "class")
 ```
 
-In the smoothed map, the outliers have been removed by expanding forest areas. Forests have replaced small corridors of water and soil encircled by trees. This effect is due to the high probability of forest detection in the training data. To keep the water areas and reduce the expansion of the forest area, a viable alternative is to reduce the smoothness ($\sigma^2$) for the "Forest" and "Water" classes. In this way, the local influence of the forest in the other classes is reduced. As for the water areas, since they are narrow, their neighborhoods will have many low probability values, which would reduce the expected value of the Bayesian estimator. 
 
-Based on expert knowledge, there are two main options for setting the $\sigma^2_{k}$ parameter:
+## Relevance of expert knowledge in Bayesian inference
+
+In the smoothed map with higher prior variance values, the most frequent classes (\code{ClearCut_Soil} and \code{Forest}) increased their areas at the expense of the others. As shown in Figure \@ref(fig:pcube), these classes occur in more compact patches than the others. In the second smoothed map, there is an increase in the area occupied by the \code{ClearCutVeg} class. This increase is due to the nature of this class, which represents a transition between a natural tropical area and one where all trees have been removed. Depending on the aims and practices of those responsible for deforestation, these areas may either have their tree cover removed completely. There are cases, however, where these places are abandoned and turn into secondary vegetation areas \cite{Uhl1988, Wang2020}. 
+
+This example shows the value of the Bayesian inference procedure compared with smoothing methods such as Gaussian and edge-aware filtering \citep{Schindler2012}. Most post-classification procedures use ad-hoc parameters which are not directly linked to the properties of the data. These parameters are based on the structure of the algorithm (e.g, size of the Gaussian kernel) and cannot easily be defined separately for each class. Bayesian inference allows the expert to control the output.
+
+Based on the experience of the authors with different experts on land use classification, there are two main approaches for setting the $\sigma^2_{k}$ parameter:
     
-1. To increase the neighbourhood influence compared with the probability values for each pixel, set the $\sigma^2_{k}$ parameter with high values (20 or above) . Classes whose probabilities have strong spatial autocorrelation will tend to replace outliers of classes with higher spatial variance variability.
+1. To increase the neighbourhood influence compared with the probability values for each pixel, set the $\sigma^2_{k}$ parameter with high values (20 or above) and increase the neighbourhood window size. Classes whose probabilities have strong spatial autocorrelation will tend to replace outliers.
 
 2. To reduce the neighbourhood influence compared with the probabilities for each pixel of class $k$, set the $\sigma^2_{k}$ parameter with low values (5 or below) . In this way, classes with low spatial autocorrelation are more likely not to be relabelled.
 
-Consider the case of forest areas and watersheds. If an expert wishes to have compact areas classified as forests without many outliers inside them, she will set the $\sigma^2$ parameter for the class "Forest" to be high. For comparison, to avoid that small watersheds with few similar neighbors being relabeled, it is advisable to avoid a strong influence of the neighbors, setting $\sigma^2$ to be as low as possible. Therefore, choice of $\sigma^2$ depends on the effect intended by the expert in the final clasified map. 
-
-To keep the water areas and reduce the expansion of the forest area, a viable alternative is to reduce the smoothness ($\sigma^2$) for the "Forest" and "Water" classes. In this way, the local influence of the forest in the other classes is reduced. As for the water areas, since they are narrow, their neighborhoods will have many low probability values, which would reduce the expected value of the Bayesian estimator.
+Consider the case of forest areas and watersheds. If an expert wishes to have compact areas classified as forests without many outliers inside them, she will set the $\sigma^2$ parameter for the class "Forest" to be high. For comparison, to avoid that small watersheds with few similar neighbors being relabeled, it is advisable to avoid a strong influence of the neighbors, setting $\sigma^2$ to be as low as possible. Therefore, choice of $\sigma^2$ depends on the effect intended by the expert in the final classified map. 
 
 # Comparison with other methods 
 
