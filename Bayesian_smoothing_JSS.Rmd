@@ -94,28 +94,18 @@ tempdir = "./temp_dir"
 \newpage
 # Introduction
 
-Methods such as support vector machines \citep{Mountrakis2011}, random forests \citep{Belgiu2016}, and deep learning \citep{Ma2019} have become the popular for remote sensing image classification. Images resulting from these classifiers frequently have outliers or misclassified pixels. For this reason, image post-processing techniques are widely used to refine the labelling in a classified image in order to enhance its classification accuracy. 
+Methods such as support vector machines \citep{Mountrakis2011}, random forests \citep{Belgiu2016}, and deep learning \citep{Ma2019} have become the popular for remote sensing image classification. These classifiers use training samples derived from "pure" pixels that users have selected to represent the desired output classes. However, images contain many mixed pixels irrespective of the resolution. Also, there is a considerable degree of data variability in each class. Therefore, images resulting from these classifiers frequently have outliers or misclassified pixels. For this reason, image post-processing techniques are widely used to refine the labelling in a classified image in order to enhance its classification accuracy [@Huang2014]. 
 
-The `bayesEO` package provides a new method for Bayesian post-processing of images produced by machine learning algorithms. The input to the package is an image containing the probabilities of that pixel belonging to each of the classes. The package provides efficient methods for removing outliers and improving class labelling. 
+Post-processing plays a significant role in remote sensing image classification. One key contribution is reducing the salt-and-pepper effect, a phenomenon where single pixels or small groups of pixels are classified differently from their larger surrounding areas, which can lead to visual discontinuity and inconsistency in the output. As a result, the quality of the initial classification results is improved by reducing errors, minimizing noise. There is a significant gain in the overall accuracy and interpretability of the final output. For these reasons, most authors recommend that post-processing methods be applied to the result of machine learning classifiers [@Schindler2012].
 
+Most post-processing methods use the "smoothness assumption" [@Schindler2012]: nearby pixels tend to have the same label. Probability-based smoothing methods include Gaussian and edge-aware filtering \citep{Schindler2012}, modal filters \citep{Ghimire2010}, and probabilistic relaxation \citep{Gong1989}. \citet{Huang2014} propose a relearning method based on co-occurrence  matrices; these matrices represent the joint distribution of class labels in the neighborhood of each pixel. 
 
-Probability-based smoothing methods include Gaussian and edge-aware filtering \citep{Schindler2012}, modal filters \citep{Ghimire2010}, and probabilistic relaxation 
-\citep{Gong1989}. \citet{Huang2014} propose a relearning method based on co-occurrence 
-matrices; these matrices represent the joint distribution of class labels in the 
-neighborhood of each pixel. In the current work, we introduce a Bayesian smoothing method, 
-which provides the means to incorporate prior knowledge in data analysis.
-
-Bayesian inference can be thought of as way of coherently update our uncertainty in the 
-light of new evidence. It can consider expert knowledge on the derivation of 
-probabilities. As stated by \citet{Spiegelhalter2009}: "In the Bayesian paradigm, degrees 
-of belief in states of nature are specified. Bayesian statistical methods start with 
-existing 'prior' beliefs, and update these using data to give 'posterior' beliefs, 
-which may be used as the basis for inferential decisions". 
+In this paper, we introduce the `bayesEO` package which provides a new method for image post-processing based on Bayesian statistics. The algorithm uses the neighbourhood information to remove outliers and enhance consistency in the resulting map. Bayesian inference can be thought of as way of coherently update our uncertainty in the  light of new evidence. It can consider expert knowledge on the derivation of  probabilities. As stated by \citet{Spiegelhalter2009}: "In the Bayesian paradigm, degrees  of belief in states of nature are specified. Bayesian statistical methods start with  existing 'prior' beliefs, and update these using data to give 'posterior' beliefs, which may be used as the basis for inferential decisions". 
 
 Bayesian smoothing methods have become an established technique for image restoration and reconstruction \citep{Hanson1993}. More recently, \citet{Wu2017} proposed a Bayesian 
 approach for soft fusion applied to change detection. However, to the best of our knowledge, 
 this work is the first proposal to use Bayesian smoothing for post-processing of machine 
-learning pixel based classification.
+learning image classification.
 
 <!--% TODO: include a paragraph about R packages following the style below
 % PEDRO: Duas sugestoes:
@@ -125,13 +115,6 @@ learning pixel based classification.
 In \proglang{R}, ...include here a discussion of what's available in R, and 
 include mention to the \pkg{sits} package.
 
-The \pkg{sits} package uses satellite image time series for land classification, using  
-a time-first, space-later approach \cite{Simoes2021}. In the data preparation part, 
-collections of big Earth observation images are organized as data cubes. 
-Each spatial location of a data cube 
-is associated with a time series. Locations with known labels train a machine learning 
-classifier, which classifies all time series of a data cube. The package has tools for 
-analysis, visualization, and classification of satellite image time series.
 
 # Methods
 
@@ -238,8 +221,6 @@ Classification challenges arise when pixels are situated along the boundaries be
 
 To approximate the prior distribution using spatial neighborhoods, the algorithm uses pixels with high probability of belonging to the class. The rationale is that pixels with low probabilities are unlikely to be part of the same class distribution as those with high probability values. This procedure ensures a more reliable estimation of the prior.
 
-
-
 # Software and examples
 
 ## Reading a probability data cube
@@ -259,36 +240,36 @@ labels <- c("Water", "ClearCut_Burn", "ClearCut_Soil",
             "ClearCut_Veg", "Forest", "Wetland")
 ```
 
-The following code reads the file using the "terra" package. 
+The following code reads the file using the \code{terra} package. 
 
 ```{r, echo=TRUE, eval=TRUE}
 probs_image <- terra::rast(paste0(data_dir,"/",probs_file))
 names(probs_image) <- labels
 ```
 
-The output is a `SpatRaster` object from the `terra` package. Figure \@ref(fig:pcube) shows the plot of all layer of the probability image. The map for class \code{Forest} shows high probability values associated with compact patches and linear stretches in riparian areas. Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. By contrast, the probability maps for classes \code{Water}, \code{ClearCut_Burn}, and \code{ClearCut_Veg} have mostly low values. Note that we need to inform the scaling parameter that converts the image to [0..1] interval.
+The output is a \code{SpatRaster} object from the \code{terra} package. Figure \@ref(fig:pcube) shows the plot of all layer of the probability image. The map for class \code{Forest} shows high probability values associated with compact patches and linear stretches in riparian areas. Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. By contrast, the probability maps for classes \code{Water}, \code{ClearCut_Burn}, and \code{ClearCut_Veg} have mostly low values. Note that we need to inform the scaling parameter that converts the image to [0..1] interval.
 
 ```{r pcube, width = 8, tidy="styler", fig.align = 'center', fig.cap = "Class probabilities produced by random forest algorithm."}
 bayes_plot(probs_image, scale = 0.0001)
 ```
 
-The non-smoothed labeled map shows the need for post-processing. This map is obtained by taking the class of higher probability to each pixel, without considering the spatial context. This is done by \code{bayes_label()} whose main parameters are: (a) \code{x}, a SpatRaster object containing the probabilities of each class for all pixels; (b) \code{labels}, the labels associated to the classes.
+The non-smoothed labeled map shows the need for post-processing. This map is obtained by taking the class of higher probability to each pixel, without considering the spatial context. This is done by \code{bayes_label()} whose parameter is a \code{SpatRaster}  object containing the probabilities of each class for all pixels.
+
 ```{r, tidy = "styler", echo=TRUE, eval=TRUE}
 map_no_smooth <- bayes_label(probs_image)
 ```
+
 Figure \@ref(fig:map1) shows the resulting map, which contains a significant number of outliers and misclassified pixels.
 
 ```{r map1, fig.width = 6, fig.align = 'center', fig.cap = "Labelled map without smoothing."}
-bayes_map(map_no_smooth, 
-          tmap_legend_title_size = 0.7,
-          tmap_legend_text_size = 0.7)
+bayes_map(map_no_smooth)
 ```
 
 \newpage
 
 ## Estimating the local logit variances
 
-The local logit variances correspond to the $s^2_{i,k}$ parameter in the Bayesian inference and are estimated by \code{sits_variance()}. Its main parameters are: (a) \code{cube}, a probability cube; (b) \code{window_size}, dimension of the local neighborhood; (c) \code{neigh_fraction}, the percentage of pixels in the neighborhood used to calculate the variance; (d) \code{output_dir}, directory where results will be stored. The example below uses half of the pixels of a $7\times 7$ window to estimate the variance. The chosen pixels will be those with the highest probability pixels to be more representative of the actual class distribution. The output values are the logit variances in the vicinity of each pixel. 
+The local logit variances correspond to the $s^2_{i,k}$ parameter in the Bayesian inference and are estimated by \code{sits_variance()}. Its main parameters are: (a) a \code{SpatRaster}  object ; (b) \code{window_size}, dimension of the local neighbourhood; (c) \code{neigh_fraction}, the percentage of pixels in the neighbourhood used to calculate the variance. The example below uses half of the pixels of a $7\times 7$ window to estimate the variance. The chosen pixels will be those with the highest probability pixels to be more representative of the actual class distribution. The output values are the logit variances in the vicinity of each pixel. 
 
 ```{r, echo=TRUE, eval=TRUE}
 var_image <- bayes_variance(
@@ -337,9 +318,7 @@ The impact of Bayesian smoothing can be best captured by producing a labelled ma
 
 ```{r smth1, fig.width = 6, fig.align = 'center', fig.cap = "Labeled map with smoothing with high smoothness values."}
 map_smooth_high <- bayes_label(smooth_high)
-bayes_map(map_smooth_high,
-          tmap_legend_title_size = 0.7,
-          tmap_legend_text_size = 0.7)
+bayes_map(map_smooth_high)
 ```
 
 In the smoothed map, the outliers have been removed by expanding \code{Forest} areas. Forests have replaced small corridors of water and soil encircled by trees. This effect is due to the high probability of forest detection in the training data. Compare the smoothing with high values with the smoothing with values close to the minimum value of the $4^{th}$ quartile of the local variance for each class, as computed below.
@@ -357,9 +336,7 @@ To see the impact of small $\sigma^2$, we compute the labeled map.
 
 ```{r smth2, fig.width = 6, fig.align = 'center', fig.cap = "Labeled map with low smoothing parameters."}
 map_smooth_low <- bayes_label(smooth_low)
-bayes_map(map_smooth_low,           
-          tmap_legend_title_size = 0.7,
-          tmap_legend_text_size = 0.7)
+bayes_map(map_smooth_low)
 ```
 
 A visual comparison between the two smoothed maps shows that there is an increase in the area of the \code{ClearCut_Veg} class. Such observation is confirmed by comparing the class areas of the non-smoothed map with the two types of smoothed maps, as shown below. 

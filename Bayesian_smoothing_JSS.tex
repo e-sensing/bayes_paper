@@ -77,38 +77,21 @@ Brazil\\
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-Methods such as support vector machines \citep{Mountrakis2011}, random forests \citep{Belgiu2016}, and deep learning \citep{Ma2019} have become the popular for remote sensing image classification. Images resulting from these classifiers frequently have outliers or misclassified pixels. For this reason, image post-processing techniques are widely used to refine the labelling in a classified image in order to enhance its classification accuracy.
+Methods such as support vector machines \citep{Mountrakis2011}, random forests \citep{Belgiu2016}, and deep learning \citep{Ma2019} have become the popular for remote sensing image classification. These classifiers use training samples derived from ``pure'' pixels that users have selected to represent the desired output classes. However, images contain many mixed pixels irrespective of the resolution. Also, there is a considerable degree of data variability in each class. Therefore, images resulting from these classifiers frequently have outliers or misclassified pixels. For this reason, image post-processing techniques are widely used to refine the labelling in a classified image in order to enhance its classification accuracy \citep{Huang2014}.
 
-The \texttt{bayesEO} package provides a new method for Bayesian post-processing of images produced by machine learning algorithms. The input to the package is an image containing the probabilities of that pixel belonging to each of the classes. The package provides efficient methods for removing outliers and improving class labelling.
+Post-processing plays a significant role in remote sensing image classification. One key contribution is reducing the salt-and-pepper effect, a phenomenon where single pixels or small groups of pixels are classified differently from their larger surrounding areas, which can lead to visual discontinuity and inconsistency in the output. As a result, the quality of the initial classification results is improved by reducing errors, minimizing noise. There is a significant gain in the overall accuracy and interpretability of the final output. For these reasons, most authors recommend that post-processing methods be applied to the result of machine learning classifiers \citep{Schindler2012}.
 
-Probability-based smoothing methods include Gaussian and edge-aware filtering \citep{Schindler2012}, modal filters \citep{Ghimire2010}, and probabilistic relaxation
-\citep{Gong1989}. \citet{Huang2014} propose a relearning method based on co-occurrence
-matrices; these matrices represent the joint distribution of class labels in the
-neighborhood of each pixel. In the current work, we introduce a Bayesian smoothing method,
-which provides the means to incorporate prior knowledge in data analysis.
+Most post-processing methods use the ``smoothness assumption'' \citep{Schindler2012}: nearby pixels tend to have the same label. Probability-based smoothing methods include Gaussian and edge-aware filtering \citep{Schindler2012}, modal filters \citep{Ghimire2010}, and probabilistic relaxation \citep{Gong1989}. \citet{Huang2014} propose a relearning method based on co-occurrence matrices; these matrices represent the joint distribution of class labels in the neighborhood of each pixel.
 
-Bayesian inference can be thought of as way of coherently update our uncertainty in the
-light of new evidence. It can consider expert knowledge on the derivation of
-probabilities. As stated by \citet{Spiegelhalter2009}: ``In the Bayesian paradigm, degrees
-of belief in states of nature are specified. Bayesian statistical methods start with
-existing `prior' beliefs, and update these using data to give `posterior' beliefs,
-which may be used as the basis for inferential decisions''.
+In this paper, we introduce the \texttt{bayesEO} package which provides a new method for image post-processing based on Bayesian statistics. The algorithm uses the neighbourhood information to remove outliers and enhance consistency in the resulting map. Bayesian inference can be thought of as way of coherently update our uncertainty in the light of new evidence. It can consider expert knowledge on the derivation of probabilities. As stated by \citet{Spiegelhalter2009}: ``In the Bayesian paradigm, degrees of belief in states of nature are specified. Bayesian statistical methods start with existing `prior' beliefs, and update these using data to give `posterior' beliefs, which may be used as the basis for inferential decisions''.
 
 Bayesian smoothing methods have become an established technique for image restoration and reconstruction \citep{Hanson1993}. More recently, \citet{Wu2017} proposed a Bayesian
 approach for soft fusion applied to change detection. However, to the best of our knowledge,
 this work is the first proposal to use Bayesian smoothing for post-processing of machine
-learning pixel based classification.
+learning image classification.
 
 In \proglang{R}, \ldots include here a discussion of what's available in R, and
 include mention to the \pkg{sits} package.
-
-The \pkg{sits} package uses satellite image time series for land classification, using\\
-a time-first, space-later approach \cite{Simoes2021}. In the data preparation part,
-collections of big Earth observation images are organized as data cubes.
-Each spatial location of a data cube
-is associated with a time series. Locations with known labels train a machine learning
-classifier, which classifies all time series of a data cube. The package has tools for
-analysis, visualization, and classification of satellite image time series.
 
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
@@ -245,7 +228,7 @@ R> labels <- c("Water", "ClearCut_Burn", "ClearCut_Soil",
 \end{CodeInput}
 \end{CodeChunk}
 
-The following code reads the file using the ``terra'' package.
+The following code reads the file using the \code{terra} package.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -254,7 +237,7 @@ R> names(probs_image) <- labels
 \end{CodeInput}
 \end{CodeChunk}
 
-The output is a \texttt{SpatRaster} object from the \texttt{terra} package. Figure \ref{fig:pcube} shows the plot of all layer of the probability image. The map for class \code{Forest} shows high probability values associated with compact patches and linear stretches in riparian areas. Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. By contrast, the probability maps for classes \code{Water}, \code{ClearCut_Burn}, and \code{ClearCut_Veg} have mostly low values. Note that we need to inform the scaling parameter that converts the image to {[}0..1{]} interval.
+The output is a \code{SpatRaster} object from the \code{terra} package. Figure \ref{fig:pcube} shows the plot of all layer of the probability image. The map for class \code{Forest} shows high probability values associated with compact patches and linear stretches in riparian areas. Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. By contrast, the probability maps for classes \code{Water}, \code{ClearCut_Burn}, and \code{ClearCut_Veg} have mostly low values. Note that we need to inform the scaling parameter that converts the image to {[}0..1{]} interval.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -270,7 +253,7 @@ R> bayes_plot(probs_image, scale = 0.0001)
 \end{figure}
 \end{CodeChunk}
 
-The non-smoothed labeled map shows the need for post-processing. This map is obtained by taking the class of higher probability to each pixel, without considering the spatial context. This is done by \code{bayes_label()} whose main parameters are: (a) \code{x}, a SpatRaster object containing the probabilities of each class for all pixels; (b) \code{labels}, the labels associated to the classes.
+The non-smoothed labeled map shows the need for post-processing. This map is obtained by taking the class of higher probability to each pixel, without considering the spatial context. This is done by \code{bayes_label()} whose parameter is a \code{SpatRaster} object containing the probabilities of each class for all pixels.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -282,9 +265,7 @@ Figure \ref{fig:map1} shows the resulting map, which contains a significant numb
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> bayes_map(map_no_smooth, 
-+           tmap_legend_title_size = 0.7,
-+           tmap_legend_text_size = 0.7)
+R> bayes_map(map_no_smooth)
 \end{CodeInput}
 \begin{figure}[h]
 
@@ -301,7 +282,7 @@ R> bayes_map(map_no_smooth,
 \hypertarget{estimating-the-local-logit-variances}{%
 \subsection{Estimating the local logit variances}\label{estimating-the-local-logit-variances}}
 
-The local logit variances correspond to the \(s^2_{i,k}\) parameter in the Bayesian inference and are estimated by \code{sits_variance()}. Its main parameters are: (a) \code{cube}, a probability cube; (b) \code{window_size}, dimension of the local neighborhood; (c) \code{neigh_fraction}, the percentage of pixels in the neighborhood used to calculate the variance; (d) \code{output_dir}, directory where results will be stored. The example below uses half of the pixels of a \(7\times 7\) window to estimate the variance. The chosen pixels will be those with the highest probability pixels to be more representative of the actual class distribution. The output values are the logit variances in the vicinity of each pixel.
+The local logit variances correspond to the \(s^2_{i,k}\) parameter in the Bayesian inference and are estimated by \code{sits_variance()}. Its main parameters are: (a) a \code{SpatRaster} object ; (b) \code{window_size}, dimension of the local neighbourhood; (c) \code{neigh_fraction}, the percentage of pixels in the neighbourhood used to calculate the variance. The example below uses half of the pixels of a \(7\times 7\) window to estimate the variance. The chosen pixels will be those with the highest probability pixels to be more representative of the actual class distribution. The output values are the logit variances in the vicinity of each pixel.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -312,20 +293,20 @@ R> var_image <- bayes_variance(
 R> bayes_summary(var_image)
 \end{CodeInput}
 \begin{CodeOutput}
- Water             ClearCut_Burn      ClearCut_Soil      ClearCut_Veg      
- Min.   : 0.0000   Min.   : 0.00296   Min.   : 0.00000   Min.   : 0.00000  
- 1st Qu.: 0.1652   1st Qu.: 0.06693   1st Qu.: 0.09558   1st Qu.: 0.09659  
- Median : 2.2109   Median : 0.15768   Median : 0.23407   Median : 0.24058  
- Mean   : 2.4892   Mean   : 0.41758   Mean   : 0.84083   Mean   : 0.69320  
- 3rd Qu.: 4.6471   3rd Qu.: 0.34780   3rd Qu.: 0.63066   3rd Qu.: 0.71301  
- Max.   :24.2813   Max.   :11.10299   Max.   :13.82341   Max.   :16.61255  
+ Water             ClearCut_Burn       ClearCut_Soil      ClearCut_Veg      
+ Min.   : 0.0000   Min.   : 0.002503   Min.   : 0.00000   Min.   : 0.00000  
+ 1st Qu.: 0.1652   1st Qu.: 0.068526   1st Qu.: 0.09862   1st Qu.: 0.09843  
+ Median : 2.2368   Median : 0.159326   Median : 0.23645   Median : 0.23882  
+ Mean   : 2.5263   Mean   : 0.417625   Mean   : 0.83763   Mean   : 0.69800  
+ 3rd Qu.: 4.6825   3rd Qu.: 0.348420   3rd Qu.: 0.64733   3rd Qu.: 0.73112  
+ Max.   :24.2103   Max.   :10.486094   Max.   :14.78957   Max.   :15.65291  
  Forest            Wetland           
  Min.   : 0.0000   Min.   : 0.00000  
- 1st Qu.: 0.1042   1st Qu.: 0.07132  
- Median : 0.4069   Median : 0.17736  
- Mean   : 1.5824   Mean   : 0.69689  
- 3rd Qu.: 2.3758   3rd Qu.: 0.41690  
- Max.   :23.5609   Max.   :10.91042  
+ 1st Qu.: 0.1080   1st Qu.: 0.07283  
+ Median : 0.4569   Median : 0.17508  
+ Mean   : 1.6269   Mean   : 0.70300  
+ 3rd Qu.: 2.4938   3rd Qu.: 0.42146  
+ Max.   :21.0130   Max.   :12.40896  
 \end{CodeOutput}
 \end{CodeChunk}
 
@@ -392,9 +373,7 @@ The impact of Bayesian smoothing can be best captured by producing a labelled ma
 \begin{CodeChunk}
 \begin{CodeInput}
 R> map_smooth_high <- bayes_label(smooth_high)
-R> bayes_map(map_smooth_high,
-+           tmap_legend_title_size = 0.7,
-+           tmap_legend_text_size = 0.7)
+R> bayes_map(map_smooth_high)
 \end{CodeInput}
 \begin{figure}[h]
 
@@ -424,9 +403,7 @@ To see the impact of small \(\sigma^2\), we compute the labeled map.
 \begin{CodeChunk}
 \begin{CodeInput}
 R> map_smooth_low <- bayes_label(smooth_low)
-R> bayes_map(map_smooth_low,           
-+           tmap_legend_title_size = 0.7,
-+           tmap_legend_text_size = 0.7)
+R> bayes_map(map_smooth_low)
 \end{CodeInput}
 \begin{figure}[h]
 
