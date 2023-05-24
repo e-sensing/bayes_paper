@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.7)  22 MAY 2023 10:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.7)  23 MAY 2023 20:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1126,26 +1126,15 @@ LaTeX Font Info:    Font shape `T1/mdput/b/n' will be
 (Font)              scaled to size 10.29301pt on input line 78.
 LaTeX Font Info:    Font shape `T1/mdput/b/n' will be
 (Font)              scaled to size 13.53603pt on input line 78.
-LaTeX Font Info:    Trying to load font information for T1+txtt on input line 8
-6.
-(/usr/local/texlive/2022/texmf-dist/tex/latex/txfonts/t1txtt.fd
-File: t1txtt.fd 2000/12/15 v3.1
-)
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `txtt' (encoding: T1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `lmss' (encoding: T1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Font shape `T1/mdput/b/n' will be
+(Font)              scaled to size 7.52002pt on input line 88.
+LaTeX Font Info:    Font shape `T1/mdput/b/n' will be
+(Font)              scaled to size 5.64001pt on input line 88.
 
-pdfTeX warning (font expansion): font should be expanded before its first use
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 4660) has occurred while \output is active []
 
 LaTeX Font Info:    Font shape `T1/mdput/m/sl' will be
-(Font)              scaled to size 10.29301pt on input line 104.
+(Font)              scaled to size 10.29301pt on input line 97.
 
 Overfull \hbox (5.45529pt too wide) has occurred while \output is active
 \T1/mdput/m/n/10.95 2 []
@@ -1154,76 +1143,94 @@ Overfull \hbox (5.45529pt too wide) has occurred while \output is active
 [2
 design size mismatch in local font md-utro8t in virtual font mdputro8t.vf ignor
 ed.]
+
+Package natbib Warning: Citation `ref' on page 3 undefined on input line 97.
+
+<images/rondonia_image.png, id=127, 332.24126pt x 242.9075pt>
+File: images/rondonia_image.png Graphic file (type png)
+<use images/rondonia_image.png>
+Package pdftex.def Info: images/rondonia_image.png  used on input line 102.
+(pdftex.def)             Requested size: 332.44243pt x 243.06996pt.
+LaTeX Font Info:    Trying to load font information for T1+txtt on input line 1
+12.
+(/usr/local/texlive/2022/texmf-dist/tex/latex/txfonts/t1txtt.fd
+File: t1txtt.fd 2000/12/15 v3.1
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `txtt' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+
 Overfull \hbox (5.45529pt too wide) has occurred while \output is active
 [] \T1/mdput/m/n/10.95 3
  []
 
-[3]
-LaTeX Font Info:    Trying to load font information for TS1+mdput on input line
- 171.
-(/usr/local/texlive/2022/texmf-dist/tex/latex/mathdesign/mdput/ts1mdput.fd
-File: ts1mdput.fd 2013/08/29 Fontinst v1.933 font definitions for TS1/mdput.
-)
-LaTeX Font Info:    Font shape `TS1/mdput/m/n' will be
-(Font)              scaled to size 10.29301pt on input line 171.
+[3
+pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.113 
+       <./images/rondonia_image.png>]
 Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `mdput' (encoding: TS1).
+(microtype)             `lmss' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
+
+pdfTeX warning (font expansion): font should be expanded before its first use
 
 Overfull \hbox (5.45529pt too wide) has occurred while \output is active
 \T1/mdput/m/n/10.95 4 []
  []
 
 [4]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
+LaTeX Font Info:    Trying to load font information for TS1+mdput on input line
+ 190.
+(/usr/local/texlive/2022/texmf-dist/tex/latex/mathdesign/mdput/ts1mdput.fd
+File: ts1mdput.fd 2013/08/29 Fontinst v1.933 font definitions for TS1/mdput.
+)
+LaTeX Font Info:    Font shape `TS1/mdput/m/n' will be
+(Font)              scaled to size 10.29301pt on input line 190.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `mdput' (encoding: TS1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
 
 Overfull \hbox (5.45529pt too wide) has occurred while \output is active
 [] \T1/mdput/m/n/10.95 5
  []
 
 [5]
-<Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf, id=159, 355.3275pt x 25
-7.96375pt>
-File: Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf Graphic file (type 
-pdf)
-<use Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf>
-Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf 
- used on input line 248.
-(pdftex.def)             Requested size: 354.12434pt x 257.09714pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
 Overfull \hbox (5.45529pt too wide) has occurred while \output is active
 \T1/mdput/m/n/10.95 6 []
  []
 
 [6]
-<Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf, id=170, 273.02pt x 254.9
+Overfull \hbox (5.45529pt too wide) has occurred while \output is active
+[] \T1/mdput/m/n/10.95 7
+ []
+
+[7]
+<Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf, id=179, 355.3275pt x 25
+7.96375pt>
+File: Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf Graphic file (type 
+pdf)
+<use Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf>
+Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf 
+ used on input line 267.
+(pdftex.def)             Requested size: 354.12434pt x 257.09714pt.
+<Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf, id=181, 273.02pt x 254.9
 525pt>
 File: Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf Graphic file (type p
 df)
 <use Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf>
 Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf  
-used on input line 272.
+used on input line 289.
 (pdftex.def)             Requested size: 354.12434pt x 330.71071pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Overfull \hbox (5.45529pt too wide) has occurred while \output is active
-[] \T1/mdput/m/n/10.95 7
- []
-
-[7
-pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.280 \newpage
-               <./Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf>]
 Overfull \hbox (5.45529pt too wide) has occurred while \output is active
 \T1/mdput/m/n/10.95 8 []
  []
@@ -1233,18 +1240,8 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.302 ...094   Max.   :14.78957   Max.   :15.65291
-                                                   <./Bayesian_smoothing_JSS_fi
-les/figure-latex/map1-1.pdf>]
-<Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf, id=210, 505.89pt x 265.
-99374pt>
-File: Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf Graphic file (type 
-pdf)
-<use Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf>
-Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf 
- used on input line 327.
-(pdftex.def)             Requested size: 354.12434pt x 186.1984pt.
-
+l.297 \newpage
+               <./Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf>]
 Overfull \hbox (5.45529pt too wide) has occurred while \output is active
 [] \T1/mdput/m/n/10.95 9
  []
@@ -1254,17 +1251,17 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.337 F
-       urther insights are provided by Figure \ref{fig:vhist}, which shows t...
- <./Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf>]
-<Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf, id=234, 568.1225pt x 25
-3.94875pt>
-File: Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf Graphic file (type 
+l.319  Forest            Wetland
+                                 <./Bayesian_smoothing_JSS_files/figure-latex/m
+ap1-1.pdf>]
+<Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf, id=221, 505.89pt x 265.
+99374pt>
+File: Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf Graphic file (type 
 pdf)
-<use Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf>
-Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf 
- used on input line 345.
-(pdftex.def)             Requested size: 354.12434pt x 158.29907pt.
+<use Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf>
+Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf 
+ used on input line 343.
+(pdftex.def)             Requested size: 354.12434pt x 186.1984pt.
 
 Overfull \hbox (10.91058pt too wide) has occurred while \output is active
 \T1/mdput/m/n/10.95 10 []
@@ -1275,28 +1272,25 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.377 \end{CodeInput}
-                      <./Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf>
-]
-<Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf, id=254, 273.02pt x 254.
+l.353 F
+       urther insights are provided by Figure \ref{fig:vhist}, which shows t...
+ <./Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf>]
+<Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf, id=245, 568.1225pt x 25
+3.94875pt>
+File: Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf Graphic file (type 
+pdf)
+<use Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf>
+Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf 
+ used on input line 361.
+(pdftex.def)             Requested size: 354.12434pt x 158.29907pt.
+<Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf, id=247, 273.02pt x 254.
 9525pt>
 File: Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf Graphic file (type 
 pdf)
 <use Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf>
 Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf 
- used on input line 380.
+ used on input line 393.
 (pdftex.def)             Requested size: 354.12434pt x 330.71071pt.
-<Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf, id=255, 273.02pt x 254.
-9525pt>
-File: Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf Graphic file (type 
-pdf)
-<use Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf>
-Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf 
- used on input line 410.
-(pdftex.def)             Requested size: 354.12434pt x 330.71071pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
 
 Overfull \hbox (10.91058pt too wide) has occurred while \output is active
 [] \T1/mdput/m/n/10.95 11
@@ -1307,9 +1301,20 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.421 \begin{CodeInput}
-                        <./Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pd
-f>]
+l.398 \end{figure}
+                   <./Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf>]
+<Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf, id=266, 273.02pt x 254.
+9525pt>
+File: Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf Graphic file (type 
+pdf)
+<use Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf>
+Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf 
+ used on input line 422.
+(pdftex.def)             Requested size: 354.12434pt x 330.71071pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
 Overfull \hbox (10.91058pt too wide) has occurred while \output is active
 \T1/mdput/m/n/10.95 12 []
  []
@@ -1319,33 +1324,41 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.440 ...04                0.8                1.43
-                                                   <./Bayesian_smoothing_JSS_fi
-les/figure-latex/smth2-1.pdf>] (./Bayesian_smoothing_JSS.bbl
+l.433 \begin{CodeInput}
+                        <./Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pd
+f>]
 Overfull \hbox (10.91058pt too wide) has occurred while \output is active
 [] \T1/mdput/m/n/10.95 13
  []
 
-[13])
-Underfull \hbox (badness 10000) in paragraph at lines 471--471
+[13
+pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.452 ...04                0.8                1.43
+                                                   <./Bayesian_smoothing_JSS_fi
+les/figure-latex/smth2-1.pdf>] (./Bayesian_smoothing_JSS.bbl
+Overfull \hbox (10.91058pt too wide) has occurred while \output is active
+\T1/mdput/m/n/10.95 14 []
+ []
+
+[14])
+
+Package natbib Warning: There were undefined citations.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 483--483
 
  []
 
 LaTeX Font Info:    Font shape `T1/pzc/m/n' in size <13> not available
-(Font)              Font shape `T1/pzc/m/it' tried instead on input line 471.
+(Font)              Font shape `T1/pzc/m/it' tried instead on input line 483.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `pzc' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Underfull \vbox (badness 7451) has occurred while \output is active []
-
-
-Overfull \hbox (10.91058pt too wide) has occurred while \output is active
-\T1/mdput/m/n/10.95 14 []
- []
-
-[14]
 Overfull \hbox (10.91058pt too wide) has occurred while \output is active
 [] \T1/mdput/m/n/10.95 15
  []
@@ -1353,27 +1366,27 @@ Overfull \hbox (10.91058pt too wide) has occurred while \output is active
 [15] (./Bayesian_smoothing_JSS.aux)
 Package rerunfilecheck Info: File `Bayesian_smoothing_JSS.out' has not changed.
 
-(rerunfilecheck)             Checksum: 5E62F8C65E394169299C9C9A149BAF0C;2969.
+(rerunfilecheck)             Checksum: 4954B4D984FFC7FB910A67C7CDFBEC1A;3035.
  ) 
 Here is how much of TeX's memory you used:
- 26879 strings out of 478268
- 497678 string characters out of 5846348
- 792423 words of memory out of 5000000
- 44207 multiletter control sequences out of 15000+600000
- 613882 words of font info for 272 fonts, out of 8000000 for 9000
+ 26905 strings out of 478268
+ 498162 string characters out of 5846348
+ 792424 words of memory out of 5000000
+ 44216 multiletter control sequences out of 15000+600000
+ 630343 words of font info for 284 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,14n,94p,1325b,875s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,14n,94p,1408b,875s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/ly1/texnansi.enc}{/usr/lo
 cal/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/20
 22/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2022/texmf-dist/f
 onts/type1/public/lm/lmss10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1
-/public/mathdesign/mdput/md-utr7m.pfb></usr/local/texlive/2022/texmf-dist/fonts
-/type1/public/mathdesign/mdput/md-utr7t.pfb></usr/local/texlive/2022/texmf-dist
-/fonts/type1/public/mathdesign/mdput/md-utr7v.pfb></usr/local/texlive/2022/texm
-f-dist/fonts/type1/public/mathdesign/mdput/md-utr7y.pfb></usr/local/texlive/202
-2/texmf-dist/fonts/type1/public/mathdesign/mdput/md-utr8t.pfb></usr/local/texli
-ve/2022/texmf-dist/fonts/type1/public/mathdesign/mdput/md-utri7m.pfb></usr/loca
-l/texlive/2022/texmf-dist/fonts/type1/public/mathdesign/mdput/md-utri8t.pfb></u
+/public/mathdesign/mdput/md-utr7t.pfb></usr/local/texlive/2022/texmf-dist/fonts
+/type1/public/mathdesign/mdput/md-utr7v.pfb></usr/local/texlive/2022/texmf-dist
+/fonts/type1/public/mathdesign/mdput/md-utr7y.pfb></usr/local/texlive/2022/texm
+f-dist/fonts/type1/public/mathdesign/mdput/md-utr8t.pfb></usr/local/texlive/202
+2/texmf-dist/fonts/type1/public/mathdesign/mdput/md-utri7m.pfb></usr/local/texl
+ive/2022/texmf-dist/fonts/type1/public/mathdesign/mdput/md-utri8t.pfb></usr/loc
+al/texlive/2022/texmf-dist/fonts/type1/public/mathdesign/mdpgd/md-utrma.pfb></u
 sr/local/texlive/2022/texmf-dist/fonts/type1/adobe/utopia/putb8a.pfb></usr/loca
 l/texlive/2022/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></usr/local/texli
 ve/2022/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></usr/local/texlive/2022
@@ -1381,10 +1394,10 @@ ve/2022/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></usr/local/texlive/2022
 -dist/fonts/type1/public/txfonts/t1xtt.pfb></usr/local/texlive/2022/texmf-dist/
 fonts/type1/public/txfonts/t1xtt.pfb></usr/local/texlive/2022/texmf-dist/fonts/
 type1/urw/zapfchan/uzcmi8a.pfb>
-Output written on Bayesian_smoothing_JSS.pdf (15 pages, 5339952 bytes).
+Output written on Bayesian_smoothing_JSS.pdf (15 pages, 5420489 bytes).
 PDF statistics:
- 413 PDF objects out of 1000 (max. 8388607)
- 330 compressed objects within 4 object streams
- 81 named destinations out of 1000 (max. 500000)
- 44688 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 420 PDF objects out of 1000 (max. 8388607)
+ 335 compressed objects within 4 object streams
+ 80 named destinations out of 1000 (max. 500000)
+ 48789 words of extra memory for PDF output out of 51595 (max. 10000000)
 
