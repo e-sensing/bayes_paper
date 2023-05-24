@@ -81,9 +81,9 @@ Machine learning methods such as support vector machines \citep{Mountrakis2011},
 
 Most post-processing methods use the smoothness assumption that nearby pixels tend to have the same label \citep{Schindler2012}. These include probability-based smoothing methods such as Gaussian and edge-aware filtering \citep{Schindler2012}, modal filters \citep{Ghimire2010}, and probabilistic relaxation \citep{Gong1989}, and co-occurrence matrices \citep{Huang2014}. In this paper, we introduced a new type of post-processing algorithm founded on Bayesian statistics.
 
-Bayesian inference is a way of coherently update our uncertainty in the light of new evidence. It can consider expert knowledge on the derivation of probabilities. In Spatial Statistics, Bayesian inference has been used in many problems, including the analysis of remote sensing images expressed as lattice data \citep{Marshall1991, Besag1991, Bivand2013}. Lattice processes \{\(Y(\mathbf{s}): \mathbf{s} \in D_s\)\} are defined on a finite and countable subset \(D_s\) of \(\mathbb{R}^d\) \citep{Cressie2011}, consisting of discrete spatial locations such as pixels or administrative units. The standard model for lattice data is a spatial process \(\mathbb{Z} \equiv (Z(\mathbf{s}_1), ..., Z(\mathbf{s}_n))\), where \(S = {\mathbf{s}_1, ..., \mathbf{s}_n}\) are the locations. These spatial random process are associated to a single continuous variable, e.g., temperature distribution on the Earth's surface. These application assume that of spatial continuity and dependence hold true for all locations within the lattice space for continuous variables, they cannot be extended to land classification scenarios.
+Bayesian inference is a way of coherently update our uncertainty in the light of new evidence. It can consider expert knowledge on the derivation of probabilities. In Spatial Statistics, Bayesian inference has been used in many problems, including the analysis of remote sensing images expressed as lattice data \citep{Marshall1991, Besag1991, Bivand2013}. Lattice processes \{\(Y(\mathbf{s}): \mathbf{s} \in D_s\)\} are defined on a finite and countable subset \(D_s\) of \(\mathbb{R}^d\) \citep{Cressie2011}, consisting of discrete spatial locations such as pixels or administrative units. The standard model for lattice data is a spatial process \(\mathbb{Z} \equiv (Z(\mathbf{s}_1), ..., Z(\mathbf{s}_n))\), where \(S = {\mathbf{s}_1, ..., \mathbf{s}_n}\) are the locations. These spatial random process are associated to a single continuous variable, e.g., temperature distribution on the Earth's surface. However, these assumptions cannot be extended to land classification problems.
 
-In land classification problems, we're dealing with categorical data, where each category corresponds to a different land type (e.g., forest, grassland, water body). Land classification aims to subdivide space into discrete areas, each associated with a distinct type of land use or cover. Borders between different land classes usually represent sharp transitions, which violate the assumptions of spatial continuity and smooth transition. Consequently, the random processes correlated with each class are not spatially continuous. Take, for instance, Figure \ref{fig:roim} showcasing a fragment of a Sentinel-2 image in the state of Rondonia, Brazil. The image starkly contrasts forest areas (depicted in green) and deforested areas (portrayed in various shades of orange and brown). In terms of spatial processes, there's a discontinuity at the borders separating forested and deforested regions. Therefore, in land classification we need to make different assumptions from traditional spatial processes on the statistical properties of the data.
+In land classification, we're dealing with categorical data, where each category corresponds to a different land type (e.g., forest, grassland, water body). Land classification aims to subdivide space into discrete areas, each associated with a distinct type of land use or cover. Borders between different land classes usually represent sharp transitions, which violate the assumptions of spatial continuity and smooth transitions made in traditional spatial statistics. Consequently, the random processes associated with each class are not spatially continuous. Take, for instance, Figure \ref{fig:roim} showcasing a fragment of a Sentinel-2 image in the state of Rondonia, Brazil. The image starkly contrasts forest areas (depicted in green) and deforested areas (portrayed in various shades of orange and brown). In terms of spatial processes, there's a discontinuity at the borders separating forested and deforested regions. Therefore, in land classification we need to make different assumptions from traditional spatial processes on the statistical properties of the data.
 
 \begin{CodeChunk}
 \begin{figure}[h]
@@ -132,15 +132,15 @@ Confidence in pixel classification increases with logit. There are situations, s
 \hypertarget{bayesian-inference}{%
 \subsection{Bayesian inference}\label{bayesian-inference}}
 
-Once the probability values are converted into logits, we can frame the problem in a Bayesian context. As discussed in our earlier section on statistical models for land classification, each land class (e.g., ``Forest'', ``Deforestation'', ``Grasslands'') is linked to a distinct spatial process. Thus, the number of spatial processes equals the number of classes, and each process exhibits unique behaviour.. This diversity in class behaviour leads us to posit independence between the classes. Thus, for each spatial location, the model uses the probability values associated to each class as realization of a specific spatial process. This perspective allows us to account for the intricate spatial patterns and variations inherent to each land class in our Bayesian analysis.
+Once the probability values are converted into logits, we can frame the problem in a Bayesian context. As discussed in our earlier section on statistical models for land classification, each land class (e.g., ``Forest'', ``Deforestation'', ``Grasslands'') is linked to a distinct spatial process. Thus, the number of spatial processes equals the number of classes, and each process exhibits unique behaviour. This diversity in behaviour leads us to posit independence between the classes. Thus, for each spatial location, the model uses the probability values associated to each class as realization of a specific spatial process. This perspective allows us to account for the intricate spatial patterns and variations inherent to each land class in our Bayesian analysis.
 
-For each pixel \(i\), we consider that the machine learning algorithms produces a set of logit values logit values \(x_{i,k}\), where \(k = {1,..n}\) is a predefined set of classes. We assume there is an underlying unknown set of values \(\mu_{i,k}\) which represent the best possible estimate of the actual pixel class. The Bayesian inference procedure can be expressed as a combination of the prior probability distribution \(\pi(\mu_{i,k})\) for each class \(k\) and the conditional distribution \(\pi(x_{i,k}|\mu_{i,k})\) which expresses the dependence of the logit values \(x_{i,k}\) on the unknown values \(\mu_{i,k}\). We aim to estimate \(\pi[\mu_{i,k} | x_{i,k}]\), the posterior probability of the \(\mu_{i,k}\) given \(x_{i,k}\). Thus, the Bayesian inference will be expressed as
+For each pixel \(i\), we consider that the machine learning algorithms produce a set of logit values logit values \(x_{i,k}\), where \(k = {1,..n}\) is a predefined set of classes. We assume there is an underlying unknown set of values \(\mu_{i,k}\) which represent the best possible estimate of the actual pixel class. The Bayesian inference procedure can be expressed as a combination of the prior probability distribution \(\pi(\mu_{i,k})\) for each class \(k\) and the conditional distribution \(\pi(x_{i,k}|\mu_{i,k})\) which expresses the dependence of the logit values \(x_{i,k}\) on the unknown values \(\mu_{i,k}\). We aim to estimate \(\pi[\mu_{i,k} | x_{i,k}]\), the posterior probability of the \(\mu_{i,k}\) given \(x_{i,k}\). Thus, the Bayesian inference will be expressed as
 
 \begin{equation}
-\pi(\mu_{i_k}|x_{i_k}) \propto{} \pi(x_{i_k}|\mu_{i_k})\pi(\mu_{i_k}).
+\pi(\mu_{i,k}|x_{i,k}) \propto{} \pi(x_{i,k}|\mu_{i,k})\pi(\mu_{i,k}).
 \end{equation}
 
-The first element of the Bayesian approach is to specify the prior probability density \(\pi(\mu_k)\) for the values of logits for each class \(k\). A well-known approach is to use the local behaviour of the observed values \(x_{i,k}\) and express the prior probability as a function of the observations in the vicinity of pixel \(i\) \cite{Besag1991}. We assume a normal local prior for the parameter \(\mu_{i,k}\) with parameters \(m_{i,k}\) and \(s^2_{i,k}\):
+The first step in the Bayesian approach is to specify the prior probability density \(\pi(\mu_{i,k})\) for the values of logits of each class \(k\) for each pixel \(i\). A well-known approach is to use the local behaviour of the observed values \(x_{i,k}\) and express the prior probability as a function of the observations in the vicinity of pixel \(i\) \citep{Besag1991}. We assume a normal local prior for the parameter \(\mu_{i,k}\) with parameters \(m_{i,k}\) and \(s^2_{i,k}\):
 
 \begin{equation}
     \mu_{i,k} \sim N(m_{i,k}, s^2_{i,k}).
@@ -158,7 +158,7 @@ and the variance by
 s^2_{i,k} = \frac{\sum_{(j) \in N_{i}} [x_{j,k} - m_{i,k}]^2}{\#(N_{i})-1}.
 \end{equation}
 
-Since the nature of land classification differs from the usual assumptions made in Bayesian spatial statistics, we use non-isotropic neighbourhoods to obtain the estimates for the prior. Our assumptions are described in detail in section ``Defining non-isotropic neighbourhoods''.
+Since the nature of land classification differs from the usual assumptions made in Bayesian spatial statistics, we use non-isotropic neighbourhoods to obtain the estimates for the prior. Our assumptions are described in detail in section \textit{"Defining non-isotropic neighbourhoods"}.
 
 The second part of the Bayesian inference is the definition of the likelihood \(\pi(x_{i_k}|\mu_{i_k})\). The method assumes that the likelihood \(x_{i,k} | \mu_{i,k}\) follows a normal distribution \(N(\mu_{i,k}, \sigma^2_{k})\), with parameters \(\mu_{i,k}\) and \(\sigma^2_{k}\). The variance \(\sigma^2_{k}\) will be estimated based on user expertise and taken as a hyperparameter to control the smoothness of the resulting estimate.
 
@@ -200,7 +200,13 @@ The parameter \(\sigma^2_k\) controls the level of smoothness. If \(\sigma^2_k\)
 Thus, the parameter \(\sigma^2_{k}\) expresses confidence in the inherent variability of the distribution of values of a class \(k\). The smaller the parameter \(\sigma^2_{k}\), the more we trust the estimated probability values produced by the classifier for class \(k\).
 Conversely, higher values of \(\sigma^2_{k}\) indicate lower confidence in the classifier outputs and improved confidence in the local average values.
 
-Consider the following two-class example. Take a pixel with probability \(0.4\) (logit \(x_{i,1} = -0.4054\)) for class A, and probability \(0.6\) (logit \(x_{i,2} = 0.4054\)) for class B. Without post-processing, the pixel will be labelled as class B. Consider a local average of \(0.6\) (logit \(m_{i,1} = 0.4054\)) for class A and \(0.4\) (logit \(m_{i,2} = -0.4054\)) for class B. This is an outlier classified as class B in the midst of a set of pixels of class A. Suppose a local variance of logits to be \(s^2_{i,1} = 5\) for class A and \(s^2_{i,2} = 10\) and for class B. This difference is to be expected if the local variability of class A is smaller than that of class B. To complete the estimate, we need to set the parameter \(\sigma^2_{k}\), representing prior belief in the variability of the probability values for each class. If we take both \(\sigma^2_{A}\) for class A and \(\sigma^2_{B}\) for class B to be both 10, the Bayesian estimated probability for class A is \(0.52\) and for class B is \(0.48\). In this case, the pixel will be relabeled as being class A. If we set \(\sigma^2\) to be 5 for both classes A and B, the Bayesian probability estimate will be \(0.48\) for class A and \(0.52\) for class B. In this case, the original class will be kept. Therefore, the result is sensitive to the subjective choice of the hyperparameter.
+Consider the following two-class example. Take a pixel \(i\) with probability \(0.4\) (logit \(x_{i,1} = -0.4054\)) for class A, and probability \(0.6\) (logit \(x_{i,2} = 0.4054\)) for class B. Without post-processing, the pixel will be labelled as class B. Consider a local average of \(0.6\) (logit \(m_{i,1} = 0.4054\)) for class A and \(0.4\) (logit \(m_{i,2} = -0.4054\)) for class B. This is an outlier classified as class B in the midst of a set of pixels of class A.
+
+Given this situation, we apply the proposed method. Suppose the local variance of logits to be \(s^2_{i,1} = 5\) for class A and \(s^2_{i,2} = 10\) and for class B. This difference is to be expected if the local variability of class A is smaller than that of class B. To complete the estimate, we need to set the parameter \(\sigma^2_{k}\), representing our belief in the variability of the probability values for each class.
+
+Setting \(\sigma^2_{k}\) will be based on our confidence in the local variability of each class around pixel \({i}\). If we considered the local variability to be high, we can take both \(\sigma^2_1\) for class A and \(\sigma^2_2\) for class B to be both 10. In this case, the Bayesian estimated probability for class A is \(0.52\) and for class B is \(0.48\) and the pixel will be relabelled as being class A.
+
+By contrast, if we consider local variability to be high If we set \(\sigma^2\) to be 5 for both classes A and B, the Bayesian probability estimate will be \(0.48\) for class A and \(0.52\) for class B. In this case, the original class will be kept. Therefore, the result is sensitive to the subjective choice of the hyperparameter.
 
 \newpage
 
@@ -211,7 +217,7 @@ The fundamental idea behind Bayesian smoothing for land classification posits th
 
 Classification challenges arise for pixels located along the boundaries between areas containing different classes, as they possess signatures of two classes. In these cases, only some of the neighbours of such boundary pixels belong to the same class. To address this issue, we employ a non-isotropic definition of a neighbourhood to estimate the prior class distribution.
 
-The non-isotropic neighborhood definition is selected as a subset of the logits of all values in a user-defined window. For instance, consider a boundary pixel with a neighborhood defined by a 7 x 7 window, located along the border between the \code{Forest} and \code{Grassland} classes. To estimate the posterior probability of the pixel being a \code{Forest}, we should only take into account the neighbours on one side of the border that are likely to be correctly classified as \code{Forest}. Pixels on the opposite side of the border should be disregarded, since they are unlikely to belong to the same spatial process. In practice, we use only half of the pixels in the 7 x 7 window, opting for those that have a higher probability of being \code{Forest}. For the probability of the \code{Grassland} class, we reverse the selection and only consider those on the opposite side of the border.
+The non-isotropic neighborhood definition is selected as a subset of the logits of all values in a user-defined window. For instance, consider a boundary pixel with a neighborhood defined by a 7 x 7 window, located along the border between the \code{Forest} and \code{Grassland} classes. To estimate the prior probability of the pixel being a \code{Forest}, we should only take into account the neighbours on one side of the border that are likely to be correctly classified as \code{Forest}. Pixels on the opposite side of the border should be disregarded, since they are unlikely to belong to the same spatial process. In practice, we use only half of the pixels in the 7 x 7 window, opting for those that have a higher probability of being \code{Forest}. For the prior probability of the \code{Grassland} class, we reverse the selection and only consider those on the opposite side of the border.
 
 Although this choice of neighbourhood may seem unconventional, it is consistent with the assumption of non-continuity of the spatial processes describing each class. A dense forest patch, for example, will have pixels with strong spatial autocorrelation for values of the \code{Forest} class; however, this spatial autocorrelation doesn't extend across its border with other land classes.
 
@@ -305,20 +311,20 @@ R> var_image <- bayes_variance(
 R> bayes_summary(var_image)
 \end{CodeInput}
 \begin{CodeOutput}
- Water             ClearCut_Burn      ClearCut_Soil      ClearCut_Veg      
- Min.   : 0.0000   Min.   : 0.00000   Min.   : 0.00000   Min.   : 0.00000  
- 1st Qu.: 0.1641   1st Qu.: 0.06823   1st Qu.: 0.09489   1st Qu.: 0.09975  
- Median : 1.8487   Median : 0.15843   Median : 0.23582   Median : 0.24514  
- Mean   : 2.4915   Mean   : 0.43040   Mean   : 0.83564   Mean   : 0.69474  
- 3rd Qu.: 4.6553   3rd Qu.: 0.35327   3rd Qu.: 0.64413   3rd Qu.: 0.73171  
- Max.   :24.9403   Max.   :10.20983   Max.   :11.37644   Max.   :22.75666  
+ Water            ClearCut_Burn     ClearCut_Soil      ClearCut_Veg      
+ Min.   : 0.000   Min.   : 0.0000   Min.   : 0.00000   Min.   : 0.00000  
+ 1st Qu.: 0.163   1st Qu.: 0.0691   1st Qu.: 0.09512   1st Qu.: 0.09832  
+ Median : 2.237   Median : 0.1610   Median : 0.23135   Median : 0.24295  
+ Mean   : 2.532   Mean   : 0.4394   Mean   : 0.83901   Mean   : 0.68811  
+ 3rd Qu.: 4.656   3rd Qu.: 0.3497   3rd Qu.: 0.63260   3rd Qu.: 0.71573  
+ Max.   :21.505   Max.   :15.7486   Max.   :14.78957   Max.   :18.40841  
  Forest            Wetland           
  Min.   : 0.0000   Min.   : 0.00000  
- 1st Qu.: 0.1072   1st Qu.: 0.07134  
- Median : 0.4401   Median : 0.17558  
- Mean   : 1.5892   Mean   : 0.69308  
- 3rd Qu.: 2.3819   3rd Qu.: 0.41701  
- Max.   :21.7258   Max.   :11.52999  
+ 1st Qu.: 0.1072   1st Qu.: 0.07155  
+ Median : 0.4490   Median : 0.17695  
+ Mean   : 1.6360   Mean   : 0.70564  
+ 3rd Qu.: 2.4937   3rd Qu.: 0.41394  
+ Max.   :28.0622   Max.   :10.21271  
 \end{CodeOutput}
 \end{CodeChunk}
 
@@ -448,6 +454,8 @@ R> dplyr::inner_join(sum1, sum2, by = "class") |>
 6 Wetland                    4.04                0.8                1.43
 \end{CodeOutput}
 \end{CodeChunk}
+
+\newpage
 
 \hypertarget{relevance-of-expert-knowledge-in-bayesian-inference}{%
 \subsection{Relevance of expert knowledge in Bayesian inference}\label{relevance-of-expert-knowledge-in-bayesian-inference}}
