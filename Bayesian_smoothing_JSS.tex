@@ -83,7 +83,7 @@ Most post-processing methods use the smoothness assumption that nearby pixels te
 
 Bayesian inference is a way of coherently update our uncertainty in the light of new evidence. It can consider expert knowledge on the derivation of probabilities. In Spatial Statistics, Bayesian inference has been used in many problems, including the analysis of remote sensing images expressed as lattice data \citep{Marshall1991, Besag1991, Bivand2013}. Lattice processes \{\(Y(\mathbf{s}): \mathbf{s} \in D_s\)\} are defined on a finite and countable subset \(D_s\) of \(\mathbb{R}^d\) \citep{Cressie2011}, consisting of discrete spatial locations such as pixels or administrative units. The standard model for lattice data is a spatial process \(\mathbb{Z} \equiv (Z(\mathbf{s}_1), ..., Z(\mathbf{s}_n))\), where \(S = {\mathbf{s}_1, ..., \mathbf{s}_n}\) are the locations. These spatial random process are associated to a single continuous variable, e.g., temperature distribution on the Earth's surface. These application assume that of spatial continuity and dependence hold true for all locations within the lattice space for continuous variables, they cannot be extended to land classification scenarios.
 
-In land classification problems, we're dealing with categorical data, where each category corresponds to a different land type (e.g., forest, grassland, water body). Land classification aims to subdivide space into discrete areas, each associated with a distinct type of land use or cover. Borders between different land classes usually represent sharp transitions, which violate the assumptions of spatial continuity and smooth transition. Consequently, the random processes correlated with each class are not spatially continuous. Take, for instance, Figure \citet{ref}(fig:roim) showcasing a fragment of a Sentinel-2 image in the state of Rondonia, Brazil. The image starkly contrasts forest areas (depicted in green) and deforested areas (portrayed in various shades of orange and brown). In terms of spatial processes, there's a discontinuity at the borders separating forested and deforested regions. Therefore, in land classification we need to make different assumptions from traditional spatial processes on the statistical properties of the data.
+In land classification problems, we're dealing with categorical data, where each category corresponds to a different land type (e.g., forest, grassland, water body). Land classification aims to subdivide space into discrete areas, each associated with a distinct type of land use or cover. Borders between different land classes usually represent sharp transitions, which violate the assumptions of spatial continuity and smooth transition. Consequently, the random processes correlated with each class are not spatially continuous. Take, for instance, Figure \ref{fig:roim} showcasing a fragment of a Sentinel-2 image in the state of Rondonia, Brazil. The image starkly contrasts forest areas (depicted in green) and deforested areas (portrayed in various shades of orange and brown). In terms of spatial processes, there's a discontinuity at the borders separating forested and deforested regions. Therefore, in land classification we need to make different assumptions from traditional spatial processes on the statistical properties of the data.
 
 \begin{CodeChunk}
 \begin{figure}[h]
@@ -305,20 +305,20 @@ R> var_image <- bayes_variance(
 R> bayes_summary(var_image)
 \end{CodeInput}
 \begin{CodeOutput}
- Water             ClearCut_Burn       ClearCut_Soil      ClearCut_Veg      
- Min.   : 0.0000   Min.   : 0.001547   Min.   : 0.00000   Min.   : 0.00000  
- 1st Qu.: 0.1568   1st Qu.: 0.067745   1st Qu.: 0.09583   1st Qu.: 0.09898  
- Median : 1.8427   Median : 0.158437   Median : 0.23655   Median : 0.24408  
- Mean   : 2.4648   Mean   : 0.434768   Mean   : 0.85451   Mean   : 0.68109  
- 3rd Qu.: 4.6550   3rd Qu.: 0.349213   3rd Qu.: 0.64532   3rd Qu.: 0.70962  
- Max.   :25.0318   Max.   :10.226172   Max.   :12.69630   Max.   :16.54537  
+ Water             ClearCut_Burn      ClearCut_Soil      ClearCut_Veg      
+ Min.   : 0.0000   Min.   : 0.00000   Min.   : 0.00000   Min.   : 0.00000  
+ 1st Qu.: 0.1641   1st Qu.: 0.06823   1st Qu.: 0.09489   1st Qu.: 0.09975  
+ Median : 1.8487   Median : 0.15843   Median : 0.23582   Median : 0.24514  
+ Mean   : 2.4915   Mean   : 0.43040   Mean   : 0.83564   Mean   : 0.69474  
+ 3rd Qu.: 4.6553   3rd Qu.: 0.35327   3rd Qu.: 0.64413   3rd Qu.: 0.73171  
+ Max.   :24.9403   Max.   :10.20983   Max.   :11.37644   Max.   :22.75666  
  Forest            Wetland           
  Min.   : 0.0000   Min.   : 0.00000  
- 1st Qu.: 0.1065   1st Qu.: 0.07183  
- Median : 0.4142   Median : 0.17968  
- Mean   : 1.5470   Mean   : 0.70548  
- 3rd Qu.: 2.2371   3rd Qu.: 0.42343  
- Max.   :21.7345   Max.   :10.82727  
+ 1st Qu.: 0.1072   1st Qu.: 0.07134  
+ Median : 0.4401   Median : 0.17558  
+ Mean   : 1.5892   Mean   : 0.69308  
+ 3rd Qu.: 2.3819   3rd Qu.: 0.41701  
+ Max.   :21.7258   Max.   :11.52999  
 \end{CodeOutput}
 \end{CodeChunk}
 

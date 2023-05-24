@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.7)  24 MAY 2023 15:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.7)  24 MAY 2023 15:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1130,10 +1130,7 @@ LaTeX Font Info:    Font shape `T1/mdput/b/n' will be
 (Font)              scaled to size 7.52002pt on input line 84.
 LaTeX Font Info:    Font shape `T1/mdput/b/n' will be
 (Font)              scaled to size 5.64001pt on input line 84.
-
-Package natbib Warning: Citation `ref' on page 2 undefined on input line 86.
-
-<images/rondonia_image.png, id=102, 332.24126pt x 242.9075pt>
+<images/rondonia_image.png, id=103, 332.24126pt x 242.9075pt>
 File: images/rondonia_image.png Graphic file (type png)
 <use images/rondonia_image.png>
 Package pdftex.def Info: images/rondonia_image.png  used on input line 91.
@@ -1217,7 +1214,7 @@ Overfull \hbox (5.45529pt too wide) has occurred while \output is active
  []
 
 [7]
-<Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf, id=200, 355.3275pt x 25
+<Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf, id=201, 355.3275pt x 25
 7.96375pt>
 File: Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pdf Graphic file (type 
 pdf)
@@ -1238,7 +1235,7 @@ s been already used, duplicate ignored
 l.274 \begin{CodeInput}
                         <./Bayesian_smoothing_JSS_files/figure-latex/pcube-1.pd
 f>]
-<Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf, id=223, 273.02pt x 254.9
+<Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf, id=224, 273.02pt x 254.9
 525pt>
 File: Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf Graphic file (type p
 df)
@@ -1258,7 +1255,7 @@ s been already used, duplicate ignored
                                                   \__shipout_drop_firstpage_...
 l.293 \newpage
                <./Bayesian_smoothing_JSS_files/figure-latex/map1-1.pdf>]
-<Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf, id=240, 505.89pt x 265.
+<Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf, id=241, 505.89pt x 265.
 99374pt>
 File: Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf Graphic file (type 
 pdf)
@@ -1275,7 +1272,7 @@ Overfull \hbox (10.91058pt too wide) has occurred while \output is active
  []
 
 [10]
-<Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf, id=251, 568.1225pt x 25
+<Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf, id=252, 568.1225pt x 25
 3.94875pt>
 File: Bayesian_smoothing_JSS_files/figure-latex/vhist-1.pdf Graphic file (type 
 pdf)
@@ -1302,7 +1299,7 @@ s been already used, duplicate ignored
 l.369 
        <./Bayesian_smoothing_JSS_files/figure-latex/vcube-1.pdf> <./Bayesian_sm
 oothing_JSS_files/figure-latex/vhist-1.pdf>]
-<Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf, id=285, 273.02pt x 254.
+<Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf, id=286, 273.02pt x 254.
 9525pt>
 File: Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf Graphic file (type 
 pdf)
@@ -1313,7 +1310,7 @@ Package pdftex.def Info: Bayesian_smoothing_JSS_files/figure-latex/smth1-1.pdf
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf, id=286, 273.02pt x 254.
+<Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf, id=287, 273.02pt x 254.
 9525pt>
 File: Bayesian_smoothing_JSS_files/figure-latex/smth2-1.pdf Graphic file (type 
 pdf)
@@ -1362,10 +1359,6 @@ Overfull \hbox (10.91058pt too wide) has occurred while \output is active
  []
 
 [15])
-
-Package natbib Warning: There were undefined citations.
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 479--479
 
  []
@@ -1387,11 +1380,11 @@ Package rerunfilecheck Info: File `Bayesian_smoothing_JSS.out' has not changed.
 (rerunfilecheck)             Checksum: 4954B4D984FFC7FB910A67C7CDFBEC1A;3035.
  ) 
 Here is how much of TeX's memory you used:
- 26977 strings out of 478268
- 499149 string characters out of 5846348
+ 26981 strings out of 478268
+ 499193 string characters out of 5846348
  792889 words of memory out of 5000000
  44242 multiletter control sequences out of 15000+600000
- 633299 words of font info for 310 fonts, out of 8000000 for 9000
+ 633570 words of font info for 313 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  99i,14n,94p,1408b,875s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/ly1/texnansi.enc}{/usr/lo
@@ -1412,10 +1405,10 @@ ve/2022/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></usr/local/texlive/2022
 -dist/fonts/type1/public/txfonts/t1xtt.pfb></usr/local/texlive/2022/texmf-dist/
 fonts/type1/public/txfonts/t1xtt.pfb></usr/local/texlive/2022/texmf-dist/fonts/
 type1/urw/zapfchan/uzcmi8a.pfb>
-Output written on Bayesian_smoothing_JSS.pdf (16 pages, 5425743 bytes).
+Output written on Bayesian_smoothing_JSS.pdf (16 pages, 5425582 bytes).
 PDF statistics:
- 453 PDF objects out of 1000 (max. 8388607)
- 367 compressed objects within 4 object streams
+ 454 PDF objects out of 1000 (max. 8388607)
+ 368 compressed objects within 4 object streams
  90 named destinations out of 1000 (max. 500000)
  48789 words of extra memory for PDF output out of 51595 (max. 10000000)
 
