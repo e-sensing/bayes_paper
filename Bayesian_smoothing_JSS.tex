@@ -107,20 +107,20 @@ In this paper, we introduced a new type of post-processing algorithm founded on 
 Our package adds to the other \proglang{R} libraries focused on the spatial data analysis, including \pkg{spdep} \citep{Bivand2023} and \pkg{rgeoda} \citep{Li2022}. \pkg{CARBayes} \citep{Lee2013} implements Bayesian models for spatial areal units. For image processing analysis, \pkg{terra} \citep{Hijmans2023} provides supervised classification with decision trees, while \pkg{stars} \citep{Bivand2023} include functions for linear regression and random forest classification. For post-processing of machine learning image classification, \pkg{sits} also uses the method described in this paper. As far as we are aware, there is no current \proglang{R} package that supports post-processing of image classification of remote sensing images. Therefore, the \pkg{bayesEO} is a useful addition to the facilities available in \proglang{R} for remote sensing image processing.
 
 \hypertarget{methods}{%
-\subsection{Methods}\label{methods}}
+\section{Methods}\label{methods}}
+
+\hypertarget{the-land-classification-problem}{%
+\subsection{The land classification problem}\label{the-land-classification-problem}}
 
 In land classification, we deal with categorical data, with each category corresponding to a different land type (e.g., forest, grassland, water body). Land classification aims to subdivide the space into discrete areas, each associated with a distinct type of land use or cover. Borders between different land classes usually represent sharp transitions. Formally,
-the land classification problem can be expressed as follows. Given a set of \(n\) spatial locations or pixels \(S = \{ \mathbf{s}_1, \ldots, \mathbf{s}_n \}\), each with an associated \(d\)-dimensional feature vector \(\mathbf{x}_1, \ldots, \mathbf{x}_s\) with values in \(\mathcal{X} \subset \mathbb{R}^m\).
-and a set of \(m\) land classes \(K = \{ 1, ..., m \}\), we seek a classification function \(f\)
+the land classification problem can be expressed as follows. Given a set of \(n\) spatial locations or pixels \(S = \{ \mathbf{s}_1, \ldots, \mathbf{s}_n \}\), each with an associated \(d\)-dimensional feature vector \(\mathbf{x}_1, \ldots, \mathbf{x}_s\) with values in \(\mathcal{X} \subset \mathbb{R}^m\) and a set of \(m\) land classes \(K = \{ 1, ..., m \}\), we seek a classification function \(f\)
 such that
 \begin{align}
 f\colon S \times \mathcal{X} \to K & \longrightarrow K \nonumber \\
 (\mathbf{s}_i, \mathbf{x}_i) & \longmapsto (p_{i,1}, \ldots, p_{i,m}) 
 \label{eq:classificationf}
 \end{align}
-with \(0 \leq p_{i,k} \leq 1\) and \(\sum_k p_{i,k} = 1 \forall i = 1, \ldots, n\).
-The value \(p_{i,k}\) is interpreted as the probability that the \(i\)-th pixel belongs to the
-\(k\)-th class. The class assigned to the pixel is determined by the highest probability among the available options. The left side of Figure \ref{fig:maps} shows such assignment produced by a random forest algorithm and explained in detail in section \textit{Software and examples}. However, this assignment can be problematic when the highest probability does not significantly surpass the others, resulting in an assignment with low confidence. This happens more frequently in pixels located at the transition zones between classes leading to noisy or fragmented class assignments.
+with \(0 \leq p_{i,k} \leq 1\) and \(\sum_k p_{i,k} = 1 \forall i = 1, \ldots, n\). The value \(p_{i,k}\) is interpreted as the probability that the \(i\)-th pixel belongs to the \(k\)-th class. The class assigned to the pixel is determined by the highest probability among the available options. The left side of Figure \ref{fig:maps} shows such assignment produced by a random forest algorithm and explained in detail in section \textit{Software and examples}. However, this assignment can be problematic when the highest probability does not significantly surpass the others, resulting in an assignment with low confidence. This happens more frequently in pixels located at the transition zones between classes leading to noisy or fragmented class assignments.
 
 \begin{CodeChunk}
 \begin{figure}[h]
@@ -193,8 +193,6 @@ Given this situation, we apply the proposed method. Suppose the local variance o
 Setting \(\sigma^2_{k}\) will be based on our confidence in the local variability of each class around pixel \({i}\). If we considered the local variability to be high, we can take both \(\sigma^2_1\) for class A and \(\sigma^2_2\) for class B to be both 10. In this case, the Bayesian estimated probability for class A is \(0.52\) and for class B is \(0.48\) and the pixel will be relabelled as being class A.
 
 By contrast, if we consider local variability to be high If we set \(\sigma^2\) to be 5 for both classes A and B, the Bayesian probability estimate will be \(0.48\) for class A and \(0.52\) for class B. In this case, the original class will be kept. Therefore, the result is sensitive to the subjective choice of the hyperparameter.
-
-\newpage
 
 \hypertarget{defining-non-isotropic-neighbourhoods}{%
 \subsection{Defining non-isotropic neighbourhoods}\label{defining-non-isotropic-neighbourhoods}}
@@ -297,20 +295,20 @@ R> var_image <- bayes_variance(
 R> bayes_summary(var_image)
 \end{CodeInput}
 \begin{CodeOutput}
- Water             ClearCut_Burn       ClearCut_Soil      ClearCut_Veg      
- Min.   : 0.0000   Min.   : 0.001214   Min.   : 0.00000   Min.   : 0.00000  
- 1st Qu.: 0.1612   1st Qu.: 0.068792   1st Qu.: 0.09474   1st Qu.: 0.09772  
- Median : 2.0534   Median : 0.159645   Median : 0.23852   Median : 0.24155  
- Mean   : 2.4927   Mean   : 0.440458   Mean   : 0.84096   Mean   : 0.68647  
- 3rd Qu.: 4.6397   3rd Qu.: 0.350913   3rd Qu.: 0.64510   3rd Qu.: 0.71808  
- Max.   :22.2649   Max.   :11.051078   Max.   :10.59077   Max.   :19.33537  
+ Water             ClearCut_Burn      ClearCut_Soil      ClearCut_Veg      
+ Min.   : 0.0000   Min.   : 0.00000   Min.   : 0.00000   Min.   : 0.00000  
+ 1st Qu.: 0.1621   1st Qu.: 0.06701   1st Qu.: 0.09608   1st Qu.: 0.09827  
+ Median : 1.8850   Median : 0.15418   Median : 0.23481   Median : 0.24832  
+ Mean   : 2.4769   Mean   : 0.42207   Mean   : 0.84903   Mean   : 0.69338  
+ 3rd Qu.: 4.6261   3rd Qu.: 0.35128   3rd Qu.: 0.65136   3rd Qu.: 0.72963  
+ Max.   :27.9772   Max.   :15.05944   Max.   :12.53901   Max.   :22.01315  
  Forest            Wetland           
  Min.   : 0.0000   Min.   : 0.00000  
- 1st Qu.: 0.1026   1st Qu.: 0.07217  
- Median : 0.4152   Median : 0.17997  
- Mean   : 1.5687   Mean   : 0.71777  
- 3rd Qu.: 2.2834   3rd Qu.: 0.42095  
- Max.   :25.7454   Max.   :10.66211  
+ 1st Qu.: 0.1062   1st Qu.: 0.07073  
+ Median : 0.4398   Median : 0.17426  
+ Mean   : 1.5959   Mean   : 0.68749  
+ 3rd Qu.: 2.3544   3rd Qu.: 0.41318  
+ Max.   :23.8712   Max.   :10.89098  
 \end{CodeOutput}
 \end{CodeChunk}
 
