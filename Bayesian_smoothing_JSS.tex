@@ -1,4 +1,4 @@
- Inc.\documentclass[
+\documentclass[
   shortnames]{jss}
 
 %% recommended packages
@@ -8,7 +8,7 @@
 
 \author{
 Gilberto Camara~\orcidlink{0000-0002-3681-487X}\\Nat Inst for Space Research\\
-Brazil \And Renato Assunção~\orcidlink{0000-0001-7442-9166}\\ESRI Inc.\\
+Brazil \And Renato Assunção~\orcidlink{0000-0001-7442-9166}\\Federal Univ of Minas Gerais\\
 Brazil \And Rolf Simoes~\orcidlink{0000-0003-0953-4132}\\Nat Inst for Space Research\\
 Brazil \AND Alexandre Carvalho~\orcidlink{0000-0001-8762-5465}\\Inst Applied Economic Research\\
 Brazil \And Felipe Souza~\orcidlink{0000-XXXXX}\\Nat Inst for Space Research\\
@@ -113,13 +113,14 @@ Our package adds to the other \proglang{R} libraries focused on the spatial data
 \subsection{The land classification problem}\label{the-land-classification-problem}}
 
 In land classification, we deal with categorical data, with each category corresponding to a different land type (e.g., forest, grassland, water body). Land classification aims to subdivide the space into discrete areas, each associated with a distinct type of land use or cover. Borders between different land classes usually represent sharp transitions. Formally,
-the land classification problem can be expressed as follows. Given a set of \(n\) spatial locations or pixels \(S = \{ \mathbf{s}_1, \ldots, \mathbf{s}_n \}\), each with an associated \(d\)-dimensional feature vector \(\mathbf{x}_1, \ldots, \mathbf{x}_s\) with values in \(\mathcal{X} \subset \mathbb{R}^m\) and a set of \(m\) land classes \(K = \{ 1, ..., m \}\), we seek a classification function \(f\)
-such that
+the land classification problem can be expressed as follows. Given a set of \(n\) spatial locations or pixels \(S = \{ \mathbf{s}_1, \ldots, \mathbf{s}_n \}\), each with an associated \(d\)-dimensional feature vector \(\mathbf{x}_1, \ldots, \mathbf{x}_s\) with values in \(\mathcal{X} \subset \mathbb{R}^m\) and a set of \(m\) land classes \(K = \{ 1, ..., m \}\), we seek a classification function \(f\) such that
+
 \begin{align}
 f\colon S \times \mathcal{X} \to K & \longrightarrow K \nonumber \\
 (\mathbf{s}_i, \mathbf{x}_i) & \longmapsto (p_{i,1}, \ldots, p_{i,m}) 
 \label{eq:classificationf}
 \end{align}
+
 with \(0 \leq p_{i,k} \leq 1\) and \(\sum_k p_{i,k} = 1 \forall i = 1, \ldots, n\). The value \(p_{i,k}\) is interpreted as the probability that the \(i\)-th pixel belongs to the \(k\)-th class. The class assigned to the pixel is determined by the highest probability among the available options. The left side of Figure \ref{fig:maps} shows such assignment produced by a random forest algorithm and explained in detail in section \textit{Software and examples}. However, this assignment can be problematic when the highest probability does not significantly surpass the others, resulting in an assignment with low confidence. This happens more frequently in pixels located at the transition zones between classes leading to noisy or fragmented class assignments.
 
 \begin{CodeChunk}
@@ -142,6 +143,7 @@ The main idea behind our post-processing method is that a pixel classification s
 
 We initially consider a Bayesian approach for this task. Let \(\pi_{i,k} \geq 0\) be the prior probability of the \(i\)-th pixel belonging to class \(k \in \{1, \ldots, m\}\).
 Converting probabilities to the logit scale allows for less modelling restrictions. Accordingly, let
+
 \begin{equation*} 
 \mu_{i,k} = \log\left( \frac{\pi_{i,k}}{1-\pi_{i,k}} \right) \sim N(m_{i,k}, s^2_{i,k}) 
 \end{equation*}
@@ -152,6 +154,7 @@ scale and assumes a Gaussian distribution conditionally on \(\mu_{i,k}\):
 The variance \(\sigma^2_{k}\) will be estimated based on user expertise and taken as a hyperparameter to control the smoothness of the resulting estimate.
 
 The standard Bayesian updating \citep{Gelman2014} leads to the posterior distribution
+
 \begin{equation}
 (\mu_{i,k} | x_{i,k}) \sim \sum N\left(  \frac{m_{i,t} \sigma^2_{k} +
     x_{i,k} s^2_{i,k}}{ \sigma^2_{k} +s^2_{i,k}} , \left( \frac{1}{\sigma_k^2} + \frac{1}{s^2_{i,k}} \right)^{-1} \right) 
@@ -167,13 +170,13 @@ There are three aspects that must be taken into account to proceed. First, there
 no prior information to specify \(m_{i,k}\) and \(s^2_{i,k}\). Because of that, we will adopt an Empirical Bayes (EB) approach to obtain estimates of these prior parameters. Second, this method is not considering the pixel neighborhood. To deal with this, we will apply the EB
 locally in a neighborhood of each pixel.
 
-The third aspect is the most relevant one. A plain neighborhood of each pixel, based uniquely on the distance between locations, did not produce reasonable results. We must consider non-isotropic neighborhoods \(\mathcal{N}_{i,k}\) specific for each class \(k\) and pixel \(i\). The reason is that we want to give more weight to those neighborhood pixels with assignment classes with large probabilities as those are the ones estimated more reliably by the classification algorithm. We use an \(L\)-statistic to estimate \(m_{i,k}\) and \(s^2_{i,k}\) in our EB approach.
-Let \(\alpha \in (0, 1)\) and \(W_{i}\) be the set of \(w\) nearest neighbors of pixel \(i\) (excluding the \(i\)-th pixel itself).
-Also, let \(\mathbb{F}_{i,k}\) be the empirical distribution of the \(x_{j,k}\) for \(j \in W_i\).
+The third aspect is the most relevant one. A plain neighborhood of each pixel, based uniquely on the distance between locations, did not produce reasonable results. We must consider non-isotropic neighborhoods \(\mathcal{N}_{i,k}\) specific for each class \(k\) and pixel \(i\). The reason is that we want to give more weight to those neighborhood pixels with assignment classes with large probabilities as those are the ones estimated more reliably by the classification algorithm. We use an \(L\)-statistic to estimate \(m_{i,k}\) and \(s^2_{i,k}\) in our EB approach. Let \(\alpha \in (0, 1)\) and \(W_{i}\) be the set of \(w\) nearest neighbors of pixel \(i\) (excluding the \(i\)-th pixel itself). Also, let \(\mathbb{F}_{i,k}\) be the empirical distribution of the \(x_{j,k}\) for \(j \in W_i\).
 Then, we take
+
 \begin{equation}
 \hat{m}_{i,k} = \frac{1}{1-\alpha} \int_{\alpha}^{\infty} \mathbb{F}_{i,k}^{-1}(s) ~ ds \: , 
 \end{equation}
+
 the average of the largest \((1-\alpha)\)-th fraction order statistics of the \(p_{i,k}\) logit transformed observations. Likewise, based on the these same \((1-\alpha)\)-th subset,
 we obtain an empirical estimate \(\hat{s}^2_{i,k}\). The values of \(\hat{m}_{i,k}\) and\\
 \(\hat{s}^2_{i,k}\) are used in the Bayesian updating (\ref{eq:BayesUpdate}).
@@ -295,20 +298,20 @@ R> var_image <- bayes_variance(
 R> bayes_summary(var_image)
 \end{CodeInput}
 \begin{CodeOutput}
- Water             ClearCut_Burn      ClearCut_Soil      ClearCut_Veg      
- Min.   : 0.0000   Min.   : 0.00000   Min.   : 0.00000   Min.   : 0.00000  
- 1st Qu.: 0.1621   1st Qu.: 0.06701   1st Qu.: 0.09608   1st Qu.: 0.09827  
- Median : 1.8850   Median : 0.15418   Median : 0.23481   Median : 0.24832  
- Mean   : 2.4769   Mean   : 0.42207   Mean   : 0.84903   Mean   : 0.69338  
- 3rd Qu.: 4.6261   3rd Qu.: 0.35128   3rd Qu.: 0.65136   3rd Qu.: 0.72963  
- Max.   :27.9772   Max.   :15.05944   Max.   :12.53901   Max.   :22.01315  
+ Water             ClearCut_Burn       ClearCut_Soil      ClearCut_Veg      
+ Min.   : 0.0000   Min.   : 0.001984   Min.   : 0.00000   Min.   : 0.00000  
+ 1st Qu.: 0.1641   1st Qu.: 0.069110   1st Qu.: 0.09611   1st Qu.: 0.09778  
+ Median : 1.9945   Median : 0.159450   Median : 0.23644   Median : 0.24320  
+ Mean   : 2.5050   Mean   : 0.439035   Mean   : 0.84324   Mean   : 0.69143  
+ 3rd Qu.: 4.6553   3rd Qu.: 0.356266   3rd Qu.: 0.64734   3rd Qu.: 0.71716  
+ Max.   :27.2358   Max.   :13.537551   Max.   :12.65429   Max.   :16.89348  
  Forest            Wetland           
  Min.   : 0.0000   Min.   : 0.00000  
- 1st Qu.: 0.1062   1st Qu.: 0.07073  
- Median : 0.4398   Median : 0.17426  
- Mean   : 1.5959   Mean   : 0.68749  
- 3rd Qu.: 2.3544   3rd Qu.: 0.41318  
- Max.   :23.8712   Max.   :10.89098  
+ 1st Qu.: 0.1090   1st Qu.: 0.07328  
+ Median : 0.4357   Median : 0.18041  
+ Mean   : 1.6081   Mean   : 0.72466  
+ 3rd Qu.: 2.3916   3rd Qu.: 0.43737  
+ Max.   :22.2920   Max.   :11.68586  
 \end{CodeOutput}
 \end{CodeChunk}
 
