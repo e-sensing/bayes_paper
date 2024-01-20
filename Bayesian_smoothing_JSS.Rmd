@@ -95,18 +95,18 @@ tempdir = "./temp_dir"
 
 The use of remote sensing images is essential for environmental management. Satellite images have a wide range of applications, including measuring changes in land cover and assessing agriculture and natural habitats. Satellite measurements are the only viable mean to repeatedely survey vast regions, such tropical forests and the polar regions. Remote sensing data plays a critical role in protecting the environment by supplying essential information to policymakers and conservationists. 
 
-Image classification is an key component of remote sensing image analysis. The goal of this task is to categorize the pixels in an image into different classes based on their spectral characteristics, spatial patterns, or other relevant features. Researchers employ machine learning methods like random forests \citep{Belgiu2016} and deep learning \citep{Ma2019} in image classification. The result of machine learning classifier is a set of class probabilities for each pixel, organised in matrices that are identical in size to the original image. Each matrix provides the probability of a pixel’s class membership. These matrices are the input to post-processing techniques that aim to improve on the machine learning results. Post-processing leads to improved accuracy and better interpretability of the final output by reducing errors and minimizing noise \citep{Schindler2012}.
+Image classification is an key component of remote sensing image analysis. The goal of this task is to categorize the pixels in an image into different classes based on their spectral characteristics, spatial patterns, or other relevant features. Researchers employ machine learning methods like random forests \citep{Belgiu2016} and deep learning \citep{Ma2019} in image classification. The result of machine learning classifiers is a set of class probabilities for each pixel, organised in matrices that are identical in size to the original image. Each matrix provides the probability of a pixel’s class membership. These matrices are the input to post-processing techniques that aim to improve on the machine learning results. Post-processing leads to improved accuracy and better interpretability of the final output by reducing errors and minimizing noise \citep{Schindler2012}.
 
 Due to the complexity of remote sensing data, classification algorithms can introduce noise or produce outliers. Spectral responses of ground targets have large variability. Pixels in medium-resolution satellite images, like Landsat or Sentinel-2, often have mixed spectral responses from different land cover types. For these reasons, classifiers produce results that include misclassified pixels, especially in the boundaries between two homogenous ground objects which have different spectral responses. Post-processing methods need to be able to detect and correct such errors.
 
 The fragment of a Sentinel-2 image from the Amazon in Rondonia, Brazil, shown in Figure \@ref(fig:roim), illustrates why post-processing is required for image classification. In the image, one can see the distinction between green forest areas and deforested areas depicted in shades of orange and brown. The border pixels between green forest areas and brown bare soil have mixed responses. In many cases, such mixed pixels will be labelled as a third class which does not occur in this area. Thus, these border pixels are prone to misclassification, which needs to be corrected using suitable post-processing methods. 
 
-```{r roim, echo = FALSE, fig.width = 5, fig.align="center", fig.cap= "Sentinel-2 image of deforestation in the Amazon forest (detail)."}
+```{r roim, echo = FALSE, out.width="70%",  fig.align="center", fig.cap= "Detail of Sentinel-2 image of deforestation in the Amazon forest (source: Sentinel Hub)."}
 
-knitr::include_graphics("images/rondonia_image.png")
+knitr::include_graphics("images/rondonia_3.png")
 ```
 
-Image classification post-processing methods include Gaussian, semi-global, bilateral, and edge-aware filtering \citep{Schindler, 2012}, modal filters \citep{Ghimire, 2010}, and co-occurrence matrices \citep{Huang, 2014}. All these methods have limitations to deal with boundary pixels. Both Gaussian and semi-global smoothing methods assume that each class has a uniform local variance value. These approaches assume probabilities change gradually within a window centred on each pixel, which is not the case for border pixels. As a result, these methods blur the crisp boundaries that separate homogenous regions in the image. Gaussian and semi-global smoothing techniques are ineffective in addressing the problem of mixed pixels at object boundaries \citep{Huang2014}. Bilateral smoothing uses two global parameters to maintain boundary shapes \citep{Schindler2012}. The algorithm assumes that the spatial distribution of the class probabilities is isotropic in a pixel's neighbourhood. As we argue in this paper, such an assumption does not hold for border pixels. Hence, there is a need for post-processing methods that can handle situations involving mixed pixels and anisotropic neighborhoods.
+Image classification post-processing methods include Gaussian, semi-global, bilateral, and edge-aware filtering \citep{Schindler2012}, modal filters \citep{Ghimire2010}, and co-occurrence matrices \citep{Huang2014}. All these methods have limitations to deal with boundary pixels. Both Gaussian and semi-global smoothing methods assume that each class has a uniform local variance value. These approaches assume probabilities change gradually within a window centred on each pixel, which is not the case for border pixels. As a result, these methods blur the crisp boundaries that separate homogenous regions in the image. Gaussian and semi-global smoothing techniques are ineffective in addressing the problem of mixed pixels at object boundaries \citep{Huang2014}. Bilateral smoothing uses two global parameters to maintain boundary shapes \citep{Schindler2012}. The algorithm assumes that the spatial distribution of the class probabilities is isotropic in a pixel's neighbourhood. As we argue in this paper, such an assumption does not hold for border pixels. Hence, there is a need for post-processing methods that can handle situations involving mixed pixels and anisotropic neighborhoods.
 
 The paper introduces a new post-processing algorithm for remote sensing image classification using an Empirical Bayes approach. The algorithm is available in the R package \pkg{bayesEO}. To simulate the impact of discontinuity between land classes, we use non-isotropic neighborhood definitions. Our method allows the inclusion of expert knowledge to enhance the consistency of the resulting map. The \pkg{bayesEO} package can be combined with \pkg{sits}, an end-to-end toolkit for land use and land cover classification using big Earth observation data developed by the authors \citep{Simoes2021}.
 
@@ -118,8 +118,7 @@ Our package adds to other \proglang{R} libraries focused on the spatial data ana
 
 ## The land classification problem
 
-In land classification, we deal with categorical data, with each category corresponding to a different land type (e.g., forest, grassland, water body). Land classification aims to subdivide the space into discrete areas, each associated with a distinct type of land use or cover. Borders between different land classes usually represent sharp transitions. Formally, 
-the land classification problem can be expressed as follows. Given a set of $n$ spatial locations or pixels $S = \{ \mathbf{s}_1, \ldots, \mathbf{s}_n \}$, each with an associated $d$-dimensional feature vector $\mathbf{x}_1, \ldots, \mathbf{x}_s$ with values in $\mathcal{X} \subset \mathbb{R}^m$ and a set of $m$ land classes $K = \{ 1, ..., m \}$, we seek a classification function $f$ such that
+In land classification, we deal with categorical data, with each category corresponding to a different land type (e.g., forest, grassland, wetland, crop). Land classification aims to subdivide the space into discrete areas, each associated with a distinct type of land use or cover. Borders between different land classes usually represent sharp transitions. Formally, the land classification problem can be expressed as follows. Given a set of $n$ spatial locations or pixels $S = \{ \mathbf{s}_1, \ldots, \mathbf{s}_n \}$, each with an associated $d$-dimensional feature vector $\mathbf{x}_1, \ldots, \mathbf{x}_s$ with values in $\mathcal{X} \subset \mathbb{R}^m$ and a set of $m$ land classes $K = \{ 1, ..., m \}$, we seek a classification function $f$ such that
 
 \begin{align}
 f\colon S \times \mathcal{X} & \longrightarrow K \nonumber \\
@@ -127,23 +126,33 @@ f\colon S \times \mathcal{X} & \longrightarrow K \nonumber \\
 \label{eq:classificationf}
 \end{align}
 
-with $0 \leq p_{i,k} \leq 1$ and $\sum_k p_{i,k} = 1 \forall i = 1, \ldots, n$. The value $p_{i,k}$ is interpreted as the probability that the $i$-th pixel belongs to the $k$-th class. The class assigned to the pixel is determined by the highest probability among the available options. The left side of Figure \@ref(fig:maps) shows such assignment produced by a random forest algorithm and explained in detail in section \textit{Software and examples}. However, this assignment can be problematic when the highest probability does not significantly surpass the others, resulting in an assignment with low confidence. This happens more frequently in pixels located at the transition zones between classes leading to noisy or fragmented class assignments.
+with $0 \leq p_{i,k} \leq 1$ and $\sum_k p_{i,k} = 1 \forall i = 1, \ldots, n$. The value $p_{i,k}$ is interpreted as the probability that the $i$-th pixel belongs to the $k$-th class. The class assigned to the pixel is determined by the highest probability among the available options. 
 
+For pixel-based classification methods the spatial $\mathbf{s}_i$ dimension is not explicitly used by the classification function $f$. The reason is that $f$ is obtained from a training dataset $T = \{ \mathbf{s}_{t_1}, \ldots, \mathbf{s}_{t_s} \} \subset S$ with $s \ll n$. Each element $\mathbf{s}_{t_i} \in T$ is coupled with one single label $k_{t_i} \in K$ representing the class to which it belongs, even when the pixel has mixed classes on the ground.  This training dataset is also called the \textit{ground truth} dataset. Usually, it is composed of non-contiguous locations and therefore, there is no spatial neighborhood context  available to train $f$. The only resource to fit $f$ are the true labels features $\mathbf{x}$ measured at each location in the training dataset $T$. 
 
-```{r maps, echo=FALSE, out.width="49%", out.height="25%",fig.cap="Labelled maps without smoothing (left) and after smoothing (right) ",fig.show='hold',fig.align='center'}
+```{r mapnosmooth, echo=FALSE, out.width="70%", fig.pos = "!h", fig.cap="Detail of labelled map produced by pixel-based random forest without smoothing (source: authors)",fig.align='center'}
 
-knitr::include_graphics(c("images/map_no_smooth.png","images/map_smooth.png"))
+knitr::include_graphics("images/map_no_smooth_v2.png")
 ```
 
-Usually, the spatial $\mathbf{s}_i$ dimension is not explicitly used by the classification function $f$. The reason is that $f$ is obtained from a training dataset $T = \{ \mathbf{s}_{t_1}, \ldots, \mathbf{s}_{t_s} \} \subset S$ with $s \ll n$. Each element $\mathbf{s}_{t_i} \in T$ is coupled with one single label $k_{t_i} \in K$ representing the class to which it belongs, even when the pixel has mixed classes on the ground.  This training dataset is also called the \textit{ground truth} dataset. Usually, it is composed of non-contiguous locations and therefore, there is no spatial neighborhood context  available to train $f$. The only resource to fit $f$ are the true labels features $\mathbf{x}$ measured at each location in the training dataset $T$. 
+The main idea behind our post-processing method is that a pixel-based classification should take into account its neighborhood pixels. Consider Figure \@ref(fig:mapnosmooth) which shows a class assignment produced by a random forest algorithm. In this case, the resulting classified map has been produced by taking, for each pixel, the class of higher probability produced by the algorithm. The resulting map has many noisy areas with a high spatial variability of class assignments. This happens more frequently in two cases: (a) small clusters of pixels of one class inside a larger area of a different class; (b) transition zones between classes. In general, images of heterogeneous landscapes with high spatial variability have many mixed pixels, whose spectral response combines different types of land cover in a single ground resolved cell. For example, many pixels in the border between areas of classes \code{Forest} and \code{Clear_Cut_Bare_Soil} are wrongly assigned to the \code{Clear_Cut_Vegetation} class. This wrong assignment occurs because these pixels have a mixed response. Inside the ground cell captured by the sensor as a single pixel value, there are both trees and bare soil areas. Such results are undesirable and need to be corrected by post-processing.
 
-The main idea behind our post-processing method is that a pixel classification should take into account its neighborhood pixels. The right side of Figure \@ref(fig:maps) shows the end result of applying our method on the random forest classification method shown in the left. We want to smooth the output and generate more coherent class representations, reducing the effects of small-scale variations or misclassifications. As the training dataset has no spatial context for the single pixels in $T$, most remote sensing classification algorithms produce pixel-level classifications without considering the spatial coherence of neighboring pixels. This spatial coherence is introduced as a post-processing step. 
 
-\pagebreak
+To maintain consistency and coherence in our class representations, we should minimise small variations or misclassifications. We incorporate spatial coherence as a post-processing step to accomplish this. The probabilities associated with each pixel will change based on statistical inference, which depends on the values for each neighbourhood. Using the recalculated probabilities for each pixel, we get a better version of the final classified map.  
+
+```{r mapsmooth, echo=FALSE, out.width="70%", fig.pos = "!h", fig.cap="Detail of labelled map produced by pixel-based random forest after smoothing (source: authors)", fig.align='center'}
+
+knitr::include_graphics("images/map_smooth_v2.png")
+```
+
+
+Consider Figure \@ref(fig:mapsmooth), which is the result ofBayesian smoothing on the random forest algorithm outcomes. The noisy border pixels between two large areas of the same class have been removed. We have also removed small clusters of pixels belonging to one class inside larger areas of other classes. The outcome is a more uniform map, like the ones created through visual interpretation or object-based analysis. Details like narrow vegetation corridors or small forest roads might be missing in the smoothed image. However, the improved spatial consistency of the final map compensates for such losses, due to the removal of misclassified pixels that have mixed spectral responses.  
+
+
 
 ## A Bayesian approach to smooth image classification probabilities
 
-We propose a Bayesian approach for this task. Let $\pi_{i,k} \geq 0$ be the prior probability of the $i$-th pixel belonging to class $k \in \{1, \ldots, m\}$. 
+We propose a Bayesian approach for post-processing of pixel probabilities. Let $\pi_{i,k} \geq 0$ be the prior probability of the $i$-th pixel belonging to class $k \in \{1, \ldots, m\}$. 
 Converting probabilities to the logit scale allows for less modelling restrictions. Accordingly, let 
 
 \begin{equation} 
@@ -173,7 +182,7 @@ There is usually no prior information to specify $m_{i,k}$ and $s^2_{i,k}$. Beca
 
 Classification challenges arise for pixels located along the boundaries between areas containing different classes, as they possess signatures of two classes. In these cases, only some of the neighbours of such boundary pixels belong to the same class. To address this issue, we employ a non-isotropic definition of a neighbourhood to estimate the prior class distribution.
 
-Non-isotropic neighborhoods are class-dependent subsets of regular windows around a pixel. Consider a boundary pixel with a neighborhood defined by a 7 x 7 window, located along the border between the \code{Forest} and \code{Grassland} classes. To estimate the prior probability of the pixel being a \code{Forest}, we should only take into account the neighbours on one side of the border that are likely to be correctly classified as \code{Forest}. Pixels on the opposite side of the border should be disregarded, since they are unlikely to belong to the same spatial process. In practice, we use only half of the pixels in the 7 x 7 window, opting for those that have a higher probability of being \code{Forest}. For the prior probability of the \code{Grassland} class, we reverse the selection and only consider those on the opposite side of the border.
+Pixels in the border between two areas of different classes pose a challenge. Only some of their neighbors belong to the same class as the pixel. Consider a boundary pixel with a neighborhood defined by a 7 x 7 window, located along the border between the \code{Forest} and \code{Grassland} classes. To estimate the prior probability of the pixel being a \code{Forest}, we should only take into account the neighbours on one side of the border that are likely to be correctly classified as \code{Forest}. Pixels on the opposite side of the border should be disregarded, since they are unlikely to belong to the same spatial process. In practice, we use only half of the pixels in the 7 x 7 window, opting for those that have a higher probability of being \code{Forest}. For the prior probability of the \code{Grassland} class, we reverse the selection and only consider those on the opposite side of the border.
 
 Although this choice of neighbourhood may seem unconventional, it is consistent with the assumption of non-continuity of the spatial processes describing each class. A dense forest patch, for example, will have pixels with strong spatial autocorrelation for values of the \code{Forest} class; however, this spatial autocorrelation doesn't extend across its border with other land classes.
 
@@ -184,9 +193,7 @@ Then, we take
 \hat{m}_{i,k} = \frac{1}{1-\alpha} \int_{\alpha}^{\infty} \mathbb{F}_{i,k}^{-1}(s) ~ ds \: , 
 \end{equation}
 
-the average of the largest $(1-\alpha)$-th fraction order statistics of the $p_{i,k}$ logit transformed observations. Likewise, based on the these same $(1-\alpha)$-th subset, 
-we obtain an empirical estimate $\hat{s}^2_{i,k}$. The values of $\hat{m}_{i,k}$ and  
-$\hat{s}^2_{i,k}$ are used in the Bayesian updating (\ref{eq:BayesUpdate}). 
+the average of the largest $(1-\alpha)$-th fraction order statistics of the $p_{i,k}$ logit transformed observations. Likewise, based on the these same $(1-\alpha)$-th subset, we obtain an empirical estimate $\hat{s}^2_{i,k}$. The values of $\hat{m}_{i,k}$ and $\hat{s}^2_{i,k}$ are used in the Bayesian updating (cf Equation \ref{eq:BayesUpdate}). 
 
 ## Effect of the hyperparameter
 
@@ -206,6 +213,8 @@ By contrast, if we consider local variability to be high If we set $\sigma^2$ to
 
 
 # Software and examples
+
+## The BayesEO package
 
 ## Reading a probability data cube
  
