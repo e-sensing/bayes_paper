@@ -259,8 +259,10 @@ bayes_plot(probs_image, scale = 0.0001)
 
 Figure \@ref(fig:map1) shows the resulting map, obtained by taking the class of higher probability to each pixel, without considering the spatial context. The non-smoothed labelled map shows the need for post-processing, since it contains a significant number of outliers and misclassified pixels. The map is produced by  \code{bayes_label()} whose parameter is a \code{SpatRaster} object containing the probabilities of each class for all pixels. Then the map is rendered using \code{bayes_map()}.
 
-```{r, tidy = "styler", echo=TRUE, eval=TRUE}
+```{r, tidy = "styler", echo=TRUE, eval=TRUE, fig.width = 6, fig.align = 'center', fig.cap = "Labelled map without smoothing."}
+# produce a labelled map
 map_no_smooth <- bayes_label(probs_image)
+# show the map on 
 ```
 
 ```{r map1, fig.width = 6, fig.align = 'center', fig.cap = "Labelled map without smoothing."}
