@@ -146,7 +146,7 @@ To maintain consistency and coherence in our class representations, we should mi
 \end{figure}
 \end{CodeChunk}
 
-Consider Figure \ref{fig:mapsmooth}. This results from implementing Bayesian smoothing on the random forest algorithm outcomes. The noisy border pixels between two large areas of the same class have been removed. We have also removed small clusters of pixels belonging to one class inside larger areas of other classes. The outcome is a more uniform map, like the ones created through visual interpretation or object-based analysis. Details like narrow vegetation corridors or small forest roads might be missing in the smoothed image. However, the improved spatial consistency of the final map compensates for such losses, due to the removal of misclassified pixels that have mixed spectral responses.
+Consider Figure \ref{fig:mapsmooth}, which is the result ofBayesian smoothing on the random forest algorithm outcomes. The noisy border pixels between two large areas of the same class have been removed. We have also removed small clusters of pixels belonging to one class inside larger areas of other classes. The outcome is a more uniform map, like the ones created through visual interpretation or object-based analysis. Details like narrow vegetation corridors or small forest roads might be missing in the smoothed image. However, the improved spatial consistency of the final map compensates for such losses, due to the removal of misclassified pixels that have mixed spectral responses.
 
 \hypertarget{a-bayesian-approach-to-smooth-image-classification-probabilities}{%
 \subsection{A Bayesian approach to smooth image classification probabilities}\label{a-bayesian-approach-to-smooth-image-classification-probabilities}}
@@ -193,9 +193,7 @@ Then, we take
 \hat{m}_{i,k} = \frac{1}{1-\alpha} \int_{\alpha}^{\infty} \mathbb{F}_{i,k}^{-1}(s) ~ ds \: , 
 \end{equation}
 
-the average of the largest \((1-\alpha)\)-th fraction order statistics of the \(p_{i,k}\) logit transformed observations. Likewise, based on the these same \((1-\alpha)\)-th subset,
-we obtain an empirical estimate \(\hat{s}^2_{i,k}\). The values of \(\hat{m}_{i,k}\) and\\
-\(\hat{s}^2_{i,k}\) are used in the Bayesian updating (\ref{eq:BayesUpdate}).
+the average of the largest \((1-\alpha)\)-th fraction order statistics of the \(p_{i,k}\) logit transformed observations. Likewise, based on the these same \((1-\alpha)\)-th subset, we obtain an empirical estimate \(\hat{s}^2_{i,k}\). The values of \(\hat{m}_{i,k}\) and \(\hat{s}^2_{i,k}\) are used in the Bayesian updating (cf Equation \ref{eq:BayesUpdate}).
 
 \hypertarget{effect-of-the-hyperparameter}{%
 \subsection{Effect of the hyperparameter}\label{effect-of-the-hyperparameter}}
@@ -216,10 +214,26 @@ By contrast, if we consider local variability to be high If we set \(\sigma^2\) 
 \hypertarget{software-and-examples}{%
 \section{Software and examples}\label{software-and-examples}}
 
+\hypertarget{the-bayeseo-package}{%
+\subsection{The BayesEO package}\label{the-bayeseo-package}}
+
+The post-processing method described in this paper is implemented in the \proglang{R} \pkg{bayesEO}, which is available on CRAN. The examples below also require installation of package \pkg{sitsdata}. Because of its size, c\} cannot be loaded into CRAN; it has to be obtained directly for its github repository, The code below retrieves and loads \pkg{bayesEO} and \pkg{bayesEO}.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> # install packages bayesEO and sitsdata
+R> install.packages(bayesEO)
+R> devtools::install_github("e-sensing/sitsdata")
+R> # load packages
+R> library(bayesEO)
+R> library(sitsdata)
+\end{CodeInput}
+\end{CodeChunk}
+
 \hypertarget{reading-a-probability-data-cube}{%
 \subsection{Reading a probability data cube}\label{reading-a-probability-data-cube}}
 
-The input for post-classification is an image with probabilities produced by a machine learning algorithm. This file should be multi-band, where each band contains the pixel probabilities of a single class. The file name must have information on reference dates and include a version number. In the examples, we use a file produced by a random forest algorithm applied to a data cube of Sentinel-2 images for tile ``20LLQ'' in the period 2020-06-04 to 2021-08-26. The image has been stored as INT2S data type with integer values between {[}0..10000{]} to represent probabilities ranging from 0 ro 1.
+The input for post-classification is an image with probabilities produced by a machine learning algorithm. This image should be a single file with multiple bands, where each band contains the pixel probabilities of a single class. The file name must have information on reference dates and include a version number. In the examples, we use a file produced by a random forest algorithm applied to a data cube of Sentinel-2 images for tile ``20LLQ'' in the period 2020-06-04 to 2021-08-26. The image has been stored as INT2S data type with integer values between {[}0..10000{]} to represent probabilities ranging from 0 ro 1.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -250,7 +264,7 @@ R> names(probs_image) <- labels
 \end{CodeInput}
 \end{CodeChunk}
 
-The output is a \code{SpatRaster} object from the \code{terra} package. Figure \ref{fig:pcube} shows the plot of all layers of the probability image. The map for class \code{Forest} shows high probability values associated with compact patches and linear stretches in riparian areas. Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. By contrast, the probability maps for classes \code{Water}, \code{ClearCut_Burn}, and \code{ClearCut_Veg} have mostly low values. Note that we need to inform the scaling parameter that converts the image to {[}0..1{]} interval.
+The output is a \code{SpatRaster} object from the \code{terra} package. Figure \ref{fig:pcube} shows the plot of all layers of the probability image. The map for class \code{Forest} shows high probability values associated with compact patches and linear stretches in riparian areas. Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. By contrast, the probability maps for classes \code{Water}, \code{ClearCut_Burn}, and \code{ClearCut_Veg} have mostly low values. Note that we need to inform the \code{scale} parameter that converts the image from a {[}0..10000{]} interval to a {[}0..1{]} range.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -303,20 +317,20 @@ R> var_image <- bayes_variance(
 R> bayes_summary(var_image)
 \end{CodeInput}
 \begin{CodeOutput}
- Water             ClearCut_Burn       ClearCut_Soil       ClearCut_Veg      
- Min.   : 0.0000   Min.   : 0.002167   Min.   : 0.001551   Min.   : 0.00000  
- 1st Qu.: 0.1662   1st Qu.: 0.069136   1st Qu.: 0.097023   1st Qu.: 0.09636  
- Median : 2.1165   Median : 0.158643   Median : 0.235302   Median : 0.23661  
- Mean   : 2.5055   Mean   : 0.430973   Mean   : 0.846656   Mean   : 0.70353  
- 3rd Qu.: 4.6472   3rd Qu.: 0.347818   3rd Qu.: 0.650485   3rd Qu.: 0.72815  
- Max.   :23.6056   Max.   :15.748641   Max.   :11.218425   Max.   :14.90009  
+ Water             ClearCut_Burn      ClearCut_Soil      ClearCut_Veg      
+ Min.   : 0.0000   Min.   : 0.00000   Min.   : 0.00000   Min.   : 0.00000  
+ 1st Qu.: 0.1669   1st Qu.: 0.06827   1st Qu.: 0.09388   1st Qu.: 0.09845  
+ Median : 2.0968   Median : 0.15811   Median : 0.23153   Median : 0.24301  
+ Mean   : 2.4812   Mean   : 0.42625   Mean   : 0.83123   Mean   : 0.70456  
+ 3rd Qu.: 4.5816   3rd Qu.: 0.34956   3rd Qu.: 0.63797   3rd Qu.: 0.73279  
+ Max.   :25.0916   Max.   :12.44700   Max.   :12.98767   Max.   :18.21636  
  Forest            Wetland           
  Min.   : 0.0000   Min.   : 0.00000  
- 1st Qu.: 0.1039   1st Qu.: 0.07263  
- Median : 0.4271   Median : 0.17965  
- Mean   : 1.6053   Mean   : 0.69200  
- 3rd Qu.: 2.4385   3rd Qu.: 0.41906  
- Max.   :23.8425   Max.   :10.83145  
+ 1st Qu.: 0.1110   1st Qu.: 0.07215  
+ Median : 0.4453   Median : 0.17772  
+ Mean   : 1.5953   Mean   : 0.69935  
+ 3rd Qu.: 2.3659   3rd Qu.: 0.42117  
+ Max.   :26.2467   Max.   :13.94576  
 \end{CodeOutput}
 \end{CodeChunk}
 

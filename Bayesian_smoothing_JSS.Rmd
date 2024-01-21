@@ -216,9 +216,20 @@ By contrast, if we consider local variability to be high If we set $\sigma^2$ to
 
 ## The BayesEO package
 
+The post-processing method described in this paper is implemented in the \proglang{R} \pkg{bayesEO}, which is available on CRAN. The examples below also require installation of package \pkg{sitsdata}. Because of its size, c} cannot be loaded into CRAN; it has to be obtained directly for its github repository, The code below retrieves and loads \pkg{bayesEO} and \pkg{bayesEO}.
+
+```{r, echo = TRUE, eval = FALSE}
+# install packages bayesEO and sitsdata
+install.packages(bayesEO)
+devtools::install_github("e-sensing/sitsdata")
+# load packages
+library(bayesEO)
+library(sitsdata)
+```
+
 ## Reading a probability data cube
  
-The input for post-classification is an image with probabilities produced by a machine learning algorithm. This file should be multi-band, where each band contains the pixel probabilities of a single class. The file name must have information on reference dates and include a version number. In the examples, we use a file produced by a random forest algorithm applied to a data cube of Sentinel-2 images for tile "20LLQ" in the period 2020-06-04 to 2021-08-26. The image has been stored as INT2S data type with integer values between [0..10000] to represent probabilities ranging from 0 ro 1. 
+The input for post-classification is an image with probabilities produced by a machine learning algorithm. This image should be a single file with multiple bands, where each band contains the pixel probabilities of a single class. The file name must have information on reference dates and include a version number. In the examples, we use a file produced by a random forest algorithm applied to a data cube of Sentinel-2 images for tile "20LLQ" in the period 2020-06-04 to 2021-08-26. The image has been stored as INT2S data type with integer values between [0..10000] to represent probabilities ranging from 0 ro 1. 
 
 ```{r, echo = TRUE, eval = TRUE}
 data_dir <- system.file("/extdata/Rondonia-20LLQ/", package = "sitsdata")
@@ -240,7 +251,7 @@ probs_image <- terra::rast(paste0(data_dir,"/",probs_file))
 names(probs_image) <- labels
 ```
 
-The output is a \code{SpatRaster} object from the \code{terra} package. Figure \@ref(fig:pcube) shows the plot of all layers of the probability image. The map for class \code{Forest} shows high probability values associated with compact patches and linear stretches in riparian areas. Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. By contrast, the probability maps for classes \code{Water}, \code{ClearCut_Burn}, and \code{ClearCut_Veg} have mostly low values. Note that we need to inform the scaling parameter that converts the image to [0..1] interval.
+The output is a \code{SpatRaster} object from the \code{terra} package. Figure \@ref(fig:pcube) shows the plot of all layers of the probability image. The map for class \code{Forest} shows high probability values associated with compact patches and linear stretches in riparian areas. Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. By contrast, the probability maps for classes \code{Water}, \code{ClearCut_Burn}, and \code{ClearCut_Veg} have mostly low values. Note that we need to inform the \code{scale} parameter that converts the image from a [0..10000] interval to a [0..1] range. 
 
 ```{r pcube, width = 8, tidy="styler", fig.align = 'center', fig.cap = "Class probabilities produced by random forest algorithm."}
 bayes_plot(probs_image, scale = 0.0001)
