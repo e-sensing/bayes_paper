@@ -23,7 +23,7 @@ Brazil
 
 
 \Abstract{
-The abstract of the article.
+A key component of remote sensing image analysis is image classification, which aims to categorize the pixels in an image into different classes using machine learning methods. The result of machine learning classifiers is a set of class probabilities for each pixel. These class probabilities are the input to post-processing techniques that aim to improve on the machine learning results. This paper introduces a new post-processing algorithm that uses an Empirical Bayes approach. To simulate the impact of discontinuity between land classes, we use non-isotropic neighborhood definitions. Our method allows the inclusion of expert knowledge to enhance the consistency of the resulting map. The method has been validated for large-scale data analysis in connection with a time-first, space-based approach and is available in the R package \pkg{bayesEO}.
 }
 
 \Keywords{Bayesian smoothing, image classification, machine learning, \proglang{R}}
@@ -74,8 +74,7 @@ Brazil\\
 
 \newpage
 
-\hypertarget{introduction}{%
-\section{Introduction}\label{introduction}}
+\section{Introduction}\label{introduction}
 
 The use of remote sensing images is essential for environmental management. Satellite images have a wide range of applications, including measuring changes in land cover and assessing agriculture and natural habitats. Satellite measurements are the only viable mean to repeatedely survey vast regions, such tropical forests and the polar regions. Remote sensing data plays a critical role in protecting the environment by supplying essential information to policymakers and conservationists.
 
@@ -104,11 +103,9 @@ Our package adds to other \proglang{R} libraries focused on the spatial data ana
 
 \newpage
 
-\hypertarget{methods}{%
-\section{Methods}\label{methods}}
+\section{Methods}\label{methods}
 
-\hypertarget{the-land-classification-problem}{%
-\subsection{The land classification problem}\label{the-land-classification-problem}}
+\subsection{The land classification problem}\label{the-land-classification-problem}
 
 In land classification, we deal with categorical data, with each category corresponding to a different land type (e.g., forest, grassland, wetland, crop). Land classification aims to subdivide the space into discrete areas, each associated with a distinct type of land use or cover. Borders between different land classes usually represent sharp transitions. Formally, the land classification problem can be expressed as follows. Given a set of \(n\) spatial locations or pixels \(S = \{ \mathbf{s}_1, \ldots, \mathbf{s}_n \}\), each with an associated \(d\)-dimensional feature vector \(\mathbf{x}_1, \ldots, \mathbf{x}_s\) with values in \(\mathcal{X} \subset \mathbb{R}^m\) and a set of \(m\) land classes \(K = \{ 1, ..., m \}\), we seek a classification function \(f\) such that
 
@@ -152,8 +149,7 @@ To maintain consistency and coherence in our class representations, we should mi
 
 Consider Figure \ref{fig:mapsmooth}, which is the result of Bayesian smoothing on the random forest algorithm outcomes. The noisy border pixels between two large areas of the same class have been removed. We have also removed small clusters of pixels belonging to one class inside larger areas of other classes. The outcome is a more uniform map, like the ones created through visual interpretation or object-based analysis. Details like narrow vegetation corridors or small forest roads might be missing in the smoothed image. However, the improved spatial consistency of the final map compensates for such losses, due to the removal of misclassified pixels that have mixed spectral responses.
 
-\hypertarget{a-bayesian-approach-to-smooth-image-classification-probabilities}{%
-\subsection{A Bayesian approach to smooth image classification probabilities}\label{a-bayesian-approach-to-smooth-image-classification-probabilities}}
+\subsection{A Bayesian approach to smooth image classification probabilities}\label{a-bayesian-approach-to-smooth-image-classification-probabilities}
 
 We propose a Bayesian approach for post-processing of pixel probabilities. Let \(\pi_{i,k} \geq 0\) be the prior probability of the \(i\)-th pixel belonging to class \(k \in \{1, \ldots, m\}\). Converting probabilities to the logit scale allows for less modelling restrictions. Accordingly, let
 
@@ -180,8 +176,7 @@ The fundamental idea behind Bayesian smoothing for land classification posits th
 
 There is usually no prior information to specify \(m_{i,k}\) and \(s^2_{i,k}\). Because of that, we adopt an Empirical Bayes (EB) approach to obtain estimates of these prior parameters by considering the pixel neighborhood. However, using a standard simmetrical neighborhood for each pixel, based uniquely on the distance between locations, would not produce reasonable results for border pixels. For this reason, our EB estimates uses non-isotropic neighbourhood, as explained below.
 
-\hypertarget{empirical-bayes-statistics-using-on-anisotropic-neighbourhoods}{%
-\subsection{Empirical Bayes statistics using on anisotropic neighbourhoods}\label{empirical-bayes-statistics-using-on-anisotropic-neighbourhoods}}
+\subsection{Empirical Bayes statistics using on anisotropic neighbourhoods}\label{empirical-bayes-statistics-using-on-anisotropic-neighbourhoods}
 
 Classification challenges arise for pixels located along the boundaries between areas containing different classes, as they possess signatures of two classes. In these cases, only some of the neighbours of such boundary pixels belong to the same class. To address this issue, we employ a non-isotropic definition of a neighbourhood to estimate the prior class distribution.
 
@@ -198,8 +193,7 @@ Then, we take
 
 the average of the largest \((1-\alpha)\)-th fraction order statistics of the \(p_{i,k}\) logit transformed observations. Likewise, based on the these same \((1-\alpha)\)-th subset, we obtain an empirical estimate \(\hat{s}^2_{i,k}\). The values of \(\hat{m}_{i,k}\) and \(\hat{s}^2_{i,k}\) are used in the Bayesian updating (cf Equation \ref{eq:BayesUpdate}).
 
-\hypertarget{effect-of-the-hyperparameter}{%
-\subsection{Effect of the hyperparameter}\label{effect-of-the-hyperparameter}}
+\subsection{Effect of the hyperparameter}\label{effect-of-the-hyperparameter}
 
 The parameter \(\sigma^2_k\) controls the level of smoothness. If \(\sigma^2_k\) is zero, the estimated value \({E}[\mu_{i,k} | x_{i,k}]\) will be the pixel value \(x_{i,k}\). Values of the likelihood variance \(\sigma^2_{k}\), which are small relative to the prior variance \(s^2_{i,k}\) increase our confidence in the original probabilities. Conversely, likelihood variances \(\sigma^2_{k}\), which are large relative to the prior variance \(s^2_{i,k}\), increase our confidence in the average probability of the neighborhood.
 
@@ -214,11 +208,9 @@ Setting \(\sigma^2_{k}\) will be based on our confidence in the local variabilit
 
 By contrast, if we consider local variability to be high If we set \(\sigma^2\) to be 5 for both classes A and B, the Bayesian probability estimate will be \(0.48\) for class A and \(0.52\) for class B. In this case, the original class will be kept. Therefore, the result is sensitive to the subjective choice of the hyperparameter.
 
-\hypertarget{software-and-examples}{%
-\section{Software and examples}\label{software-and-examples}}
+\section{Software and examples}\label{software-and-examples}
 
-\hypertarget{the-bayeseo-package}{%
-\subsection{The BayesEO package}\label{the-bayeseo-package}}
+\subsection{The BayesEO package}\label{the-bayeseo-package}
 
 The post-processing method described in this paper is implemented in the \proglang{R} \pkg{bayesEO}, which is available on CRAN and also on github. The examples below also require installation of package \pkg{sitsdata}. Because of its size, they cannot be loaded into CRAN; it has to be obtained directly for its github repository, The code below retrieves and loads \pkg{bayesEO} and \pkg{sitsdata}.
 
@@ -227,17 +219,12 @@ The post-processing method described in this paper is implemented in the \progla
 R> # configuration 
 R> # if bayesEO is not installed, install it
 R> if (!requireNamespace("bayesEO", quietly = TRUE))
-+     devtools::install_github("e-sensing/bayesEO")
++     devtools::install_github("e-sensing/bayesEO", dependencies = TRUE)
 R> library(bayesEO)
-R> # if sitsdata is not installed, get it
-R> if (!requireNamespace("sitsdata", quietly = TRUE))
-+     devtools::install_github("e-sensing/sitsdata")
-R> library(sitsdata)
 \end{CodeInput}
 \end{CodeChunk}
 
-\hypertarget{reading-a-probability-data-cube}{%
-\subsection{Reading a probability data cube}\label{reading-a-probability-data-cube}}
+\subsection{Reading a probability data cube}\label{reading-a-probability-data-cube}
 
 The input for post-classification is an image with probabilities produced by a machine learning algorithm. This image should be a single file with multiple bands, where each band contains the pixel probabilities of a single class. In the examples, we use a file produced by a random forest algorithm applied to a data cube of Sentinel-2 images for tile ``20LLQ'' in the period 2020-06-04 to 2021-08-26. The file uses an INT2S data type with integer values between {[}0..10000{]} to represent probabilities ranging from 0 ro 1.
 
@@ -248,23 +235,17 @@ To read the probability image, we use the function \code{bayes_read_probs()} who
 \begin{CodeChunk}
 \begin{CodeInput}
 R> # select the file containing the class probability
-R> data_dir <- system.file("/extdata/Rondonia-20LLQ/", package = "sitsdata")
-R> probs_file <- paste0(
-+   data_dir,
-+   "SENTINEL-2_MSI_20LLQ_2020-06-04_2021-08-26_probs_v1.tif"
-+ )
+R> data_dir <- system.file("/extdata/probs/", package = "bayesEO")
+R> probs_file <- paste0(data_dir, 
++                      "SENTINEL-2_MSI_20LLQ_2020-06-04_2021-08-26_probs_v0.tif")
 R> # set the labels
-R> labels <- c(
-+   "Water", "ClearCut_Burn", "ClearCut_Soil",
-+   "ClearCut_Veg", "Forest", "Wetland"
-+ )
-R> # read the probability image
+R> labels <- c("Water", "ClearCut_Burn", "ClearCut_Soil",
++             "ClearCut_Veg", "Forest", "Wetland")
+R> # read the probability image 
 R> probs_image <- bayes_read_probs(probs_file, labels)
 R> # plot the probabilities for classes Forest and ClearCut_Soil
-R> bayes_plot_probs(probs_image, labels = c(
-+   "Forest", "ClearCut_Soil",
-+   "ClearCut_Veg", "ClearCut_Burn"
-+ ))
+R> bayes_plot_probs(probs_image, labels = c("Forest", "ClearCut_Soil", 
++                                          "ClearCut_Veg", "ClearCut_Burn"))
 \end{CodeInput}
 \begin{figure}[h]
 
@@ -276,7 +257,9 @@ R> bayes_plot_probs(probs_image, labels = c(
 \end{figure}
 \end{CodeChunk}
 
-Figure \ref{fig:pcube} shows the plot of the probability images for classes \code{Forest}, \code{ClearCut_Soil}, \code{ClearCut_Veg} and \code{ClearCut_Burn}. The map for class \code{Forest} shows high probability values associated with compact patches. Even inside relatively homogenous areas, there are locations whose probabilities vary significantly. There is large variation in areas close to the river that runs from South to North, corresponding to riparian forest of lower density. Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. Some of the patches of this class, as those in the upper-left corner, have high variation in their probabilities. The class \code{ClearCut_Veg} is less well-defined than the others; this is to be expected since this is a transitional class between a natural forest and areas of bare soil. Patches associated to class \code{ClearCut_Brun} include both homogeneous areas of high probability and areas of mixed response. Overall, there are many areas with mixed responses, which highlight the value of spatial smoothing.
+Figure \ref{fig:pcube} shows the plot of the probability images for classes \code{Forest}, \code{ClearCut_Soil}, \code{ClearCut_Veg} and \code{ClearCut_Burn}. The map for class \code{Forest} shows high probability values associated with compact patches. Even inside relatively homogenous areas, there are locations whose probabilities vary significantly. There is large variation in areas close to the river that runs from South to North, corresponding to riparian forest of lower density. Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. Some of the patches of this class, as those in the upper-left corner, have high variation in their probabilities. The class \code{ClearCut_Veg} is less well-defined than the others; this is to be expected since this is a transitional class between a natural forest and areas of bare soil. Patches associated to class \code{ClearCut_Burn} include both homogeneous areas of high probability and areas of mixed response. Overall, there are many areas with mixed responses.
+
+The next step is to show the labelled map resulting from the raw class probabilites. Figure \ref{fig:map1} shows the classification map, obtained by taking the class of higher probability to each pixel, without considering the spatial context. There are many place with the so-called ``salt-and-pepper'' effect, which result from misclassified pixels. The non-smoothed labelled map shows the need for post-processing, since it contains a significant number of outliers and areas with mixed labelling.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -295,10 +278,9 @@ R> bayes_plot_map(map_no_smooth)
 \end{figure}
 \end{CodeChunk}
 
-Figure \ref{fig:map1} shows the classification map, obtained by taking the class of higher probability to each pixel, without considering the spatial context. The non-smoothed labelled map shows the need for post-processing, since it contains a significant number of outliers and areas with mixed labelling.
+\newpage
 
-\hypertarget{estimating-the-local-logit-variances}{%
-\subsection{Estimating the local logit variances}\label{estimating-the-local-logit-variances}}
+\subsection{Estimating the local logit variances}\label{estimating-the-local-logit-variances}
 
 The local logit variances correspond to the \(s^2_{i,k}\) parameter in the Bayesian inference and are estimated by \code{bayes_variance()}. Its main parameters are: (a) a \code{SpatRaster} object ; (b) \code{window_size}, dimension of the local neighbourhood; (c) \code{neigh_fraction}, the percentage of pixels in the neighbourhood used to calculate the variance. The example below uses half of the pixels of a \(7\times 7\) window to estimate the variance. The chosen pixels will be those with the highest probability pixels to be more representative of the actual class distribution. The output values are the logit variances in the vicinity of each pixel.
 
@@ -311,20 +293,20 @@ R> var_image <- bayes_variance(
 R> bayes_summary(var_image)
 \end{CodeInput}
 \begin{CodeOutput}
- Water             ClearCut_Burn      ClearCut_Soil       ClearCut_Veg     
- Min.   : 0.0000   Min.   :0.002007   Min.   : 0.002046   Min.   : 0.0000  
- 1st Qu.: 0.1301   1st Qu.:0.057242   1st Qu.: 0.080684   1st Qu.: 0.0953  
- Median : 0.4649   Median :0.119250   Median : 0.183635   Median : 0.2204  
- Mean   : 2.0270   Mean   :0.232629   Mean   : 0.452358   Mean   : 0.5093  
- 3rd Qu.: 4.2251   3rd Qu.:0.257846   3rd Qu.: 0.399471   3rd Qu.: 0.5477  
- Max.   :36.3142   Max.   :8.548515   Max.   :11.459432   Max.   :16.1614  
- Forest             Wetland          
- Min.   : 0.00000   Min.   :0.00000  
- 1st Qu.: 0.06943   1st Qu.:0.05479  
- Median : 0.21597   Median :0.12525  
- Mean   : 1.09165   Mean   :0.36892  
- 3rd Qu.: 1.15675   3rd Qu.:0.28634  
- Max.   :21.40924   Max.   :9.34593  
+ Water             ClearCut_Burn      ClearCut_Soil     ClearCut_Veg     
+ Min.   : 0.0000   Min.   : 0.00233   Min.   : 0.0000   Min.   : 0.0000  
+ 1st Qu.: 0.2018   1st Qu.: 0.07145   1st Qu.: 0.1024   1st Qu.: 0.1145  
+ Median : 2.2370   Median : 0.15462   Median : 0.2292   Median : 0.2880  
+ Mean   : 2.5961   Mean   : 0.33254   Mean   : 0.6132   Mean   : 0.6536  
+ 3rd Qu.: 4.7783   3rd Qu.: 0.31730   3rd Qu.: 0.5517   3rd Qu.: 0.7836  
+ Max.   :22.7504   Max.   :10.93709   Max.   :11.6652   Max.   :16.1527  
+ Forest            Wetland           
+ Min.   : 0.0000   Min.   : 0.00000  
+ 1st Qu.: 0.1204   1st Qu.: 0.07168  
+ Median : 0.5083   Median : 0.16502  
+ Mean   : 1.6885   Mean   : 0.49337  
+ 3rd Qu.: 2.7354   3rd Qu.: 0.35334  
+ Max.   :22.0860   Max.   :10.71809  
 \end{CodeOutput}
 \end{CodeChunk}
 
@@ -334,11 +316,10 @@ The summary statistics show that most local variance values are low, which is an
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> bayes_plot_var(var_image,
-+   quantile = 0.75,
-+   palette = "Greens",
-+   labels = c("ClearCut_Veg", "Forest")
-+ )
+R> bayes_plot_var(var_image, 
++                  quantile = 0.75, 
++                  palette = "Greens",
++                  labels = c("ClearCut_Veg", "Forest"))
 \end{CodeInput}
 \begin{figure}[h]
 
@@ -352,10 +333,9 @@ R> bayes_plot_var(var_image,
 
 Comparing the logit variance maps of Figure \ref{fig:vcube} with the probability maps of Figure \ref{fig:pcube} emphasizes the relevance of expert knowledge. The areas of high probability of class \code{Forest} are mostly made of compact patches. However, there are areas of high local variance inside these patches, due to natural variation of the forest and also resulting from forest degradation. By contrast, class \code{ClearCut_Veg} represents a transition between natural forest areas and places where all trees have been cut, which are associated to class \code{ClearCut_Soil}. Class \code{ClearCut_Veg} has a high spectral variability, since the extent of remaining vegetation after most trees have been removed is not uniform. For this reason, many areas of high local variance of class \code{ClearCut_Veg} are located in the borders between homogenous areas.
 
-\hypertarget{applying-bayesian-smoothing-to-remove-outliers}{%
-\subsection{Applying Bayesian smoothing to remove outliers}\label{applying-bayesian-smoothing-to-remove-outliers}}
+\subsection{Applying Bayesian smoothing to remove outliers}\label{applying-bayesian-smoothing-to-remove-outliers}
 
-As discussed above, the effect of the Bayesian estimator depends on the values of the a priori variance \(\sigma^2_{k}\) set by the user and the neighbourhood definition to compute the local variance \(s^2_{i,1}\) for each pixel. We set \(\sigma^2\) values for each class by considering values in the 4th quartile, close to the maximum local logit variance for each class. To remove the outliers in the classification map, \pkg{bayesEO} provides \code{bayes_smooth()}. Its main parameters are: (a) \code{x}, a probability image; (b) \code{window_size}, dimension of the local neighbourhood; (c) \code{smoothness}, prior logit variances for each class.
+As discussed above, the effect of the Bayesian estimator depends on the values of the a priori variance \(\sigma^2_{k}\) set by the user and the neighbourhood definition to compute the local variance \(s^2_{i,1}\) for each pixel. We set \(\sigma^2\) values for each class by considering values in the 4th quartile, close to the maximum local logit variance for each class. To remove the outliers, \pkg{bayesEO} provides \code{bayes_smooth()}. Its main parameters are: (a) \code{x}, a probability image; (b) \code{window_size}, dimension of the local neighbourhood; (c) \code{smoothness}, prior logit variances for each class. The impact of Bayesian smoothing can be best captured by producing a labelled map using \code{bayes_label()}, taking the smoothed image as its input. Figure \ref{fig:smth1} shows that the outliers and isolated pixels have been removed.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -366,13 +346,6 @@ R> smooth_probs <- bayes_smooth(
 +       "Water" = 15, "ClearCut_Burn" = 5, "ClearCut_Soil" = 6, 
 +       "ClearCut_Veg" =  8, "Forest" = 10, "Wetland" = 5)
 + )
-\end{CodeInput}
-\end{CodeChunk}
-
-The impact of Bayesian smoothing can be best captured by producing a labelled map using \code{bayes_label()}, taking the smoothed image as its input. Figure \ref{fig:smth1} shows that the outliers and isolated pixels have been removed.
-
-\begin{CodeChunk}
-\begin{CodeInput}
 R> map_smooth_bayes <- bayes_label(smooth_probs)
 R> bayes_plot_map(map_smooth_bayes)
 \end{CodeInput}
@@ -403,17 +376,18 @@ R> dplyr::inner_join(sum1, sum2, by = "class")
 # A tibble: 6 x 3
   class         area_k2_no_smooth area_k2_smooth
   <chr>                     <dbl>          <dbl>
-1 Water                      2.55           2.31
-2 ClearCut_Burn             34.6           32.8 
-3 ClearCut_Soil             65.7           68.3 
-4 ClearCut_Veg              37.3           33.2 
-5 Forest                    83.8           88.0 
-6 Wetland                    0.99           0.31
+1 Water                      0.51          0.42 
+2 ClearCut_Burn              4.59          2.99 
+3 ClearCut_Soil             47.2          50.6  
+4 ClearCut_Veg              17.1          14.1  
+5 Forest                    30.2          31.7  
+6 Wetland                    0.38          0.081
 \end{CodeOutput}
 \end{CodeChunk}
 
-\hypertarget{relevance-of-expert-knowledge-in-bayesian-inference}{%
-\subsection{Relevance of expert knowledge in Bayesian inference}\label{relevance-of-expert-knowledge-in-bayesian-inference}}
+These area variations can be best understood by considering the spatial distribution of class probabilities shown in Figure \ref{fig:pcube}. Classes \code{ClearCut_Veg} and \code{ClearCut_Burn} are transitional classes that represent intermediate stages of conversion between areas of class \code{Forest} and those of class \code{ClearCut_Soil} which are more stable classes. The number of outliers of the transitional classes is larger than those of the more stable ones. Thus, it is natural that the smoothing procedure decreases the area of the first two classes and increases that area of last two, resulting in a more informative map.
+
+\subsection{Relevance of expert knowledge in Bayesian inference}\label{relevance-of-expert-knowledge-in-bayesian-inference}
 
 In the smoothed map (Figure \ref{fig:smth1}), the most frequent classes (\code{ClearCut_Soil} and \code{Forest}) increased their areas at the expense of the others. As shown in Figure \ref{fig:pcube}, these classes occur in more compact patches than the others. Based on the experience of the authors with different experts on land use classification, there are two main approaches for setting the \(\sigma^2_{k}\) parameter:
 
@@ -427,10 +401,9 @@ In the smoothed map (Figure \ref{fig:smth1}), the most frequent classes (\code{C
 
 Consider the case of forest areas and watersheds. If an expert wishes to have compact areas classified as forests without many outliers inside them, she will set the \(\sigma^2\) parameter for the class \code{Forest} to be high. For comparison, to avoid that small watersheds with few similar neighbors being relabeled, it is advisable to avoid a strong influence of the neighbors, setting \(\sigma^2\) to be as low as possible. Therefore, the choice of \(\sigma^2\) depends on the effect intended by the expert in the final classified map.
 
-\hypertarget{comparison-with-other-methods}{%
-\section{Comparison with other methods}\label{comparison-with-other-methods}}
+\section{Comparison with other methods}\label{comparison-with-other-methods}
 
-To better understand the benefits of Bayesian smoothing, in this section we present the results of post-processing using two alternatives: Gaussian smoothing and bilateral smoothing. Gaussian smoothing is a low-pass filter where the weights are based on the normal distribution. Pixels near the center of the kernel have a higher weight, and the weight decreases for pixels further away from the center. This creates a blurring effect that is stronger at the center and weaker at the edges. The extent of smoothing is controlled by the standard deviation of a Gaussian distribution. The convolution operation effectively averages pixel values in the neighborhood defined by the kernel, with weights given by the Gaussian distribution. This results in a reduction of high-frequency noise and a blurring effect.
+To better understand the benefits of Bayesian smoothing, we present the results of post-processing using two alternatives: Gaussian smoothing and bilateral smoothing. Gaussian smoothing is a low-pass filter where the weights are based on the normal distribution. Pixels near the center of the kernel have a higher weight, and the weight decreases for pixels further away from the center. This creates a blurring effect that is stronger at the center and weaker at the edges. The extent of smoothing is controlled by the standard deviation of a Gaussian distribution. This results in a reduction of high-frequency noise and a blurring effect.
 
 The Gaussian Kernel is expressed as
 \begin{equation}
@@ -442,7 +415,7 @@ where \(\sigma\) is the standard deviation of the Gaussian distribution. The con
    I'(x, y) = \sum_{i=-k}^{k} \sum_{j=-k}^{k} G(i, j) \cdot I(x - i, y - j)
 \end{equation}
 
-In this equation, \(I'(x, y)\) represents the smoothed image, \(I(x, y)\) is the original image, \(G(i, j)\) is the Gaussian kernel, and \((i,j)\) are the indices running over the kernel size, typically centered around zero. The following code computes a Gaussian smoothing filter, labels the image and plots the resulting map.
+In this equation, \(I'(x, y)\) represents the smoothed image, \(I(x, y)\) is the original image, \(G(i, j)\) is the Gaussian kernel, and \((i,j)\) are the indices running over the kernel size, typically centered around zero. The following code computes a Gaussian filter, labels the image and plots the resulting map.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -482,7 +455,7 @@ This formula illustrates how the bilateral filter considers both spatial proximi
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> # compute Gaussian smoothing
+R> # compute Bilateral smoothing
 R> bilat_smooth <- bilateral_smooth(
 +     probs_image,
 +     window_size = 7,
@@ -508,8 +481,9 @@ The resulting map after bilateral smoothing is similar to the output of Bayesian
 
 This example shows the value of the Bayesian inference procedure compared with smoothing methods such as Gaussian and edge-aware filtering \citep{Schindler2012}. Most post-classification procedures use ad-hoc parameters which are not directly linked to the properties of the data. These parameters are based on the structure of the algorithm (e.g, size of the Gaussian kernel), not being easily defined separately for each class. Bayesian inference allows the expert to control the output and to set the parameters based on objective criteria.
 
-\hypertarget{using-smoothing-in-connection-with-time-first-space-later-methods}{%
-\section{Using smoothing in connection with time-first, space-later methods}\label{using-smoothing-in-connection-with-time-first-space-later-methods}}
+\FloatBarrier
+
+\section{Using smoothing in connection with time-first, space-later methods}\label{using-smoothing-in-connection-with-time-first-space-later-methods}
 
 Time-first, space-later is a concept in satellite image classification that takes time series analysis as the first step for analysing remote sensing data, with spatial information being considered after all time series are classified \citep{Camara2016}. Satellite image time series are calibrated and comparable measures of the same location on Earth at different times. When associated with frequent revisits, image time series can capture significant land use and land cover changes. Detecting and tracking seasonal and long-term trends becomes feasible, as well as identifying anomalous events or patterns in the data, such as wildfires, floods, or droughts \cite{Woodcock2020}.
 
@@ -517,13 +491,11 @@ This approach takes image time series as the first step for analysing remote sen
 
 In \proglang{R}, the \pkg{sits} package combines machine learning methods for time series classification with spatial-based smoothing\citep{Simoes2021}. It has been used for large-scale land use classification in Brazil \cite{Picoli2018}. A recent comparative study shows that image time series classification with spatial smoothing achieves better results than purely spatial-based methods\citep{Hadi2023}. Thus, Bayesian smoothing is a key component of the time-first, space-later Earth observation data analysis.
 
-\hypertarget{conclusion}{%
-\section{Conclusion}\label{conclusion}}
+\section{Conclusion}\label{conclusion}
 
 This paper presents a new method for post-processing of Earth observation images that have been classified using machine learning algorithms. Unlike ad-hoc smoothing methods avaliable in the literature, the proposed algorithm relies on objective metrics of class probability variance. We propose an Empirical Bayes approach to post-processing, which has a sound mathematical basis. The method has been validated for large-scale data analysis in connection with a time-first, space-based approach and represents a worthy alternative to other post-processing methods available in the literature.
 
-\hypertarget{acknowledgments}{%
-\subsection*{Acknowledgments}\label{acknowledgments}}
+\subsection*{Acknowledgments}\label{acknowledgments}
 \addcontentsline{toc}{subsection}{Acknowledgments}
 
 The authors acknowledge the support of the following institutions: (a) Amazon Fund, established by Brazil with financial contribution from Norway, through contract 17.2.0536.1.; (b) International Climate Initiative of the Germany Federal Ministry for the Environment, Nature Conservation, Building and Nuclear Safety (IKI) under grant 17-III-084-Global-A-RESTORE+ (``RESTORE+: Addressing Landscape Restoration on Degraded Land in Indonesia and Brazil''); (c) Microsoft Planetary Computer initiative under the GEO-Microsoft Cloud Computer Grants Programme; (d)

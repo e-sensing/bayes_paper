@@ -45,7 +45,7 @@ title:
   # For running headers, if needed
   short:     "Bayesian smoothing for image classification"
 abstract: >
-  The abstract of the article.
+  A key component of remote sensing image analysis is image classification, which aims to categorize the pixels in an image into different classes using machine learning methods. The result of machine learning classifiers is a set of class probabilities for each pixel. These class probabilities are the input to post-processing techniques that aim to improve on the machine learning results. This paper introduces a new post-processing algorithm that uses an Empirical Bayes approach. To simulate the impact of discontinuity between land classes, we use non-isotropic neighborhood definitions. Our method allows the inclusion of expert knowledge to enhance the consistency of the resulting map. The method has been validated for large-scale data analysis in connection with a time-first, space-based approach and is available in the R package \pkg{bayesEO}. 
 keywords:
   # at least one keyword must be supplied
   formatted: [Bayesian smoothing, image classification, machine learning, "\\proglang{R}"]
@@ -81,10 +81,6 @@ library(terra)
 if (!requireNamespace("bayesEO", quietly = TRUE))
     devtools::install_github("e-sensing/bayesEO")
 library(bayesEO)
-# if sitsdata is not installed, get it
-if (!requireNamespace("sitsdata", quietly = TRUE))
-    devtools::install_github("e-sensing/sitsdata")
-library(sitsdata)
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "h")
 knitr::opts_chunk$set(message = FALSE)
 knitr::opts_chunk$set(warning = FALSE)
@@ -224,12 +220,8 @@ The post-processing method described in this paper is implemented in the \progla
 # configuration 
 # if bayesEO is not installed, install it
 if (!requireNamespace("bayesEO", quietly = TRUE))
-    devtools::install_github("e-sensing/bayesEO")
+    devtools::install_github("e-sensing/bayesEO", dependencies = TRUE)
 library(bayesEO)
-# if sitsdata is not installed, get it
-if (!requireNamespace("sitsdata", quietly = TRUE))
-    devtools::install_github("e-sensing/sitsdata")
-library(sitsdata)
 ```
 
 ## Reading a probability data cube
@@ -242,9 +234,9 @@ To read the probability image, we use the function \code{bayes_read_probs()} who
 
 ```{r pcube, width = 5, tidy="styler", fig.align = 'center', fig.cap = "Class probabilities produced by random forest algorithm"}
 # select the file containing the class probability
-data_dir <- system.file("/extdata/Rondonia-20LLQ/", package = "sitsdata")
+data_dir <- system.file("/extdata/probs/", package = "bayesEO")
 probs_file <- paste0(data_dir, 
-                     "SENTINEL-2_MSI_20LLQ_2020-06-04_2021-08-26_probs_v1.tif")
+                     "SENTINEL-2_MSI_20LLQ_2020-06-04_2021-08-26_probs_v0.tif")
 # set the labels
 labels <- c("Water", "ClearCut_Burn", "ClearCut_Soil",
             "ClearCut_Veg", "Forest", "Wetland")
@@ -255,7 +247,11 @@ bayes_plot_probs(probs_image, labels = c("Forest", "ClearCut_Soil",
                                          "ClearCut_Veg", "ClearCut_Burn"))
 ```
 
-Figure \@ref(fig:pcube) shows the plot of the probability images for classes \code{Forest}, \code{ClearCut_Soil}, \code{ClearCut_Veg} and \code{ClearCut_Burn}. The map for class \code{Forest} shows high probability values associated with compact patches. Even inside relatively homogenous areas, there are locations whose probabilities vary significantly. There is large variation in areas close to the river that runs from South to North, corresponding to riparian forest of lower density.  Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. Some of the patches of this class, as those in the upper-left corner, have high variation in their probabilities. The class \code{ClearCut_Veg} is less well-defined than the others; this is to be expected since this is a transitional class between a natural forest and areas of bare soil. Patches associated to class \code{ClearCut_Brun} include both homogeneous areas of high probability and areas of mixed response. Overall, there are many areas with mixed responses, which highlight the value of spatial smoothing.
+Figure \@ref(fig:pcube) shows the plot of the probability images for classes \code{Forest}, \code{ClearCut_Soil}, \code{ClearCut_Veg} and \code{ClearCut_Burn}. The map for class \code{Forest} shows high probability values associated with compact patches. Even inside relatively homogenous areas, there are locations whose probabilities vary significantly. There is large variation in areas close to the river that runs from South to North, corresponding to riparian forest of lower density.  Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. Some of the patches of this class, as those in the upper-left corner, have high variation in their probabilities. The class \code{ClearCut_Veg} is less well-defined than the others; this is to be expected since this is a transitional class between a natural forest and areas of bare soil. Patches associated to class \code{ClearCut_Burn} include both homogeneous areas of high probability and areas of mixed response. Overall, there are many areas with mixed responses.
+
+The next step is to show the labelled map resulting from the raw class probabilites. Figure \@ref(fig:map1) shows the classification map, obtained by taking the class of higher probability to each pixel, without considering the spatial context. There are many place with the so-called "salt-and-pepper" effect, which result from misclassified pixels. The non-smoothed labelled map shows the need for post-processing, since it contains a significant number of outliers and areas with mixed labelling. 
+
+
 
 ```{r map1, tidy = "styler", echo=TRUE, eval=TRUE, fig.width = 5, fig.align = 'center', fig.cap = "Labelled map without smoothing."}
 # produce a labelled map
@@ -264,7 +260,9 @@ map_no_smooth <- bayes_label(probs_image)
 bayes_plot_map(map_no_smooth)
 ```
 
-Figure \@ref(fig:map1) shows the classification map, obtained by taking the class of higher probability to each pixel, without considering the spatial context. The non-smoothed labelled map shows the need for post-processing, since it contains a significant number of outliers and areas with mixed labelling. 
+
+
+\newpage
 
 ## Estimating the local logit variances
 
@@ -293,9 +291,9 @@ Comparing the logit variance maps of Figure \@ref(fig:vcube) with the probabilit
 
 ## Applying Bayesian smoothing to remove outliers
 
-As discussed above, the effect of the Bayesian estimator depends on the values of the a priori variance $\sigma^2_{k}$ set by the user and the neighbourhood definition to compute the local variance $s^2_{i,1}$ for each pixel. We set $\sigma^2$ values for each class by considering values in the 4th quartile, close to the maximum local logit variance for each class. To remove the outliers in the classification map, \pkg{bayesEO} provides \code{bayes_smooth()}. Its main parameters are: (a) \code{x}, a probability image; (b) \code{window_size},  dimension of the local neighbourhood; (c) \code{smoothness}, prior logit variances for each class. 
+As discussed above, the effect of the Bayesian estimator depends on the values of the a priori variance $\sigma^2_{k}$ set by the user and the neighbourhood definition to compute the local variance $s^2_{i,1}$ for each pixel. We set $\sigma^2$ values for each class by considering values in the 4th quartile, close to the maximum local logit variance for each class. To remove the outliers, \pkg{bayesEO} provides \code{bayes_smooth()}. Its main parameters are: (a) \code{x}, a probability image; (b) \code{window_size},  dimension of the local neighbourhood; (c) \code{smoothness}, prior logit variances for each class. The impact of Bayesian smoothing can be best captured by producing a labelled map using \code{bayes_label()}, taking the smoothed image as its input. Figure \@ref(fig:smth1) shows that the outliers and isolated pixels have been removed. 
 
-```{r, echo=TRUE, eval=TRUE}
+```{r smth1, fig.width = 5, fig.align = 'center', fig.cap = "Labeled map with Bayesian  smoothing."}
 smooth_probs <- bayes_smooth(
     probs_image,
     window_size = 7,
@@ -303,11 +301,6 @@ smooth_probs <- bayes_smooth(
       "Water" = 15, "ClearCut_Burn" = 5, "ClearCut_Soil" = 6, 
       "ClearCut_Veg" =  8, "Forest" = 10, "Wetland" = 5)
 )
-```
-
-The impact of Bayesian smoothing can be best captured by producing a labelled map using \code{bayes_label()}, taking the smoothed image as its input. Figure \@ref(fig:smth1) shows that the outliers and isolated pixels have been removed.
-
-```{r smth1, fig.width = 5, fig.align = 'center', fig.cap = "Labeled map with Bayesian  smoothing."}
 map_smooth_bayes <- bayes_label(smooth_probs)
 bayes_plot_map(map_smooth_bayes)
 ```
@@ -325,6 +318,8 @@ colnames(sum2) <- c("class", "area_k2_smooth")
 dplyr::inner_join(sum1, sum2, by = "class")
 ```
 
+These area variations can be best understood by considering the spatial distribution of class probabilities shown in Figure \@ref(fig:pcube). Classes \code{ClearCut_Veg} and \code{ClearCut_Burn} are transitional classes that represent intermediate stages of conversion between areas of class \code{Forest} and those of class \code{ClearCut_Soil} which are more stable classes. The number of outliers of the transitional classes is larger than those of the more stable ones. Thus, it is natural that the smoothing procedure decreases the area of the first two classes and increases that area of last two, resulting in a more informative map. 
+
 ## Relevance of expert knowledge in Bayesian inference
 
 In the smoothed map (Figure \@ref(fig:smth1)), the most frequent classes (\code{ClearCut_Soil} and \code{Forest}) increased their areas at the expense of the others. As shown in Figure \@ref(fig:pcube), these classes occur in more compact patches than the others.  Based on the experience of the authors with different experts on land use classification, there are two main approaches for setting the $\sigma^2_{k}$ parameter:
@@ -335,16 +330,9 @@ In the smoothed map (Figure \@ref(fig:smth1)), the most frequent classes (\code{
 
 Consider the case of forest areas and watersheds. If an expert wishes to have compact areas classified as forests without many outliers inside them, she will set the $\sigma^2$ parameter for the class  \code{Forest} to be high. For comparison, to avoid that small watersheds with few similar neighbors being relabeled, it is advisable to avoid a strong influence of the neighbors, setting $\sigma^2$ to be as low as possible. Therefore, the choice of $\sigma^2$ depends on the effect intended by the expert in the final classified map. 
 
-<!--
-PEDRO: Eu poderia usar o filtro bayesiano para as situacoes abaixo? Ou isto ficaria a cargo apenas da classificacao?
-1) Computar um "intervalo de confianca" para o total de cada classe de uso da terra para cada ano. a depender do estudo posterior que for realizado com os dados de uso da terra esse intervalo pode ser considerado, verificando se ele pode ter algum efeito significativo no resultado final ou nao.
-
-2) Maximizar/minimizar a area uma determinada classe em detrimento de outras. Por exemplo, suponha que eu queira fazer um PRODES usando o sits. Eu poderia maximizar as areas de desmatamento, minimizando falsos negativos. Assim, um especialista poderia fazer uma validacao visual em cima das areas indicadas como desmatamento resultantes do sits, ao inves de ter que olhar toda a area fora da mascara, como e' feito hoje.
--->
-
 # Comparison with other methods 
 
-To better understand the benefits of Bayesian smoothing, in this section we present the results of post-processing using two alternatives: Gaussian smoothing and bilateral smoothing. Gaussian smoothing is a low-pass filter where the weights are based on the normal distribution. Pixels near the center of the kernel have a higher weight, and the weight decreases for pixels further away from the center. This creates a blurring effect that is stronger at the center and weaker at the edges. The extent of smoothing is controlled by the standard deviation of a Gaussian distribution. The convolution operation effectively averages pixel values in the neighborhood defined by the kernel, with weights given by the Gaussian distribution. This results in a reduction of high-frequency noise and a blurring effect. 
+To better understand the benefits of Bayesian smoothing, we present the results of post-processing using two alternatives: Gaussian smoothing and bilateral smoothing. Gaussian smoothing is a low-pass filter where the weights are based on the normal distribution. Pixels near the center of the kernel have a higher weight, and the weight decreases for pixels further away from the center. This creates a blurring effect that is stronger at the center and weaker at the edges. The extent of smoothing is controlled by the standard deviation of a Gaussian distribution. This results in a reduction of high-frequency noise and a blurring effect. 
 
 The Gaussian Kernel is expressed as
 \begin{equation}
@@ -356,7 +344,7 @@ The Gaussian Kernel is expressed as
    I'(x, y) = \sum_{i=-k}^{k} \sum_{j=-k}^{k} G(i, j) \cdot I(x - i, y - j)
 \end{equation}
 
-In this equation, $I'(x, y)$ represents the smoothed image, $I(x, y)$ is the original image, $G(i, j)$ is the Gaussian kernel, and $(i,j)$ are the indices running over the kernel size, typically centered around zero. The following code computes a Gaussian smoothing filter, labels the image and plots the resulting map. 
+In this equation, $I'(x, y)$ represents the smoothed image, $I(x, y)$ is the original image, $G(i, j)$ is the Gaussian kernel, and $(i,j)$ are the indices running over the kernel size, typically centered around zero. The following code computes a Gaussian filter, labels the image and plots the resulting map. 
 
 ```{r gauss, fig.width = 5, fig.align = 'center', fig.cap = "Labeled map using Gaussian smoothing."} 
 # compute Gaussian smoothing, label and plot map
@@ -385,7 +373,7 @@ W(x, y) = \sum_{i=-k}^{k} \sum_{j=-k}^{k} G_{\sigma_s}(i, j) \cdot G_{\sigma_r}(
 This formula illustrates how the bilateral filter considers both spatial proximity and intensity similarity in its smoothing process, thereby preserving edges while reducing noise in other areas. The following code performs bilateral smoothing.
 
 ```{r bilat, fig.width = 5, fig.align = 'center', fig.cap = "Labeled map using bilateral smoothing."} 
-# compute Gaussian smoothing
+# compute Bilateral smoothing
 bilat_smooth <- bilateral_smooth(
     probs_image,
     window_size = 7,
@@ -402,6 +390,8 @@ bayes_plot_map(bilat_map)
 The resulting map after bilateral smoothing is similar to the output of Bayesian smoothing. However, this result required some rounds of trial and error to set the best values for the $\sigma$ and $\tau$ parameters. There is no objective method for choosing the appropriate values for them. By contrast, the smoothness parameters for Bayesian filtering are select based on the variances of the class probabilities. 
 
 This example shows the value of the Bayesian inference procedure compared with smoothing methods such as Gaussian and edge-aware filtering \citep{Schindler2012}. Most post-classification procedures use ad-hoc parameters which are not directly linked to the properties of the data. These parameters are based on the structure of the algorithm (e.g, size of the Gaussian kernel), not being easily defined separately for each class. Bayesian inference allows the expert to control the output and to set the parameters based on objective criteria.
+
+\FloatBarrier
 
 # Using smoothing in connection with time-first, space-later methods
 
