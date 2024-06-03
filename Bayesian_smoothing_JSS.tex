@@ -212,14 +212,13 @@ By contrast, if we consider local variability to be high If we set \(\sigma^2\) 
 
 \subsection{The BayesEO package}\label{the-bayeseo-package}
 
-The post-processing method described in this paper is implemented in the \proglang{R} \pkg{bayesEO}, which is available on CRAN and also on github. The examples below also require installation of package \pkg{sitsdata}. Because of its size, they cannot be loaded into CRAN; it has to be obtained directly for its github repository, The code below retrieves and loads \pkg{bayesEO} and \pkg{sitsdata}.
+The post-processing method described in this paper is implemented in the \proglang{R} \pkg{bayesEO}, which is available on CRAN and also on github. The \pkg{bayesEO} contains functions that allow reading a probability file, applying Bayesian smoothing, and plotting the result. It also includes auxialiary functions for computing the variance of the probability maps.
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> # configuration 
 R> # if bayesEO is not installed, install it
 R> if (!requireNamespace("bayesEO", quietly = TRUE))
-+     devtools::install_github("e-sensing/bayesEO", dependencies = TRUE)
++           install_packages("bayesEO", dependencies = TRUE)
 R> library(bayesEO)
 \end{CodeInput}
 \end{CodeChunk}
@@ -293,20 +292,20 @@ R> var_image <- bayes_variance(
 R> bayes_summary(var_image)
 \end{CodeInput}
 \begin{CodeOutput}
- Water             ClearCut_Burn      ClearCut_Soil       ClearCut_Veg     
- Min.   : 0.0000   Min.   :0.002435   Min.   : 0.002032   Min.   : 0.0000  
- 1st Qu.: 0.2103   1st Qu.:0.071394   1st Qu.: 0.099334   1st Qu.: 0.1135  
- Median : 2.3437   Median :0.153887   Median : 0.223378   Median : 0.2887  
- Mean   : 2.6378   Mean   :0.351474   Mean   : 0.609755   Mean   : 0.6634  
- 3rd Qu.: 4.7933   3rd Qu.:0.322778   3rd Qu.: 0.557150   3rd Qu.: 0.7865  
- Max.   :21.9481   Max.   :9.799687   Max.   :12.110867   Max.   :13.6907  
+ Water             ClearCut_Burn      ClearCut_Soil      ClearCut_Veg     
+ Min.   : 0.0000   Min.   :0.002872   Min.   : 0.00251   Min.   : 0.0000  
+ 1st Qu.: 0.2032   1st Qu.:0.071199   1st Qu.: 0.09977   1st Qu.: 0.1123  
+ Median : 2.3428   Median :0.151025   Median : 0.22774   Median : 0.2861  
+ Mean   : 2.6216   Mean   :0.336432   Mean   : 0.60954   Mean   : 0.6426  
+ 3rd Qu.: 4.7931   3rd Qu.:0.313889   3rd Qu.: 0.56343   3rd Qu.: 0.7708  
+ Max.   :21.1976   Max.   :9.597321   Max.   :11.92732   Max.   :16.8963  
  Forest            Wetland           
  Min.   : 0.0000   Min.   : 0.00000  
- 1st Qu.: 0.1179   1st Qu.: 0.07379  
- Median : 0.4931   Median : 0.16769  
- Mean   : 1.6935   Mean   : 0.50242  
- 3rd Qu.: 2.6687   3rd Qu.: 0.35688  
- Max.   :22.9732   Max.   :11.89854  
+ 1st Qu.: 0.1165   1st Qu.: 0.07349  
+ Median : 0.4858   Median : 0.16240  
+ Mean   : 1.6754   Mean   : 0.50523  
+ 3rd Qu.: 2.6242   3rd Qu.: 0.35460  
+ Max.   :24.3785   Max.   :11.36798  
 \end{CodeOutput}
 \end{CodeChunk}
 

@@ -73,18 +73,9 @@ output:
 ```{r, setup, include=FALSE, echo = FALSE}
 options(prompt = 'R> ', continue = '+ ')
 options(warn = -1)
-# if terra is not installed, install it
-if (!requireNamespace("terra", quietly = TRUE))
-    install.packages("terra", repos = "https://cloud.r-project.org/")
-library(terra)
-# if bayesEO is not installed, install it
-if (!requireNamespace("bayesEO", quietly = TRUE))
-    devtools::install_github("e-sensing/bayesEO")
-library(bayesEO)
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "h")
 knitr::opts_chunk$set(message = FALSE)
 knitr::opts_chunk$set(warning = FALSE)
-tempdir = "./temp_dir"
 ```
 \newpage
 # Introduction
@@ -106,7 +97,7 @@ Image classification post-processing methods include Gaussian, semi-global, bila
 
 The paper introduces a new post-processing algorithm for remote sensing image classification using an Empirical Bayes approach. The algorithm is available in the R package \pkg{bayesEO}. To simulate the impact of discontinuity between land classes, we use non-isotropic neighborhood definitions. Our method allows the inclusion of expert knowledge to enhance the consistency of the resulting map. The \pkg{bayesEO} package can be combined with \pkg{sits}, an end-to-end toolkit for land use and land cover classification using big Earth observation data developed by the authors \citep{Simoes2021}.
 
-Our package adds to other \proglang{R} libraries focused on the spatial data analysis, including \pkg{spdep} \citep{Bivand2023} and \pkg{rgeoda} \citep{Li2022}. \pkg{CARBayes} \citep{Lee2013}  implements Bayesian models for spatial areal units. For image processing analysis,  \pkg{terra} \citep{Hijmans2023} provides supervised classification with decision trees, while \pkg{stars} \citep{Bivand2023} includes functions for linear regression and random forest classification. For post-processing of machine learning image classification, \pkg{sits} also uses the method described in this paper. As far as we know, no current \proglang{R} package supports post-processing of image classification of remote sensing images. Therefore, the \pkg{bayesEO} is a useful addition to the facilities available in \proglang{R} for remote sensing image processing. 
+Our package adds to other \proglang{R} libraries focused on the spatial data analysis, including \pkg{spdep} \citep{Bivand2023} and \pkg{rgeoda} \citep{Li2022}. \pkg{CARBayes} \citep{Lee2013}  implements Bayesian models for spatial areal units. For image processing analysis,  \pkg{terra} \citep{Hijmans2023} provides supervised classification with decision trees, while \pkg{stars} \citep{Bivand2023} includes functions for linear regression and random forest classification. For post-processing of machine learning image classification, \pkg{sits} also uses the method described in this paper. As far as we know, no current \proglang{R} package supports post-processing of image classification of remote sensing images. For this reason, we consider  \pkg{bayesEO} to be a useful addition to the facilities available in \proglang{R} for remote sensing image processing. 
 
 
 \newpage
@@ -176,7 +167,7 @@ The fundamental idea behind Bayesian smoothing for land classification posits th
 
 There is usually no prior information to specify $m_{i,k}$ and $s^2_{i,k}$. Because of that, we adopt an Empirical Bayes (EB) approach to obtain estimates of these prior parameters by considering the pixel neighborhood. However, using a standard simmetrical neighborhood for each pixel, based uniquely on the distance between locations, would not produce reasonable results for border pixels. For this reason, our EB estimates uses non-isotropic neighbourhood, as explained below.
 
-## Empirical Bayes statistics using on anisotropic neighbourhoods
+## Empirical Bayes statistics with anisotropic neighbourhoods
 
 Classification challenges arise for pixels located along the boundaries between areas containing different classes, as they possess signatures of two classes. In these cases, only some of the neighbours of such boundary pixels belong to the same class. To address this issue, we employ a non-isotropic definition of a neighbourhood to estimate the prior class distribution.
 
@@ -214,13 +205,12 @@ By contrast, if we consider local variability to be high If we set $\sigma^2$ to
 
 ## The BayesEO package
 
-The post-processing method described in this paper is implemented in the \proglang{R} \pkg{bayesEO}, which is available on CRAN and also on github. The examples below also require installation of package \pkg{sitsdata}. Because of its size, they cannot be loaded into CRAN; it has to be obtained directly for its github repository, The code below retrieves and loads \pkg{bayesEO} and \pkg{sitsdata}.
+The post-processing method described in this paper is implemented in the \proglang{R} \pkg{bayesEO}, which is available on CRAN and also on github. The \pkg{bayesEO} contains functions that allow reading a probability file, applying Bayesian smoothing, and plotting the result. It also includes auxialiary functions for computing the variance of the probability maps.
 
-```{r, echo = TRUE, eval = FALSE}
-# configuration 
+```{r, echo = TRUE, eval = TRUE}
 # if bayesEO is not installed, install it
 if (!requireNamespace("bayesEO", quietly = TRUE))
-    devtools::install_github("e-sensing/bayesEO", dependencies = TRUE)
+          install_packages("bayesEO", dependencies = TRUE)
 library(bayesEO)
 ```
 
@@ -249,7 +239,7 @@ bayes_plot_probs(probs_image, labels = c("Forest", "ClearCut_Soil",
 
 Figure \@ref(fig:pcube) shows the plot of the probability images for classes \code{Forest}, \code{ClearCut_Soil}, \code{ClearCut_Veg} and \code{ClearCut_Burn}. The map for class \code{Forest} shows high probability values associated with compact patches. Even inside relatively homogenous areas, there are locations whose probabilities vary significantly. There is large variation in areas close to the river that runs from South to North, corresponding to riparian forest of lower density.  Class \code{ClearCut_Soil} is mostly composed of dense areas of high probability whose geometrical boundaries result from forest cuts. Some of the patches of this class, as those in the upper-left corner, have high variation in their probabilities. The class \code{ClearCut_Veg} is less well-defined than the others; this is to be expected since this is a transitional class between a natural forest and areas of bare soil. Patches associated to class \code{ClearCut_Burn} include both homogeneous areas of high probability and areas of mixed response. Overall, there are many areas with mixed responses.
 
-The next step is to show the labelled map resulting from the raw class probabilites. Figure \@ref(fig:map1) shows the classification map, obtained by taking the class of higher probability to each pixel, without considering the spatial context. There are many place with the so-called "salt-and-pepper" effect, which result from misclassified pixels. The non-smoothed labelled map shows the need for post-processing, since it contains a significant number of outliers and areas with mixed labelling. 
+The next step is to show the labelled map resulting from the raw class probabilites. Figure \@ref(fig:map1) shows the classification map, obtained by taking the class of higher probability to each pixel, without considering the spatial context. There are many places with the so-called "salt-and-pepper" effect, which result from misclassified pixels. The non-smoothed labelled map shows the need for post-processing, since it contains a significant number of outliers and areas with mixed labelling. 
 
 
 
